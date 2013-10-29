@@ -23,11 +23,11 @@
 	//sessiondata
 	$sessiondata = $this->session->all_userdata();
     ?>
-	<script src="js/jquery-1.9.0.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/jquery-ui-1.10.0.custom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery-1.9.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript" charset="utf-8"></script>
 	<!--<script src="js/jquery.jcarousel.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jquery-func.js" type="text/javascript" charset="utf-8"></script>-->
-	<script src="js/bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="/js/bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>	
 </head>
 <body>
 <!-- Wrapper -->

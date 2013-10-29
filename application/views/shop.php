@@ -69,7 +69,7 @@
                                         foreach($products AS $item){ ?>
                                     <li>
                                         <a href="products/item/<?php echo $item['pid']; ?>" class="product" title="#">
-                                            <div style="width:204px; height:165px; overflow:hidden;"><img src="../media/images/products/<?php echo $item['img1']; ?>" style="max-width:204px;" alt="Product Image 1" />
+                                            <div style="width:204px; height:165px; overflow:hidden;"><img src="/media/images/products/<?php echo $item['img1']; ?>" style="max-width:204px;" alt="Product Image 1" />
                                             </div>
                                             <span class="order model"><?php echo $item['name']; ?></span>
                                             <span class="order">catalog number: <span class="number">1925</span></span>
