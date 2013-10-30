@@ -23,6 +23,7 @@ a img { border: 0; }
 
 ol, ul { list-style: none outside none; }
 
+
 input, textarea, select { font-size: 12px; font-family: arial, sans-serif; padding:5px; }
 textarea { overflow: auto; resize:none; }
 
@@ -215,6 +216,7 @@ li.clearfix {
 
 .main_prod_img { width:300px; margin-bottom:10px; }
 
+input.qty_field { width:30px; text-align:center; margin-left:10px; }
 .txtlabel205 { width:205px; float:left; }
 .right10 { margin-right:10px; }
 .right20 { margin-right:20px; }
