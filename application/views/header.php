@@ -37,7 +37,7 @@
         <div class="shell">
             <div class="top-nav">
                 <ul>
-                	<?php if($sessiondata['is_logged_in']){ ?>
+                	<?php if(@$sessiondata['is_logged_in']){ ?>
 	                    <li class="first nobg"><?php echo "Welcome ".$sessiondata['customer']."!"; ?></a></li>
 	                    <li><a href="/user/logout" title="Logout">Logout</a></li>
 	                    <li><a href="/account/profile/<?php echo $sessiondata['uid']; ?>" title="My Account">My Account</a></li>
