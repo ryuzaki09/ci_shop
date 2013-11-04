@@ -4,9 +4,10 @@ class Profile extends CI_Controller {
     
     function __construct(){
         parent::__construct();
+        $this->load->model('commonmodel');
+        $this->load->model('adminmodel');
         $this->load->library('adminpage');
         $this->load->library('auth');
-        $this->load->model('adminmodel');
     }
     
     

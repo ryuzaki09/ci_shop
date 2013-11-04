@@ -1,20 +1,14 @@
-<?php
-
-
-?>
-<div class="content_block go_left">
-    <div class="page_title bottom_space"><?php echo $pagetitle; ?></div>
-    <div class="clearfix bottom_space">
-        <div class="go_left" style="width:150px;">New Password</div>
-        <div class="go_left"><input type="password" id="pwd1" /></div>
-    </div>
-    <div class="clearfix bottom_space">
-        <div class="go_left" style="width:150px;">Confirm Password</div>
-        <div class="go_left"><input type="password" id="pwd2" /></div>
-    </div>
-    <div class="clearfix bottom_space">        
-        <div class="go_left"><input type="button" id="change" value="Change Password!" /></div>
-    </div>
+<div class="page_title bottom_space"><?php echo $pagetitle; ?></div>
+<div class="clearfix bottom_space">
+	<div class="go_left" style="width:150px;">New Password</div>
+	<div class="go_left"><input type="password" id="pwd1" /></div>
+</div>
+<div class="clearfix bottom_space">
+	<div class="go_left" style="width:150px;">Confirm Password</div>
+	<div class="go_left"><input type="password" id="pwd2" /></div>
+</div>
+<div class="clearfix bottom_space">        
+	<div class="go_left"><input type="button" id="change" value="Change Password!" /></div>
 </div>
 
 <script>

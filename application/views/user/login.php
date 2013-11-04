@@ -1,6 +1,6 @@
 
 <div class="container">
-	<?php if($loginpage =="forgotpassword"){ ?>
+	<?php if(@$loginpage =="forgotpassword"){ ?>
 		<form method="POST" action="forgot_password">    
 	    <div class="loginblock">
 	        
@@ -16,7 +16,7 @@
 	} else { ?>
 	    <form method="POST" action="login">    
 	    <div class="loginblock">
-	        <?php if($message){ echo "<div class='error'>".$message."</div>"; } ?>
+	        <?php if(@$message){ echo "<div class='error'>".$message."</div>"; } ?>
 	        <div class="logintitle">Customer Login</div>
 	        <div class="bottom_space">Email:</div><div class="bottom_space"><input type="text" size="25" name="email" /></div>
 	        <div class="bottom_space">Password:</div><div class="bottom_space"><input type="password" size="25" name="password" /></div>

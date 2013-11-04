@@ -23,7 +23,7 @@
 	
 <?php } ?>
 
-<?php if($item->img1 != ""){ ?>    
+<?php if(@$item->img1 != ""){ ?>    
 <div class="clearfix list_div bottom_space" style="border-bottom:1px solid #cacaca; margin-bottom: 10px;">	
 	
 	
@@ -52,45 +52,45 @@
 <div class="note">Fill in all required fields</div>        
 <div class="clearfix list_div">
 	<div class="go_left label2">Name</div>
-	<div class="go_left"><input type="text" name="name" value="<?php echo $item->name; ?>"/></div>
+	<div class="go_left"><input type="text" name="name" value="<?php echo @$item->name; ?>"/></div>
 </div>
 
 <div class="clearfix list_div">
 	<div class="go_left label2">Main Photo</div>
 	<div class="go_left"><input type="file" name="img1" /></div>
-        <input type="hidden" name="current_img1" value="<?php echo $item->img1; ?>" />
+        <input type="hidden" name="current_img1" value="<?php echo @$item->img1; ?>" />
 </div>
 <div class="clearfix list_div">
 	<div class="go_left label2">Image 2</div>
 	<div class="go_left"><input type="file" name="img2" /></div>
-        <input type="hidden" name="current_img2" value="<?php echo $item->img2 ?>" />
+        <input type="hidden" name="current_img2" value="<?php echo @$item->img2 ?>" />
 </div>
 <div class="clearfix list_div">
 	<div class="go_left label2">Image 3</div>
 	<div class="go_left"><input type="file" name="img3" /></div>
-        <input type="hidden" name="current_img3" value="<?php echo $item->img3; ?>" />
+        <input type="hidden" name="current_img3" value="<?php echo @$item->img3; ?>" />
 </div>
 <div class="clearfix list_div">
 	<div class="go_left label2">Image 4</div>
 	<div class="go_left"><input type="file" name="img4" /></div>
-        <input type="hidden" name="current_img4" value="<?php echo $item->img4; ?>" />
+        <input type="hidden" name="current_img4" value="<?php echo @$item->img4; ?>" />
 </div>
 <div class="clearfix list_div">
 	<div class="go_left label2">Price</div>
-	<div class="go_left"><input type="text" name="price" value="<?php echo $item->price; ?>" /></div>
+	<div class="go_left"><input type="text" name="price" value="<?php echo @$item->price; ?>" /></div>
 </div>
 <div class="clearfix list_div">
 	<div class="go_left label2">Category</div>
-	<div class="go_left"><input type="text" name="category" value="<?php echo $item->category; ?>" /></div>
+	<div class="go_left"><input type="text" name="category" value="<?php echo @$item->category; ?>" /></div>
 </div>
 <div class="clearfix list_div">
 	<div class="go_left label2">Sub Category</div>
-	<div class="go_left"><input type="text" name="subcategory" value="<?php echo $item->sub_cat; ?>" /></div>
+	<div class="go_left"><input type="text" name="subcategory" value="<?php echo @$item->sub_cat; ?>" /></div>
 </div>
 
 <div class="clearfix list_div">
 	<div class="go_left label2">Description</div>
-	<div class="go_left block740"><textarea cols="20" id="desc" rows="5" name="desc"><?php echo $item->desc; ?></textarea></div>
+	<div class="go_left block740"><textarea cols="20" id="desc" rows="5" name="desc"><?php echo @$item->desc; ?></textarea></div>
 	<!--<div class="go_left" id="editable" contenteditable="true"><?php echo $item->desc; ?></div>-->
 	<script>
     // Turn off automatic editor creation first.

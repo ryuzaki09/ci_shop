@@ -1,3 +1,7 @@
+Version 0.0.2
+ - all variables suppressed in admin and main pages.
+ - change password page have been updated to load commonmodel first as it was not loading and style have been updated.
+
 Version 0.0.1
  - product images added and basket qty field styled
  - all shop files added from existing project

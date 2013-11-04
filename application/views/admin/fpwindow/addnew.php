@@ -15,33 +15,33 @@
         : form_open_multipart(base_url().'admin/fpwindows/addnew'); ?>
     
     <div class="clearfix">
-        <input type="hidden" id="id" value="<?php echo $item->id;  ?>" />
+        <input type="hidden" id="id" value="<?php echo @$item->id;  ?>" />
         <div class="block150 go_left">Name</div>
-        <div class="block250 go_left"><input type="text" id="firstname" name="firstname" value="<?php echo $item->firstname;  ?>" /></div>
+        <div class="block250 go_left"><input type="text" id="firstname" name="firstname" value="<?php echo @$item->firstname;  ?>" /></div>
     </div>
     <div class="clearfix">
         <div class="block150 go_left">Last Name</div>
-        <div class="block250 go_left"><input type="text" id="lastname" name="lastname" value="<?php echo $item->lastname; ?>" /></div>
+        <div class="block250 go_left"><input type="text" id="lastname" name="lastname" value="<?php echo @$item->lastname; ?>" /></div>
     </div>
     <div class="clearfix">
         <div class="block150 go_left">Email</div>        
-        <div class="block250 go_left"><input type="text" id="email" name="email" value="<?php echo $item->email; ?>" /></div>
+        <div class="block250 go_left"><input type="text" id="email" name="email" value="<?php echo @$item->email; ?>" /></div>
     </div>
     <div class="clearfix">
         <div class="block150 go_left">Address 1</div>        
-        <div class="block250 go_left"><input type="text" id="email" name="address1" value="<?php echo $item->address1; ?>" /></div>
+        <div class="block250 go_left"><input type="text" id="email" name="address1" value="<?php echo @$item->address1; ?>" /></div>
     </div>
     <div class="clearfix">
         <div class="block150 go_left">Address 2</div>        
-        <div class="block250 go_left"><input type="text" id="email" name="address2" value="<?php echo $item->address2; ?>" /></div>
+        <div class="block250 go_left"><input type="text" id="email" name="address2" value="<?php echo @$item->address2; ?>" /></div>
     </div>
     <div class="clearfix">
         <div class="block150 go_left">Postcode</div>        
-        <div class="block250 go_left"><input type="text" id="email" name="postcode" value="<?php echo $item->postcode; ?>" /></div>
+        <div class="block250 go_left"><input type="text" id="email" name="postcode" value="<?php echo @$item->postcode; ?>" /></div>
     </div>
     <div class="clearfix">
         <div class="block150 go_left">Password</div>        
-        <div class="block250 go_left"><input type="password" id="password" name="password" value="<?php echo $item->sub_title; ?>" /></div>
+        <div class="block250 go_left"><input type="password" id="password" name="password" value="<?php echo @$item->sub_title; ?>" /></div>
     </div>
     
       

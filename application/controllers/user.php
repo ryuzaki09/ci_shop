@@ -36,10 +36,10 @@ class User extends CI_Controller {
                     redirect(base_url());
                     
                 } else {
-                    $data['message'] = "Incorrect Email or Password";
+                    @$data['message'] = "Incorrect Email or Password";
                 }
             } else {
-                $data['message'] = "Email address invalid";
+                @$data['message'] = "Email address invalid";
             }
              
         }//end if

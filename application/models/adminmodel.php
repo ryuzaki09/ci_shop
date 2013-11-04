@@ -4,7 +4,6 @@ class Adminmodel extends Commonmodel {
         
     function __construct(){
         parent::__construct();
-        $this->load->model('commonmodel');
     }
     
     function adminlogin($username, $password){        

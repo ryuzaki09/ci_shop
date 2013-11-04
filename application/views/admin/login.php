@@ -1,6 +1,6 @@
 <h2>Admin Login</h2>
 <div id="adminlogin">    
-    <p class="error"><?php if ($message){ echo($message); } ?></p>
+    <p class="error"><?php if (@$message){ echo($message); } ?></p>
 	<ul>
 		<li>Username: </li><input type="text" name="username" id="username" placeholder="Username..." /><br /><br />
 		<li>Password: </li><input type="password" name="password" id="password" placeholder="Enter password..." /><br /><br />

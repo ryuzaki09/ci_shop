@@ -17,19 +17,19 @@
     </div>
     <div class="clearfix bottom_space">
         <div class="go_left block150">Name:</div> 
-        <div class="go_left block250"><input type="text" name="name" value="<?php echo $result->name; ?>" /></div>
+        <div class="go_left block250"><input type="text" name="name" value="<?php echo @$result->name; ?>" /></div>
     </div>
     <div class="clearfix bottom_space">
         <div class="go_left block150">Description:</div>
-        <div class="go_left block250"><textarea name="desc"><?php echo $result->desc; ?></textarea></div>
+        <div class="go_left block250"><textarea name="desc"><?php echo @$result->desc; ?></textarea></div>
     </div>
     <div class="clearfix bottom_space">
         <div class="go_left block150">Price: (&pound;)</div> 
-        <div class="go_left block250"><input type="text" name="price" size="3" value="<?php echo $result->price; ?>" /></div>
+        <div class="go_left block250"><input type="text" name="price" size="3" value="<?php echo @$result->price; ?>" /></div>
     </div>
     <div class="clearfix bottom_space">
         <div class="go_left block150">Position:</div>
-        <div class="go_left block250"><input type="text" name="position" size="3" value="<?php echo $result->position; ?>" /></div>
+        <div class="go_left block250"><input type="text" name="position" size="3" value="<?php echo @$result->position; ?>" /></div>
     </div>
     <div class="clearfix bottom_space">
             <input type="submit" name="add" value="Add to Carousel" />

@@ -1,4 +1,4 @@
-<?php if($message){ echo "<div class='error'>".$message."</div>"; } ?>
+<?php if(@$message){ echo "<div class='error'>".$message."</div>"; } ?>
 
 <?php
 if($pagetitle == "Admin Menu Setup"){

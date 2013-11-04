@@ -8,7 +8,7 @@ if (is_array($listing)){
         <div class="go_left marg_right" style="width:430px;"><?php echo $list['firstname']." ".$list['lastname']; ?></div>
         <!--<div class="go_left marg_right" style="width:150px;"><a href="subphotos/<?php //echo $list['id']; ?>">Upload Sub Photos</a></div>-->
         <div class="go_left marg_right" style="width:50px;"><a href="edit/<?php echo $list['uid']; ?>">Edit</a></div>
-        <div class="go_left marg_right" style="width:50px;"><a href="javascript:void(0);" onclick="delete_item('<?php echo $list['id']; ?>');">Delete</a></div>
+        <div class="go_left marg_right" style="width:50px;"><a href="javascript:void(0);" onclick="delete_item('<?php echo @$list['id']; ?>');">Delete</a></div>
      </div>
      
     

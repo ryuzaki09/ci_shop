@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="register_block">
 		<div class="darkgreytitle">Create New Account</div>
-		<?php  echo $message; ?>		
+		<?php  echo @$message; ?>		
 		<form method="POST" action="/user/register">
 		<div class="clearfix bottom_space">
 			<div class="block150 go_left">Email Address: </div>
