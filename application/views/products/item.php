@@ -75,7 +75,7 @@
 		<div class="top_space">
 			<input type="submit" name="add_basket" value="Add to Basket" />
 		</div>
-		<input type="hidden" name="rowID" value="<?php echo $rowID; ?>" />
+		<input type="hidden" name="rowID" value="<?php if(@$rowID){ echo $rowID; } ?>" />
 		<input type="hidden" name="pid" value="<?php echo $product->pid; ?>" />
 		<input type="hidden" name="pname" value="<?php echo $product->name; ?>" />
 		<input type="hidden" name="price" value="<?php echo $product->price; ?>" />

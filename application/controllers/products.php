@@ -80,7 +80,7 @@ class Products extends CI_Controller {
 		$data['product'] = $this->productsmodel->db_get_product($where);
 		
         //if no rowID
-		if($data['rowID']==""){
+		if(@$data['rowID']==""){
 			
 			if(!empty($basket)){  //if theres a basket session
 				foreach ($this->cart->contents() as $items): 
@@ -92,6 +92,7 @@ class Products extends CI_Controller {
 				endforeach;				
 			}
 		}
+		$data['pagetitle'] = "Product: ".$data['product']->name;
         
         $this->loadpage->loadpage('products/item', $data);
     }
