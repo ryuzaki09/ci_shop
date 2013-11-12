@@ -4,72 +4,59 @@ class Carousel extends CI_Controller {
         parent::__construct();
         $this->load->model('commonmodel');
         $this->load->library('adminpage');
-        $this->load->library('auth');                
+        // $this->load->library('auth');                
         $this->load->model('carouselmodel');
+        $this->auth->is_logged_in();        
     }
     
     function addnew(){
-        $login = $this->auth->is_logged_in();        
-        if($login == true){
-            if($this->input->post('add', true) =="Add to Carousel"){
-                $name 	= $this->input->post('name', true);
-                $desc 	= $this->input->post('desc', true);
-				$price 	= $this->input->post('price', true);
-                $pos 	= $this->input->post('position', true);
-				
-				//check for blank fields
-                if($name !=""){
-                    $this->load->library('upload');
-                    $image = "image";
+		if($this->input->post('add', true) =="Add to Carousel"){
+			$name 	= $this->input->post('name', true);
+			$desc 	= $this->input->post('desc', true);
+			$price 	= $this->input->post('price', true);
+			$pos 	= $this->input->post('position', true);
+			
+			//check for blank fields
+			if($name !=""){
+				$this->load->library('upload');
+				$image = "image";
 
-                    $config['upload_path']   = './media/images/carousel/'; //if the files does not exist it'll be created
-                    $config['allowed_types'] = 'gif|jpg|png';
-                    $config['max_size']   = '8000'; //size in kilobytes                    
-                    $config['encrypt_name']  = true;
+				$config['upload_path']   = './media/images/carousel/'; //if the files does not exist it'll be created
+				$config['allowed_types'] = 'gif|jpg|png';
+				$config['max_size']   = '8000'; //size in kilobytes                    
+				$config['encrypt_name']  = true;
 
-                    $this->upload->initialize($config);
+				$this->upload->initialize($config);
 
-                    if(!$this->upload->do_upload($image)){
-                        $data['message'] = $this->upload->display_errors();
-                    } else {
-                        $filedata = $this->upload->data();
-                        $result = $this->carouselmodel->add_update_item($filedata['file_name'], $name, $desc, $price, $pos);
+				if(!$this->upload->do_upload($image)){
+					$data['message'] = $this->upload->display_errors();
+				} else {
+					$filedata = $this->upload->data();
+					$result = $this->carouselmodel->add_update_item($filedata['file_name'], $name, $desc, $price, $pos);
 
-                        $data['message'] = "Item Added!";
-                    }
+					$data['message'] = "Item Added!";
+				}
 
-                } else {
-                    $data['message'] = "Please enter a name!";
-                }
-            }
+			} else {
+				$data['message'] = "Please enter a name!";
+			}
+		}
 
-            $data['pagetitle'] = "Carousel | Add New";
+		$data['pagetitle'] = "Carousel | Add New";
 
-            $this->adminpage->loadpage('admin/carousel/add_edit', $data);
-        
-        } else {
-            redirect(base_url().'admin/login');
-        }
+		$this->adminpage->loadpage('admin/carousel/add_edit', $data);
+	
     }
     
     function listing(){
-        $login = $this->auth->is_logged_in();        
-        if($login == true){
-            $data['result'] = $this->carouselmodel->alldata();
+		$data['result'] = $this->carouselmodel->alldata();
 
-            $data['pagetitle'] = "Carousel List";
-            $this->adminpage->loadpage('admin/carousel/list', $data);
-        
-        } else {
-            redirect(base_url().'admin/login');
-        }
-        
+		$data['pagetitle'] = "Carousel List";
+		$this->adminpage->loadpage('admin/carousel/list', $data);
+	
     }
     
     function edit($id){
-        error_reporting(E_ALL);
-        $login = $this->auth->is_logged_in();        
-        if($login == true){
             $id = $id*1;
             
             if($this->input->post('update', true) == "Update"){
@@ -112,9 +99,6 @@ class Carousel extends CI_Controller {
             $data['pagetitle'] = "Edit | ".$data['result']->port_title;
             $this->adminpage->loadpage('admin/portfolio/edit', $data);
             
-        } else {
-            redirect(base_url().'admin/login');
-        }
     }
     
 	function update_carousel(){

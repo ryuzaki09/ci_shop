@@ -5,11 +5,11 @@ class Adminpage {
     
     public function __construct(){
         $this->CI =& get_instance();
+		$this->CI->load->model('commonmodel');
     }
     
-    function loadpage($page, $data=false, $adminmenu=true)
+    public function loadpage($page, $data=false, $adminmenu=true)
     {
-    		$this->CI->load->model('commonmodel');
 			//get navigation menus
 			$data['menu_array'] = $this->__nav_menus();
 			//echo $this->CI->db->last_query();       
@@ -37,7 +37,7 @@ class Adminpage {
         return $data;
     }
 	
-	Private function __nav_menus(){
+	private function __nav_menus(){
 		$left_menu = $this->CI->commonmodel->db_get_left_menus();
 		$sub_leftmenu = $this->CI->commonmodel->db_get_left_menus($submenu=true);
 		

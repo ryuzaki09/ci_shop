@@ -2,26 +2,22 @@
 
 class Products extends CI_Controller {
     
-    function __construct(){
+    public function __construct(){
         parent::__construct();
         $this->load->model('commonmodel');
         $this->load->library('adminpage');
-        $this->load->model('adminmodel');        
+        $this->load->model('adminmodel');     
         $this->load->model('productsmodel');
 		
-		$logged_in = $this->auth->is_logged_in();
-        
-		if(!$logged_in){
-			redirect(base_url().'admin/login');
-		}
+		$this->auth->is_logged_in();
 		
     }
     
-    
-    function addnew(){
+   
+    public function addnew(){
         
         $this->load->helper('form');
-        $data['pagetitle'] = "Add new product";		
+        $data['pagetitle'] = "Add new product";	
 
         //start upload process
         if($this->input->post('upload') == "Upload"){
@@ -70,7 +66,7 @@ class Products extends CI_Controller {
         
     }
     
-    function listing(){
+    public function listing(){
         
         $this->load->library('pagination');
         $data['products'] = $this->productsmodel->db_allproducts();
@@ -86,7 +82,6 @@ class Products extends CI_Controller {
     }
     
     function edit($id){ 
-       //error_reporting(E_ALL);
        $id = $id*1; 
        $where = array('pid' => $id);      
        if ($this->input->post('update') == "Update"){
@@ -105,8 +100,7 @@ class Products extends CI_Controller {
 		   				'1' => $_FILES['img2']['name'],
 		   				'2' => $_FILES['img3']['name'],
 		   				'3' => $_FILES['img4']['name']);
-           	//print_r($img);
-           	//exit();
+
            	$files = $_FILES;
            	$count=0;
 			Foreach($files AS $images => $imgname){               
@@ -127,7 +121,7 @@ class Products extends CI_Controller {
 	                   	                   
 	                   if($this->upload->do_upload($images)){  //upload new image
 	                        $uploaded = $this->upload->data();
-	                        $imgs[] = $uploaded['file_name']; // image filenames ready to update into DB	                        
+	                        $imgs[] = $uploaded['file_name']; // image filenames ready to update into DB                       
 	                        
 	                        $data['imgfiles'][] = $imgname['name']." has been uploaded";
 	                   } else {                        
@@ -138,7 +132,7 @@ class Products extends CI_Controller {
 	                                      
 	                   $data['imgfiles'][] = "Product updated. You did not select an image to upload";
 	                   //keep old image name 
-	                   $imgs[$count] = $current_img[$count];                   
+	                   $imgs[$count] = $current_img[$count];              
 	           }
 			   $count++;          
 			}
@@ -151,13 +145,12 @@ class Products extends CI_Controller {
        $data['edit'] = true;
 
        $data['pagetitle'] = "Edit | ".$data['item']->name;
-       $this->adminpage->loadpage('admin/products/upload', $data);       
+       $this->adminpage->loadpage('admin/products/upload', $data);   
    }
-    
-    
+   
+   
     
     function album($id){
-        error_reporting(E_ALL);
                   
         $id = $id*1;            
         
@@ -218,7 +211,7 @@ class Products extends CI_Controller {
         }
         
     }
-    
+   
     function delete_photo(){
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
             $id = ($this->input->post('id', true)*1);
@@ -252,4 +245,4 @@ class Products extends CI_Controller {
 }
 
 
-?>
+

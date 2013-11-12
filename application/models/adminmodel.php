@@ -13,10 +13,10 @@ class Adminmodel extends Commonmodel {
         $result = $this->db->get($this->table['adminusers']);
                 
         if ($result){
-        return ($result->num_rows()>0)
+			return ($result->num_rows()>0)
                 ? $result->row()
                 : false;
-        }else {
+        } else {
             return false;
         }        
     }

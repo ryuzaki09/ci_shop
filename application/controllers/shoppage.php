@@ -2,7 +2,7 @@
 
 class Shoppage extends CI_Controller {
     
-    function __construct(){
+    public function __construct(){
         parent::__construct();
         $this->load->library('loadpage');
         $this->load->library('auth');
@@ -10,9 +10,9 @@ class Shoppage extends CI_Controller {
         $this->load->model('productsmodel');
     }
     
-    function index(){
-        //$data['sessiondata'] = $this->session->all_userdata();
-        //print_r($data['sessiondata']);
+    public function index(){
+		echo 4 + "4<br />";
+
         $this->load->model('carouselmodel');
 		//carousel data	
 		$data['carousel'] = $this->carouselmodel->alldata();

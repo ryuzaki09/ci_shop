@@ -11,10 +11,11 @@
 </div>
 <br /> <br />
 <script type="text/javascript">
-    $("#password").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#login").click();
-    }
+    $("#password").keypress(function(event){
+		if(event.keyCode == 13 && ($('#username').is(':focus') || $('#password').is(':focus'))){
+			$("#login").click();
+			// loginbtn();
+		}
     });
     
     //$('#login').click(function(){
@@ -26,7 +27,7 @@
         $.post(url, {username: uname, password: pwd}, function(data){
             if (data == 'true'){            
                 window.location ="home";
-            }else{
+            } else {
                 alert('Login Failed');
             }        
         });

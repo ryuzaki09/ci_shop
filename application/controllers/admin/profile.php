@@ -2,25 +2,19 @@
 
 class Profile extends CI_Controller {
     
-    function __construct(){
+    public function __construct(){
         parent::__construct();
         $this->load->model('commonmodel');
         $this->load->model('adminmodel');
         $this->load->library('adminpage');
-        $this->load->library('auth');
     }
     
     
     function changepwd(){
-        $login = $this->auth->is_logged_in();        
-        if($login == true){
         
         $data['pagetitle'] = "Change Password";        
         $this->adminpage->loadpage('admin/profile', $data);
         
-        } else {
-            redirect(base_url().'admin/login');
-        }
     }
     
     function process(){

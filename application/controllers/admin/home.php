@@ -6,11 +6,8 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->load->library('adminpage');
 		$this->load->model('commonmodel');
-		$logged_in = $this->auth->is_logged_in();
+		$this->auth->is_logged_in();
         
-		if(!$logged_in){
-			redirect(base_url().'admin/login');
-		}
     }
     
     function index(){        

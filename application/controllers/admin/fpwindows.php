@@ -4,11 +4,11 @@ class Fpwindows extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->library('adminpage');
-        $this->load->library('auth');  
         $this->load->model('commonmodel');
         $this->load->model('fpmodel');
         $this->load->model('adminmodel');
         $this->load->library('upload');  
+        $this->auth->is_logged_in();
         
     }
     
@@ -17,10 +17,6 @@ class Fpwindows extends CI_Controller {
    } 
     
    function addnew(){
-       //error_reporting(E_ALL);
-       $login = $this->auth->is_logged_in();
-        
-       if($login){
            
            if($this->input->post('submit') == "Add"){
                $firstname 	= $this->input->post('firstname', true);
@@ -77,24 +73,15 @@ class Fpwindows extends CI_Controller {
            
        $data['pagetitle'] = "Add new user";
        $this->adminpage->loadpage('admin/fpwindow/addnew', $data);
-       } else {
-            redirect(base_url().'admin/login');
-       }             
    }
    
    function listing(){
-       $login = $this->auth->is_logged_in();
         
-       if($login){
-            $data['listing'] = $this->fpmodel->all_users();
-            
-            $data['pagetitle'] = "Users List";        
-            $this->adminpage->loadpage('admin/fpwindow/list', $data);       
-       
-       } else {
-           redirect(base_url().'admin/login');
-       }
-       
+		$data['listing'] = $this->fpmodel->all_users();
+		
+		$data['pagetitle'] = "Users List";        
+		$this->adminpage->loadpage('admin/fpwindow/list', $data);       
+   
    }
    
    function edit($id){ 
@@ -162,47 +149,40 @@ class Fpwindows extends CI_Controller {
    }
    
    function subphotos($id){
-       error_reporting(E_ALL);
-       $login = $this->auth->is_logged_in();        
-       if($login == true){
-            $id = $id*1;
-            
-            if($this->input->post('upload') == "Upload"){
-                $files = $_FILES;
-                
-                $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'].'/media/images/frontpage/thumbs/';
-                $config['allowed_types'] = 'gif|jpg|png';
-                $config['max_size']	= '500';
-                $config['max_width']  = '260';
-                $config['max_height']  = '173';
-                
-                $this->upload->initialize($config);
-                
-                Foreach($files AS $imgfile => $imgname){ //go through each img upload
-                    if($imgfile['name'] != ""){ //check to see if it's empty
-			if($this->upload->do_upload($imgfile)){  //if not empty then upload
-                            $this->fpmodel->addphotos('thumbs', $imgname['name'], $id);
-                            $data['imgfiles'][] = $imgname['name']." has been uploaded to thumbs folder<br/>";
-			} else {
-                            $data['imgfiles'][] = $this->upload->display_errors();
-                        }
-                    } else{
-                        $data['imgfiles'][] = "No file selected";
-                    }
-		}//end foreach                
-            }
-            
-            $data['item'] = $this->adminmodel->retrieve_data($id);
-            $data['sub_photos'] = $this->adminmodel->retrieve_fpphotos($id, $foldername=true);            
-            
-            $data['pagetitle'] = $data['item']->title." | Upload Sub Photos";
-            
-            $this->adminpage->loadpage('admin/fpwindow/subphotos', $data);
-        
-       } else {
-            redirect(base_url().'admin/login');
-       }
-        
+		$id = $id*1;
+		
+		if($this->input->post('upload') == "Upload"){
+			$files = $_FILES;
+			
+			$config['upload_path'] = $_SERVER['DOCUMENT_ROOT'].'/media/images/frontpage/thumbs/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']	= '500';
+			$config['max_width']  = '260';
+			$config['max_height']  = '173';
+			
+			$this->upload->initialize($config);
+			
+			Foreach($files AS $imgfile => $imgname): //go through each img upload
+				if($imgfile['name'] != ""){ //check to see if it's empty
+					if($this->upload->do_upload($imgfile)){  //if not empty then upload
+						$this->fpmodel->addphotos('thumbs', $imgname['name'], $id);
+						$data['imgfiles'][] = $imgname['name']." has been uploaded to thumbs folder<br/>";
+					} else {
+						$data['imgfiles'][] = $this->upload->display_errors();
+					}
+				} else{
+					$data['imgfiles'][] = "No file selected";
+				}
+			endforeach;//end foreach                
+		}
+		
+		$data['item'] = $this->adminmodel->retrieve_data($id);
+		$data['sub_photos'] = $this->adminmodel->retrieve_fpphotos($id, $foldername=true);            
+		
+		$data['pagetitle'] = $data['item']->title." | Upload Sub Photos";
+		
+		$this->adminpage->loadpage('admin/fpwindow/subphotos', $data);
+	
     }
   
    
