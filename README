@@ -1,3 +1,6 @@
+Version 0.0.4
+ - fix bug with auth library. it was redirecting to admin login page when visiting the main web page.
+
 Version 0.0.3
  - added logger to project.
  - auth logged in method have been updated to check login status automatically throughout each controller in CMS.

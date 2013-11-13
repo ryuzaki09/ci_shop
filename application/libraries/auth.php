@@ -15,8 +15,9 @@ class Auth {
             return true;
         } else {
 			$this->CI->load->helper('url');
-			//check to make sure its not the admin login page and not ajax
-			if(current_url() != base_url().'index.php?/admin/login' && ((!isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']!='XMLHttpRequest')))) {    
+			//check to make sure its not the admin login page and not ajax then redirect back to login page if theres no session.
+			// if(current_url() != base_url().'index.php?/admin/login' && ((!isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']!='XMLHttpRequest')))) {    
+			if($this->CI->uri->segment(1) == 'admin' && $this->CI->uri->segment(2) != 'login' && ((!isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']!='XMLHttpRequest')))) {    
             	redirect(base_url().'admin/login');
 			}
         }
