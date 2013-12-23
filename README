@@ -1,3 +1,6 @@
+Version 0.0.5
+ - added paypal integration to get access token.
+
 Version 0.0.4
  - fix bug with auth library. it was redirecting to admin login page when visiting the main web page.
 

@@ -66,28 +66,10 @@ class Basket extends CI_Controller {
 
 
 	public function testpaypal(){
-		$url = commonclass::getConfig("shoplongdestiny.paypal_endpoint");
-		// $curldata =
-		
-		try{
-			echo $url;
-			$curl = curl_init();
-			curl_setopt($curl, CURLOPT_URL, $url);
-			// curl_setopt($curl, CURLOPT_POSTFIELDS, $curldata);
-			curl_setopt($curl, CURLOPT_HEADER, false);	
-			curl_exec($curl);
-			echo $url;
-			if(curl_error($url)){ 
-				echo curl_error($url);
-			}
-
-
-			curl_close($curl);
-		} catch(Exception $e){
-			echo $e->getMessage();
-		}
-		echo $url;
-	
+		$this->load->library("paypal");
+		$paypal_token = $this->paypal->getAccessToken();
+		if($paypal_token)
+			print_R($paypal_token);
 	}
 	
 	
