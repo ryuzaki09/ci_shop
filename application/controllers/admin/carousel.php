@@ -4,7 +4,6 @@ class Carousel extends CI_Controller {
         parent::__construct();
         $this->load->model('commonmodel');
         $this->load->library('adminpage');
-        // $this->load->library('auth');                
         $this->load->model('carouselmodel');
         $this->auth->is_logged_in();        
     }
@@ -103,6 +102,7 @@ class Carousel extends CI_Controller {
     
 	function update_carousel(){
 		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
+			$this->logger->info("updating carousel");
 			$id = ($this->input->post('id', true)*1);	
 			$name = $this->input->post('name', true);
 			$desc = $this->input->post('desc', true);
@@ -110,21 +110,22 @@ class Carousel extends CI_Controller {
 			$pos = $this->input->post('pos', true);
 			
 			$result = $this->carouselmodel->add_update_item(false, $name, $desc, $price, $pos, $id);
-			if($result){
-				echo "true";
-			} else {
-				echo "Cannot Update";
-			}
+			echo ($result)
+				? "true"
+				: "Cannot Update";
+			
 		}
 	}
 	
 	
     function delete_carousel(){
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
+			$this->logger->info("deleting carousel");
             $id = ($this->input->post('id', true)*1);
             $old_img = $this->input->post('old_img', true);
             
             if($old_img != ""){
+				$this->logger->info("deleting old image: ".$old_img);
                 if(file_exists($_SERVER['DOCUMENT_ROOT'].'/media/images/carousel/'.$old_img)){
                     unlink($_SERVER['DOCUMENT_ROOT'].'/media/images/carousel/'.$old_img);
                 }

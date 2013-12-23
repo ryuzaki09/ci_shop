@@ -1,3 +1,6 @@
+Version 0.0.6
+ - completed paypal access token with curl and paypal libraries.
+
 Version 0.0.5
  - added paypal integration to get access token.
 

@@ -7,22 +7,21 @@ class Paypal {
 	}
 
 	public function getAccessToken(){
+		$this->CI->load->library('curl');
 		$url = commonclass::getConfig("shoplongdestiny.paypal_endpoint");
 		$url .= "/v1/oauth2/token";
 		$clientId = commonclass::getConfig("shoplongdestiny.paypal_client_id");
 		$secret = commonclass::getConfig("shoplongdestiny.paypal_secret");
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, false);	
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_USERPWD, $clientId.":".$secret);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
-		$response = curl_exec($ch);
-		
-		curl_close($ch);
+		$this->CI->curl->curl_url($url);
+		$this->CI->curl->headers(false);
+		$this->CI->curl->curl_ssl(false);
+		$this->CI->curl->curl_post(true);
+		$this->CI->curl->returnTransfer(true);
+		$this->CI->curl->userPwd($clientId.":".$secret);
+		$this->CI->curl->postfields("grant_type=client_credentials");
+
+		$response = $this->CI->curl->curlexec();
 
 		if(empty($response))
 			$this->CI->logger->info("cannot get paypal access token");
