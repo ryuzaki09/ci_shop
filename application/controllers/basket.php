@@ -69,9 +69,14 @@ class Basket extends CI_Controller {
 		$this->load->library("paypal");
 		$paypal_token = $this->paypal->getAccessToken();
 		if($paypal_token)
-			print_R($paypal_token);
+			// print_R($paypal_token);
+			$this->createPaypalPayment();
 	}
 	
+	private function createPaypalPayment(){
+		$this->load->library("paypal");
+		$payment = $this->paypal->createPayment();
+	}
 	
 	
 }

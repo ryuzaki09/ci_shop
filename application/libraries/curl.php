@@ -50,6 +50,11 @@ class Curl {
 			curl_setopt($this->CI->ch, CURLOPT_POSTFIELDS, $postfields); 
 	}
 
+	public function http_header($http_headers){
+		if(is_array($http_headers) && !empty($http_headers))
+			curl_setopt($this->CI->ch, CURLOPT_HTTPHEADER, $http_headers);
+	}
+
 	public function curlexec(){
 		$result = curl_exec($this->CI->ch);
 		curl_close($this->CI->ch);
