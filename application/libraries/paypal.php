@@ -1,7 +1,9 @@
 <?php
 
 class Paypal {
-	private $url, $secret, $clientId;
+	private $url = false;
+	private $secret = false;
+	private $clientId = false;
 
 	public function __construct(){
 		$this->CI =& get_instance();
@@ -12,9 +14,9 @@ class Paypal {
 	}
 
 	public function getAccessToken(){
-		$this->CI->url .= "/v1/oauth2/token";
+		$curl_url = $this->CI->url ."/v1/oauth2/token";
 
-		$this->CI->curl->curl_url($this->CI->url);
+		$this->CI->curl->curl_url($curl_url);
 		$this->CI->curl->headers(false);
 		$this->CI->curl->curl_ssl(false);
 		$this->CI->curl->curl_post(true);
@@ -33,36 +35,43 @@ class Paypal {
 	}
 
 
-	public function createPayment(){
-		$this->CI->url .= "/v1/payments/payment";
-		echo $this->CI->url;
+	public function createPayment($access_token){
+		$this->CI->logger->info("process create payment");
+		$payment_url = $this->CI->url ."/v1/payments/payment";
 		
 		$saledata = array("intent" => "sale",
-							"redirect_urls" => array("return_url" => "http://www.google.com", "cancel_url" => "http://www.ebuyer.com"),
+							"redirect_urls" => array("return_url" => "http://www.google.com", 
+													"cancel_url" => "http://www.ebuyer.com"),
 							"payer" => array("payment_method" => "paypal"),
 							"transactions" => array(
+												array(
 													"amount" => array(
 																		"total" => "7.47", 
 																		"currency" => "USD"
 																	),
 													"description" => "This is a test payment transaction description"
 													)
+												)
 							);
 		$sale_json = json_encode($saledata);
-		
 
-		$this->CI->curl->curl_url($this->CI->url);
+		$headers_data = array("Content-Type: application/json",
+								"Authorization: Bearer ".$access_token,
+								"Content-length: ".strlen($sale_json));
+
+		$this->CI->curl->curl_url($payment_url);
 		$this->CI->curl->headers(false);
 		$this->CI->curl->curl_ssl(false);
 		$this->CI->curl->curl_post(true);
 		$this->CI->curl->returnTransfer(true);
-		// $this->CI->curl->userPwd($this->CI->clientId.":".$this->CI->secret);
+		$this->CI->curl->http_header($headers_data);
 		$this->CI->curl->postfields($sale_json);
 		
 		$response = $this->CI->curl->curlexec();
-		echo "<pre>";
-		print_R($sale_json);
-		echo "</pre>";
+		$this->CI->curl->closeCurl();
+		
+		if(($response) && !empty($response))
+			return json_decode($response);
 	}
 
 

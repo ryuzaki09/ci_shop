@@ -1,32 +1,31 @@
 <?php
 
 class Curl {
-	public $ch;
+	private $ch;
 
 	public function __construct(){
 		$this->CI =& get_instance();
-		$this->CI->ch = curl_init();
+		// if(!$this->CI->ch){
+			$this->CI->ch = curl_init();
+		//}
 	}
 
 	public function curl_url($url){
 		if(!empty($url) && is_string($url)){
+			// echo $url."<br />";
+			// print_r($this->CI->ch);
 			curl_setopt($this->CI->ch, CURLOPT_URL, $url);
-			return $this->CI;
 		}
 	}
 	
 	public function headers($headers){
 		if(is_bool($headers) && ($headers))
-			curl_setopt($this->CI->ch, CURLOPT_HEADER, true);
-		else
-			curl_setopt($this->CI->ch, CURLOPT_HEADER, false);
+			curl_setopt($this->CI->ch, CURLOPT_HEADER, $headers);
 	}
 	
 	public function curl_ssl($ssl){
 		if(is_bool($ssl) && ($ssl))
-			curl_setopt($this->CI->ch, CURLOPT_SSL_VERIFYPEER, true);
-		else
-			curl_setopt($this->CI->ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($this->CI->ch, CURLOPT_SSL_VERIFYPEER, $ssl);
 		
 	}
 
@@ -46,7 +45,7 @@ class Curl {
 	}
 
 	public function postfields($postfields){
-		if(is_string($postfields))
+		if($postfields)
 			curl_setopt($this->CI->ch, CURLOPT_POSTFIELDS, $postfields); 
 	}
 
@@ -57,8 +56,15 @@ class Curl {
 
 	public function curlexec(){
 		$result = curl_exec($this->CI->ch);
-		curl_close($this->CI->ch);
 		return $result;
+	}
+
+	public function __destruct(){
+		$this->CI->ch = false;
+	}
+
+	public function closeCurl(){
+		curl_close($this->CI->ch);
 	}
 
 }
