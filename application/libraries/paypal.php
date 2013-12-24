@@ -40,7 +40,7 @@ class Paypal {
 		$payment_url = $this->CI->url ."/v1/payments/payment";
 		
 		$saledata = array("intent" => "sale",
-							"redirect_urls" => array("return_url" => "http://www.google.com", 
+							"redirect_urls" => array("return_url" => "http://shoplongdestiny.dev/basket/paypal_callback", 
 													"cancel_url" => "http://www.ebuyer.com"),
 							"payer" => array("payment_method" => "paypal"),
 							"transactions" => array(
@@ -58,23 +58,48 @@ class Paypal {
 		$headers_data = array("Content-Type: application/json",
 								"Authorization: Bearer ".$access_token,
 								"Content-length: ".strlen($sale_json));
+		try {
+			$this->CI->curl->curl_url($payment_url);
+			$this->CI->curl->headers(false);
+			$this->CI->curl->curl_ssl(false);
+			$this->CI->curl->curl_post(true);
+			$this->CI->curl->returnTransfer(true);
+			$this->CI->curl->http_header($headers_data);
+			$this->CI->curl->postfields($sale_json);
+			
+			$response = $this->CI->curl->curlexec();
+			$this->CI->curl->closeCurl();
+		
+		} catch(Exception $e){
+			$this->CI->logger->info($e->getMessage());	
+		}
 
-		$this->CI->curl->curl_url($payment_url);
-		$this->CI->curl->headers(false);
-		$this->CI->curl->curl_ssl(false);
-		$this->CI->curl->curl_post(true);
-		$this->CI->curl->returnTransfer(true);
-		$this->CI->curl->http_header($headers_data);
-		$this->CI->curl->postfields($sale_json);
-		
-		$response = $this->CI->curl->curlexec();
-		$this->CI->curl->closeCurl();
-		
-		if(($response) && !empty($response))
+		if(($response) && !empty($response)){
+			$this->CI->logger->info("Payment created");
 			return json_decode($response);
+
+		} else {
+			$this->CI->logger->info("Unable to create paypal payment");
+			return;
+		}
+
 	}
 
+	
+	public function execute_payment($payer_id, $token){
+		$execute_url .= $this->CI->url."/v1/payments/payment/";
+		try {
+			$this->CI->curl->curl_url($execute_url);
+			$this->CI->curl->headers(false);
+			$this->CI->curl->ssl(false);
+			$this->CI->curl->returnTransfer(true);
 
+
+		} catch(Exception $e) {
+			echo $e->getMessage();
+		}
+
+	}
 
 
 

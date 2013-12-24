@@ -5,16 +5,13 @@ class Curl {
 
 	public function __construct(){
 		$this->CI =& get_instance();
-		// if(!$this->CI->ch){
-			$this->CI->ch = curl_init();
-		//}
+		$this->CI->ch = curl_init();
 	}
 
 	public function curl_url($url){
 		if(!empty($url) && is_string($url)){
-			// echo $url."<br />";
-			// print_r($this->CI->ch);
-			curl_setopt($this->CI->ch, CURLOPT_URL, $url);
+			if(!curl_setopt($this->CI->ch, CURLOPT_URL, $url))
+				throw new Exception("cannot create curl instance");
 		}
 	}
 	

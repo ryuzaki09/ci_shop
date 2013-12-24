@@ -65,18 +65,29 @@ class Basket extends CI_Controller {
 	}
 
 
-	public function testpaypal(){
+	public function process_paypal(){
 		$this->load->library("paypal");
 		$paypal_token = $this->paypal->getAccessToken();
-		// print_r($paypal_token->access_token);
 		if($paypal_token){
 			$payment_result = $this->paypal->createPayment($paypal_token->access_token);
-			if($payment_result){
-				echo "<pre>";
-				print_R($payment_result);
-				echo "</pre>";
+			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
+				//redirect customer to get approval of sale
+				redirect($payment_result->links[1]->href);
 			}
 		}
+	}
+
+	
+	//once customer approves, execute payment and save to DB
+	public function paypal_callback(){
+		$this->load->library("paypal");
+		$payer_id 	= $this->input->get("PAYERID", true);
+		$token		= $this->input->get("token", true);
+		if($payer_id && $token){
+			$result = $this->paypal->execute_payment($payer_id, $token);
+		
+		}
+
 	}
 	
 	// private function createPaypalPayment($access_token){
