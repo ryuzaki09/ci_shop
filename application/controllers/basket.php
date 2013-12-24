@@ -18,7 +18,8 @@ class Basket extends CI_Controller {
 		
 	}
 	
-	function shoppingbasket(){
+	//Update the shopping basket at the basket page
+	public function shoppingbasket(){
 		
 		if($this->input->post('update') == "Update Cart"){
 			foreach($this->input->post() AS $postdata => $value):
@@ -33,7 +34,8 @@ class Basket extends CI_Controller {
 		$this->loadpage->loadpage('basket/list', @$data);
 	}
 	
-	function checkout(){
+	//confirmation page to checkout and require customer to be logged in.
+	public function checkout(){
 		$data['environment'] = (ENVIRONMENT == "development")
 								? true
 								:false;
