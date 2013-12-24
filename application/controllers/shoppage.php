@@ -11,7 +11,7 @@ class Shoppage extends CI_Controller {
     }
     
     public function index(){
-		echo 4 + "4<br />";
+		// echo 4 + "4<br />";
 
         $this->load->model('carouselmodel');
 		//carousel data	
@@ -19,9 +19,6 @@ class Shoppage extends CI_Controller {
         //products data
         $data['products'] = $this->productsmodel->db_allproducts();
 		
-		//$html = "<img src='/images/test.jpg' alt='test' /><img src='/images/test2.jpg' alt='test2' /><img src='/images/test.jpg' alt='test' />";
-		//preg_match_all('/<img[^>]+>/i',$html, $result);
-		//$data['img_array'] = $result;
 		$data['pagetitle'] = "Shop Longdestiny";
         $this->loadpage->loadpage('shop', $data);
     }

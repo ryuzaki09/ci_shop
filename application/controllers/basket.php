@@ -2,7 +2,7 @@
 
 class Basket extends CI_Controller {
     
-    function __construct(){
+    public function __construct(){
         parent::__construct();
         $this->load->model('commonmodel');
         $this->load->model('productsmodel');
@@ -29,7 +29,6 @@ class Basket extends CI_Controller {
 
 			$this->cart->update($data);
 		}
-		
 		
 		$this->loadpage->loadpage('basket/list', @$data);
 	}
@@ -63,18 +62,25 @@ class Basket extends CI_Controller {
 		print_R($_POST);
 		echo "</pre>";
 
-
 	}
 
 
 	public function process_paypal(){
 		$this->load->library("paypal");
+		$this->load->library("payment");
 		$paypal_token = $this->paypal->getAccessToken();
 		if($paypal_token){
+			// $this->payment->setValue("paypal_token", $paypal_token['access_token']);
+			echo "<pre>";
+			print_R($this->session->all_userdata());
+			echo "</pre>";
 			$payment_result = $this->paypal->createPayment($paypal_token->access_token);
 			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
 				//redirect customer to get approval of sale
-				redirect($payment_result->links[1]->href);
+				// redirect($payment_result->links[1]->href);
+				echo "<pre>";
+				print_r($payment_result);
+				echo "</pre>";
 			}
 		}
 	}
@@ -91,7 +97,8 @@ class Basket extends CI_Controller {
 		}
 
 	}
-	
+
+		
 	// private function createPaypalPayment($access_token){
 	// 	$this->load->library("paypal");
 	// 	$payment = $this->paypal->createPayment($access_token);

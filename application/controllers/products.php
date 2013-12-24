@@ -12,7 +12,6 @@ class Products extends CI_Controller {
     }
     
     function index($id=false){        
-        
                 
         $this->item($id);
         /*foreach($albums AS $folders){
@@ -31,9 +30,7 @@ class Products extends CI_Controller {
 			//check for basket session
 			$basket = is_basket();
 			
-			
 			//echo $rowID;
-			
 			if(empty($basket)){	//if no basket session	
 				$basket_data = array('id' => $pid, 
 									 'qty' => 1,
@@ -67,7 +64,6 @@ class Products extends CI_Controller {
 				
         
         $basket = is_basket();
-		               
         
         if($id){
             //if there is an album selected then select where clause
@@ -114,7 +110,7 @@ class Products extends CI_Controller {
 		
 	}
 	
-	function empty_basket(){
+	public function empty_basket(){
 		
 		if(is_basket()){
 			
