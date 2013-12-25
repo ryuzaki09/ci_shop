@@ -70,11 +70,15 @@ class Basket extends CI_Controller {
 		$this->load->library("payment");
 		$paypal_token = $this->paypal->getAccessToken();
 		if($paypal_token){
-			// $this->payment->setValue("paypal_token", $paypal_token['access_token']);
+			$this->payment->setValue("paypal_token", $paypal_token->access_token);
+			$this->payment->setValue("pay_method", "paypal");
 			echo "<pre>";
-			print_R($this->session->all_userdata());
+			$payment_session = $this->payment->getAllValues();
+
+			print_R($payment_session);
 			echo "</pre>";
 			$payment_result = $this->paypal->createPayment($paypal_token->access_token);
+			$this->payment->destroyValues();
 			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
 				//redirect customer to get approval of sale
 				// redirect($payment_result->links[1]->href);
