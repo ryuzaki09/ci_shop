@@ -1,7 +1,12 @@
 <?php
 
 class Payment {
-	private $payment_session = array();
+	private $payment_session;
+	private $payment_data = array( "payment" => array(
+												"paypal_token" => false,
+												"pay_method"	=> false
+												)
+								);
 
 	public function __construct(){
 		$this->CI =& get_instance();
@@ -9,16 +14,13 @@ class Payment {
 	}
 
 	public function setValue($item, $value){
-		// if(!$this->CI->session->userdata("payment")){
+		$this->CI->payment_data["payment"][$item] = $value;
+
 		if(!$this->CI->payment_session){
-			$this->CI->session->set_userdata("payment", array($item => $value));
-			// $this->CI->session->set_userdata(
+			$this->CI->session->set_userdata($this->CI->payment_data);
 		} else {
 			
-		// if(!$this->session->userdata('payment')){
-			$this->CI->session->set_userdata($this->CI->payment_session = array($item), $value);
-		// } else {
-		// 	$this->session
+			$this->CI->session->set_userdata($this->CI->payment_data);
 		}
 
 	}
