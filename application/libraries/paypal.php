@@ -39,6 +39,7 @@ class Paypal {
 		$this->CI->logger->info("process create payment");
 		$payment_url = $this->CI->url ."/v1/payments/payment";
 		
+		//put all sale data together
 		$saledata = array("intent" => "sale",
 							"redirect_urls" => array("return_url" => "http://shoplongdestiny.dev/basket/paypal_callback", 
 													"cancel_url" => "http://www.ebuyer.com"),
@@ -47,14 +48,30 @@ class Paypal {
 												array(
 													"amount" => array(
 																		"total" => "7.47", 
-																		"currency" => "USD"
+																		"currency" => "USD",
+																		"details" => array(
+																						"subtotal" => "5.00",
+																						"tax"	=> "1.00",
+																						"shipping"	=> "1.47"
+																						)
 																	),
-													"description" => "This is a test payment transaction description"
+													"description" => "This is a test payment transaction description",
+													"item_list" => array(
+																	"items" => array(
+																				array(
+																					"quantity" 	=> "1",
+																					"name" 	=> "Hat",
+																					"price"	=> "5.00",
+																					"currency"	=> "USD"
+																					 )	
+																					)
+																	)
 													)
 												)
 							);
 		$sale_json = json_encode($saledata);
-
+		
+		//send request to paypal
 		$headers_data = array("Content-Type: application/json",
 								"Authorization: Bearer ".$access_token,
 								"Content-length: ".strlen($sale_json));

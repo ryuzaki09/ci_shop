@@ -42,7 +42,7 @@ class Products extends CI_Controller {
 					
 			} else { //if theres basket session
 				//if the same product is there then add 1 to qty
-				if($basket[$rowID]){
+				if(@$basket[$rowID]){
 					$basket_data = array('rowid' => $rowID, 'qty' => ($basket[$rowID]['qty']+1));
 					
 					$this->cart->update($basket_data);

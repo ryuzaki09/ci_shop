@@ -13,6 +13,11 @@
 			<?php
 		}
 		?>
+		<?php
+		echo "<pre>";
+		print_R($this->cart->contents());
+		echo "</pre>";
+		?>
 		<table width="100%" border="0" class="collapse bottom_space">
 			<tr>
 				<td width="10%" class="basket_headtd">Qty</td>
@@ -23,8 +28,15 @@
 			<?php $i = 1; 
 			
 			foreach ($this->cart->contents() as $items): 
-			
-				echo form_hidden($i.'[rowid]', $items['rowid']); ?>
+				//hidden form fields to send back to server to process	
+				echo form_hidden($i.'[rowid]', $items['rowid']); 
+				echo form_hidden($i.'[qty]', $items['qty']); 
+				echo form_hidden($i.'[price]', $items['price']); 
+				echo form_hidden($i.'[pid]', $items['id']); 
+				echo form_hidden($i.'[name]', $items['name']); 
+				echo form_hidden($i.'[subtotal]', $items['subtotal']); 
+				
+				?>
 			
 				<tr class="tr_bot_border">
 				  <td><?php echo $items['qty']; ?></td>

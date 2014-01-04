@@ -59,7 +59,7 @@ class Basket extends CI_Controller {
 
 		endforeach;
 		echo "<pre>";
-		print_R($_POST);
+		print_R($this->input->post());
 		echo "</pre>";
 
 	}
@@ -73,7 +73,7 @@ class Basket extends CI_Controller {
 			$this->payment->setValue("paypal_token", $paypal_token->access_token);
 			$this->payment->setValue("pay_method", "paypal");
 			echo "<pre>";
-			$payment_session = $this->payment->getAllValues();
+			$payment_session = $this->session->all_userdata();
 
 			print_R($payment_session);
 			echo "</pre>";
@@ -81,10 +81,10 @@ class Basket extends CI_Controller {
 			$this->payment->destroyValues();
 			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
 				//redirect customer to get approval of sale
-				// redirect($payment_result->links[1]->href);
-				echo "<pre>";
-				print_r($payment_result);
-				echo "</pre>";
+				redirect($payment_result->links[1]->href);
+				// echo "<pre>";
+				// print_r($payment_result);
+				// echo "</pre>";
 			}
 		}
 	}
