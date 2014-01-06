@@ -54,14 +54,15 @@
                 </ul>
             </div>
             <?php if(is_basket()) { ?>
-            <div style="width:100px; float:right;">
-            	<a href="<?php echo base_url(); ?>products/empty_basket">Empty Basket</a></div>
+                <!-- <div style="width:100px; float:right;"> -->
+                    <a href="<?php echo base_url(); ?>products/empty_basket" class="empty_basket">Empty Basket</a>
+                <!-- </div> -->
             <?php } ?>
-            <div id="search">
-                    <form action="" method="post">
-                            <input type="text" class="field" value="Quick search..." title="Quick search..." style="margin-top:-5px; "/>
-                    </form>
-            </div>
+            <!-- <div id="search"> -->
+            <!--         <form action="" method="post"> -->
+            <!--                 <input type="text" class="field" value="Quick search..." title="Quick search..." style="margin&#45;top:&#45;5px; "/> -->
+            <!--         </form> -->
+            <!-- </div> -->
             <div class="cl">&nbsp;</div>
         </div>
         <!-- End Shell -->
