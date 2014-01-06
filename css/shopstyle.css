@@ -38,7 +38,8 @@ textarea { overflow: auto; resize:none; }
 
 #top { 
 	/*background: url(../media/images/top-bg.png) repeat-x 0 0; */
-	background-color:#000;
+	background-color:#2552CF;
+    color: #fff;
 	height: 38px; 
 	padding: 7px 4px 0 0;
 	position:fixed;
@@ -132,10 +133,11 @@ h1#logo { width: 298px; float: left; display: inline; }
 #footer, #footer-push { overflow: hidden; }
 #footer { 
 	/*background: #1a719e url(media/images/footer-bg.png) repeat-x 0 0; */
-	background-color:#000;
+	background-color:#2552CF;
 	color:#fff; 
 	padding:10px; 
 }
+#footer a { color:#fff; }
 #footer .cols { width: 980px; overflow: hidden; min-height: 238px; }
 #footer .cols ul { position: relative; }
 #footer .cols .col { width: 224px; float: left; display: inline; padding: 0 25px 0 0; }
@@ -202,7 +204,14 @@ li.clearfix {
 .error { color:#f00; font-weight:bold; font-size:10px; }
 
 .basket_container { width:800px; padding:10px; margin:0 auto; }
-.basket_title { font-size: 20px; padding:10px 0; margin-bottom:10px; border-bottom: 4px solid #000; }
+.basket_title { 
+    font-size: 20px; 
+    padding:10px 0; 
+    margin-bottom:10px; 
+    border-bottom: 4px solid #fbd37c; 
+    color:#a45c11;
+    font-weight:bold;
+}
 .basket_headtd { background-color: #fbd37c; text-align:center; padding:10px; color: #a45c11; font-weight:bold; }
 .collapse { border-collapse: collapse; }
 .go_left { float:left; }
