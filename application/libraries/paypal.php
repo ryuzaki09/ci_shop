@@ -35,7 +35,7 @@ class Paypal {
 	}
 
 
-	public function createPayment($access_token){
+	public function createPayment($access_token, $order_data=false){
 		$this->CI->logger->info("process create payment");
 		$payment_url = $this->CI->url ."/v1/payments/payment";
 		

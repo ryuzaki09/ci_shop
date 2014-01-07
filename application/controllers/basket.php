@@ -55,8 +55,11 @@ class Basket extends CI_Controller {
 	public function process_checkout(){
 		$price = $this->input->post('price', true);
 		$qty = $this->input->post('qty', true);
+		$order_data = array();
+		//grab all product info from post and pass to process payment
+		$i = 0;
 		foreach($this->input->post() AS $order):
-
+			$order_data[$i]['quantity']
 		endforeach;
 		echo "<pre>";
 		print_R($this->input->post());
@@ -65,7 +68,7 @@ class Basket extends CI_Controller {
 	}
 
 
-	public function process_paypal(){
+	public function process_paypal($order_data=false){
 		$this->load->library("paypal");
 		$this->load->library("payment");
 		$paypal_token = $this->paypal->getAccessToken();
