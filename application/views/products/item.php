@@ -1,4 +1,4 @@
-<div class="container" style="margin-top:20px;">
+<div class="product_container" style="margin-top:60px;">
 	<div class="clearfix bottom_space">
 		
 		<div class="nobreak" style="width:350px; margin-right:30px; margin-bottom:20px;">
@@ -24,21 +24,28 @@
 						
 
 		</div>
-		<div class="nobreak block500">
+		<div class="nobreak block350">
 			<div class="clearfix itemtitle bottom_space" style="padding-bottom:15px;">		
 				<div class="nobreak" style="width:200px;"><?php echo $product->name; ?></div>
 			</div>
 			
-			<div class="clearfix">
+			<div class="clearfix bot30">
 				<div class="nobreak" style="width:90px;">Price:</div>
-				<div class="nobreak" style="width:200px;">&pound;<?php echo $product->price; ?></div>
+				<div class="nobreak" style="width:100px;">&pound;<?php echo $product->price; ?></div>
 			</div>
-			
-			<div class="clearfix bottom_space bot_border">
-				<div class="nobreak" style="width:90px;">Description:</div>
-				<div class="nobreak" style="width:200px;"><?php echo $product->desc; ?></div>
-			</div>
-			<!--
+			<div class="clearfix">
+                <form method="POST" action="<?php echo base_url(); ?>products/item/<?php echo $product->pid; ?>">			
+                <div class="top_space">
+                    <input type="submit" name="add_basket" value="Add to Basket" />
+                </div>
+                <input type="hidden" name="rowID" value="<?php if(@$rowID){ echo $rowID; } ?>" />
+                <input type="hidden" name="pid" value="<?php echo $product->pid; ?>" />
+                <input type="hidden" name="pname" value="<?php echo $product->name; ?>" />
+                <input type="hidden" name="price" value="<?php echo $product->price; ?>" />
+                </form>
+            </div>
+
+            <!--
 			<div class="clearfix">
 				<div class="go_right">
 					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
@@ -70,18 +77,11 @@
 		</div>
 		
 	</div>
-	<div class="clearfix">
-		<form method="POST" action="<?php echo base_url(); ?>products/item/<?php echo $product->pid; ?>">			
-		<div class="top_space">
-			<input type="submit" name="add_basket" value="Add to Basket" />
-		</div>
-		<input type="hidden" name="rowID" value="<?php if(@$rowID){ echo $rowID; } ?>" />
-		<input type="hidden" name="pid" value="<?php echo $product->pid; ?>" />
-		<input type="hidden" name="pname" value="<?php echo $product->name; ?>" />
-		<input type="hidden" name="price" value="<?php echo $product->price; ?>" />
-		</form>
-	</div>
-	
+    <div class="clearfix bottom_space bot_border">
+        <div class="nobreak" style="width:90px;">Description:</div>
+        <div class="nobreak" style="width:200px;"><?php echo $product->desc; ?></div>
+    </div>
+
 
 </div>
 

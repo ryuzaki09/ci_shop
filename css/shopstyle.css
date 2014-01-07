@@ -196,6 +196,7 @@ input[type=submit], input[type=button] {
 }
 input[type=submit]:hover, input[type=button]:hover { background-color:#5687BF; }
 .bottom_space { margin-bottom:10px; }
+.bot30 { margin-bottom:30px; }
 .bot_border { padding-bottom:10px; border-bottom:1px solid #cacaca; }
 .container{ 
 	min-height:600px;
@@ -259,6 +260,8 @@ a:hover.empty_basket { color:#fff; }
 
 .main_prod_img { width:300px; margin-bottom:10px; }
 
+.product_container { width:750px; margin:20px auto; min-height:600px; padding:20px; }
+
 input.qty_field { width:30px; text-align:center; margin-left:10px; }
 .txtlabel205 { width:205px; float:left; }
 .right10 { margin-right:10px; }
@@ -274,6 +277,7 @@ input.qty_field { width:30px; text-align:center; margin-left:10px; }
 .block150 { width:150px; margin-right:10px;}
 .block200 { width:200px; margin-right:10px;}
 .block250 { width:250px; margin-right:10px;}
+.block350 { width:350px; margin-right:10px;}
 .block500 { width:500px; margin-right:10px;}
 
 .leftpane { 
