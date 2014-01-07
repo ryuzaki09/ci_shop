@@ -117,8 +117,8 @@ h1#logo { width: 298px; float: left; display: inline; }
 
 /* .product { font-style: italic; } */
 .product img { padding: 0 0 10px 0; position: relative; margin-left: -2px; }
-.product .order { display: block; }
-.product .model { font-size: 16px; color: #1898d6; padding: 0 0 2px 0; font-weight:bold; margin-top:10px; }
+.product .order { display: block; text-align:center; width:204px; }
+.product .model { font-size: 17px; color: #1898d6; padding: 0 0 2px 0; font-weight:bold; margin-top:10px; }
 .product .number { font-family: arial, sans-serif; font-style: normal; }
 .product .buy-text { 
     font-size: 18px; 
@@ -127,16 +127,14 @@ h1#logo { width: 298px; float: left; display: inline; }
     font-style: normal; 
     font-weight: bold; 
     letter-spacing: -1px; 
-    float: right; 
     display: inline; 
     padding: 8px 0 0 0; 
-    margin-right:10px;
 }
-.product .price { font-size: 30px; line-height: 40px; float: right; display: inline; font-style: normal; color: #E83348; font-weight: bold; margin-right:30px; }
+.product .price { font-size: 30px; line-height: 40px; display: inline; font-style: normal; color: #E83348; font-weight: bold; }
 .product .sub-text { font-size: 20px; line-height: 20px; }
 .product .dollar { font-size: 20px; }
 .product:hover,
-.product.hover .buy-text { color: #1898d6; }
+.product.hover .buy-text, .product:hover .order, .product:hover img { opacity:0.8; color: #cacaca !important; text-decoration:none; }
 
 .products-slider { padding: 30px 0 0 0; width: 980px; height: 266px; position: relative; }
 .slider-holder,

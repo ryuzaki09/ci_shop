@@ -67,18 +67,18 @@
                                     if(is_array($products)){
                                         foreach($products AS $item){ ?>
                                     <li>
-                                        <a href="products/item/<?php echo $item['pid']; ?>" class="product" title="#">
+                                    <a href="products/item/<?php echo $item['pid']; ?>" class="product" title="<?php echo ucfirst($item['name']); ?>">
                                             <div style="width:204px; height:165px; overflow:hidden;"><img src="/media/images/products/<?php echo $item['img1']; ?>" style="max-width:204px;" alt="Product Image 1" />
                                             </div>
-                                            <span class="order model"><?php echo ucfirst($item['name']); ?></span>
+                                            <div class="order model"><?php echo ucfirst($item['name']); ?></div>
                                             <!-- <span class="order">catalog number: <span class="number">1925</span></span> -->
-                                            <span class="order">
+                                            <div class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                 <span class="dollar">&pound;</span><?php echo $item['price']; ?>
                                                     <!-- <span class="sub&#45;text">.99</span> -->
                                                 </span>
-                                                <span class="buy-text">Only</span>
-                                            </span>
+                                            </div>
                                         </a>                                        
                                     </li>                                    
                                             
@@ -94,11 +94,11 @@
                                             <img src="../media/images/product-1.jpg" alt="Product Image 1" />
                                             <span class="order model">Model Name</span>
                                             <span class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                     <span class="dollar">&pound;</span>599
                                                     <span class="sub-text">.99</span>
                                                 </span>
-                                                <span class="buy-text">Only</span>
                                             </span>
                                         </a>
                                     </li>
@@ -107,11 +107,11 @@
                                             <img src="../media/images/product-2.jpg" alt="Product Image 2" />
                                             <span class="order model">Model Name</span>
                                             <span class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                     <span class="dollar">&pound;</span>599
                                                     <span class="sub-text">.99</span>
                                                 </span>
-                                                <span class="buy-text">Only</span>
                                             </span>
                                         </a>	
                                     </li>
@@ -120,11 +120,11 @@
                                                 <img src="../media/images/product-3.jpg" alt="Product Image 3" />
                                             <span class="order model">Model Name</span>
                                             <span class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                     <span class="dollar">&pound;</span>599
                                                     <span class="sub-text">.99</span>
                                                 </span>
-                                                <span class="buy-text">Only</span>
                                             </span>
                                         </a>	
                                     </li>
@@ -133,11 +133,11 @@
                                                 <img src="../media/images/product-4.jpg" alt="Product Image 4" />
                                             <span class="order model">Model Name</span>
                                             <span class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                     <span class="dollar">&pound;</span>599
                                                     <span class="sub-text">.99</span>
                                                 </span>
-                                                <span class="buy-text">Only</span>
                                             </span>
                                         </a>	
                                     </li>
@@ -153,11 +153,11 @@
                                             <img src="../media/images/product-5.jpg" alt="Product Image 5" />
                                             <span class="order model">Model Name</span>
                                             <span class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                     <span class="dollar">&pound;</span>599
                                                     <span class="sub-text">.99</span>
                                                 </span>
-                                                <span class="buy-text">Only</span>
                                             </span>
                                         </a>
                                     </li>
@@ -166,11 +166,11 @@
                                             <img src="../media/images/product-6.jpg" alt="Product Image 6" />
                                             <span class="order model">Model Name</span>
                                             <span class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                     <span class="dollar">&pound;</span>599
                                                     <span class="sub-text">.99</span>
                                                 </span>
-                                                <span class="buy-text">Only</span>
                                             </span>
                                         </a>	
                                     </li>
@@ -179,11 +179,11 @@
                                             <img src="../media/images/product-7.jpg" alt="Product Image 7" />
                                             <span class="order model">Model Name</span>
                                             <span class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                     <span class="dollar">&pound;</span>599
                                                     <span class="sub-text">.99</span>
                                                 </span>
-                                                <span class="buy-text">Only</span>
                                             </span>
                                         </a>	
                                     </li>
@@ -192,11 +192,11 @@
                                             <img src="../media/images/product-8.jpg" alt="Product Image 8" />
                                             <span class="order model">Model Name</span>
                                             <span class="order">
+                                                <span class="buy-text">Only</span>
                                                 <span class="price">
                                                     <span class="dollar">&pound;</span>599
                                                     <span class="sub-text">.99</span>
                                                 </span>
-                                                <span class="buy-text">Only</span>
                                             </span>
                                         </a>	
                                     </li>
