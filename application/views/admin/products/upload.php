@@ -1,4 +1,3 @@
-<script src="<?php echo base_url(); ?>js/ckeditor/ckeditor.js"></script>
 <!--<div class="content_block go_left">-->
 <div class="page_title"><?php echo $pagetitle; ?></div>
 

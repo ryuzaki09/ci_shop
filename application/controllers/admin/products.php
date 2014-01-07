@@ -62,6 +62,7 @@ class Products extends CI_Controller {
 
         }//if post = upload
 		
+        $data['js'][] = $this->adminpage->set('js', '/js/ckeditor/ckeditor.js'); 
         $this->adminpage->loadpage('admin/products/upload', $data);
         
     }
@@ -143,7 +144,7 @@ class Products extends CI_Controller {
        $data['item'] = $this->productsmodel->db_get_product($where);
        //$data['imgs'] = $this->adminmodel->retrieve_fpphotos($id);       
        $data['edit'] = true;
-
+        $data['js'][] = $this->adminpage->set('js', '/js/ckeditor/ckeditor.js'); 
        $data['pagetitle'] = "Edit | ".$data['item']->name;
        $this->adminpage->loadpage('admin/products/upload', $data);   
    }

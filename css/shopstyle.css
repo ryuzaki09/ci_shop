@@ -46,7 +46,7 @@ textarea { overflow: auto; resize:none; }
 	width:100%;
 	z-index: 10;
 }
-.top-nav { float: left; display: inline; padding: 10px 0 0 0; font-size: 12px; line-height: 12px; }
+.top-nav { float: left; display: inline; padding: 10px 0 0 0; font-size: 14px; line-height: 12px; }
 .top-nav ul li { 
     float: left; 
     display: inline; 
@@ -185,7 +185,7 @@ h1#logo { width: 298px; float: left; display: inline; }
 
 
 /* SHOPPING WEBSITE */
-input[type=submit] {
+input[type=submit], input[type=button] {
     background-color:#2552CF;
     padding:6px 12px;
     border:none;
@@ -194,6 +194,7 @@ input[type=submit] {
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
 }
+input[type=submit]:hover, input[type=button]:hover { background-color:#5687BF; }
 .bottom_space { margin-bottom:10px; }
 .bot_border { padding-bottom:10px; border-bottom:1px solid #cacaca; }
 .container{ 
@@ -251,7 +252,7 @@ a:hover.empty_basket { color:#fff; }
 .go_right { float:right; }
 .left20 { margin-left:20px; }
 .label110 { width:110px; margin-right:25px; float:left; }
-.loginblock { width:300px; margin:50px auto; padding:30px; border:2px solid #000; border-radius:5px; -webkit-border-radius: 5px; }
+.loginblock { width:300px; margin:50px auto; padding:30px; border:2px solid #2552CF; border-radius:5px; -webkit-border-radius: 5px; }
 .loginblock a { color: #000; }
 .loginblock a:hover { text-decoration:underline; }
 .logintitle { margin-bottom:20px; color:#000; padding:10px 0; font-weight:bold; font-size:18px; border-bottom:2px solid #000; }
