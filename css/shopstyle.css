@@ -120,8 +120,19 @@ h1#logo { width: 298px; float: left; display: inline; }
 .product .order { display: block; }
 .product .model { font-size: 16px; color: #1898d6; padding: 0 0 2px 0; font-weight:bold; margin-top:10px; }
 .product .number { font-family: arial, sans-serif; font-style: normal; }
-.product .buy-text { font-size: 18px; line-height: 30px; color: #ffba00; font-style: normal; font-weight: bold; letter-spacing: -1px; float: left; display: inline; padding: 8px 0 0 0; }
-.product .price { font-size: 30px; line-height: 40px; float: right; display: inline; font-style: normal; color: #1898d6; font-weight: bold; margin-right:30px; }
+.product .buy-text { 
+    font-size: 18px; 
+    line-height: 30px; 
+    color: #494949; 
+    font-style: normal; 
+    font-weight: bold; 
+    letter-spacing: -1px; 
+    float: right; 
+    display: inline; 
+    padding: 8px 0 0 0; 
+    margin-right:10px;
+}
+.product .price { font-size: 30px; line-height: 40px; float: right; display: inline; font-style: normal; color: #E83348; font-weight: bold; margin-right:30px; }
 .product .sub-text { font-size: 20px; line-height: 20px; }
 .product .dollar { font-size: 20px; }
 .product:hover,
