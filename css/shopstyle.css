@@ -3,9 +3,9 @@
 body {
     font-size: 13px;
     line-height: 15px;
-    font-family: arial, sans-serif;
+    font-family: tahoma !important;
     color: #fff;
-    /*background: #e1dcc6 url(../media/images/skyrim_cn_skin_v4.jpg) no-repeat;*/
+    /* background: #e1dcc6 url(../media/images/skyrim_cn_skin_v4.jpg) no-repeat; */
     background-position: top center;
     background-attachment:fixed;
     min-width: 980px;
@@ -98,7 +98,7 @@ h1#logo { width: 298px; float: left; display: inline; }
 #main-slider .cnt p { padding: 36px 0 22px 0; width: 335px; font-size: 18px; line-height: 22px; color: #979798; }
 #main-slider .cnt .price { font-size: 53px; line-height: 75px; color: #ff7800; font-weight: bold; float: left; display: inline; }
 #main-slider .cnt .dollar { font-size: 35px; color: #1898d6; font-weight: normal; letter-spacing: -1px; }
-#main-slider .cnt .sub-text { vertical-align: super; font-size: 32px; }
+/* #main-slider .cnt .sub-text { font-size: 32px; } */
 #main-slider .cnt a.btn { float: right; display: inline; background: url(../images/order-btn.png) no-repeat 0 0; width: 215px; height: 62px; margin: 31px 0 0 0; }
 
 #main-slider .nav { position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; }
@@ -115,17 +115,17 @@ h1#logo { width: 298px; float: left; display: inline; }
 .row ul { width: 1017px; display: block; position: relative; }
 .row ul li { float: left; display: inline; width: 232px; height: 266px; padding: 0 19px 0 0; }
 
-.product { font-style: italic; }
+/* .product { font-style: italic; } */
 .product img { padding: 0 0 10px 0; position: relative; margin-left: -2px; }
 .product .order { display: block; }
-.product .model { font-size: 16px; color: #1898d6; padding: 0 0 2px 0; }
+.product .model { font-size: 16px; color: #1898d6; padding: 0 0 2px 0; font-weight:bold; margin-top:10px; }
 .product .number { font-family: arial, sans-serif; font-style: normal; }
 .product .buy-text { font-size: 18px; line-height: 30px; color: #ffba00; font-style: normal; font-weight: bold; letter-spacing: -1px; float: left; display: inline; padding: 8px 0 0 0; }
-.product .price { font-size: 30px; line-height: 40px; float: right; display: inline; font-style: normal; color: #1898d6; font-weight: bold; }
-.product .sub-text { font-size: 20px; line-height: 20px; vertical-align: super; }
+.product .price { font-size: 30px; line-height: 40px; float: right; display: inline; font-style: normal; color: #1898d6; font-weight: bold; margin-right:30px; }
+.product .sub-text { font-size: 20px; line-height: 20px; }
 .product .dollar { font-size: 20px; }
 .product:hover,
-.product.hover .buy-text { color: #ff7800; }
+.product.hover .buy-text { color: #1898d6; }
 
 .products-slider { padding: 30px 0 0 0; width: 980px; height: 266px; position: relative; }
 .slider-holder,

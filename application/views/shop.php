@@ -71,9 +71,15 @@
                                         <a href="products/item/<?php echo $item['pid']; ?>" class="product" title="#">
                                             <div style="width:204px; height:165px; overflow:hidden;"><img src="/media/images/products/<?php echo $item['img1']; ?>" style="max-width:204px;" alt="Product Image 1" />
                                             </div>
-                                            <span class="order model"><?php echo $item['name']; ?></span>
-                                            <span class="order">catalog number: <span class="number">1925</span></span>
-                                            <span class="order"><span class="buy-text">View More</span><span class="price"><span class="dollar">$</span>599<span class="sub-text">.99</span></span></span>
+                                            <span class="order model"><?php echo ucfirst($item['name']); ?></span>
+                                            <!-- <span class="order">catalog number: <span class="number">1925</span></span> -->
+                                            <span class="order">
+                                                <span class="buy-text">View More</span>
+                                                <span class="price">
+                                                    <span class="dollar">&pound;</span>599
+                                                    <span class="sub-text">.99</span>
+                                                </span>
+                                            </span>
                                         </a>                                        
                                     </li>                                    
                                             
@@ -88,23 +94,21 @@
                                         <a href="#" class="product" title="Product 1">
                                             <img src="../media/images/product-1.jpg" alt="Product Image 1" />
                                             <span class="order model">Model Name</span>
-                                            <span class="order">catalog number: <span class="number">1925</span></span>
-                                            <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">$</span>599<span class="sub-text">.99</span></span></span>
+                                            <!-- <span class="order">catalog number: <span class="number">1925</span></span> -->
+                                            <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">&pound;</span>599<span class="sub-text">.99</span></span></span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#" class="product" title="Product 2">
                                             <img src="../media/images/product-2.jpg" alt="Product Image 2" />
                                             <span class="order model">Model Name</span>
-                                            <span class="order">catalog number: <span class="number">1357</span></span>
-                                            <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">$</span>1999<span class="sub-text">.99</span></span></span>
+                                            <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">&pound;</span>1999<span class="sub-text">.99</span></span></span>
                                         </a>	
                                     </li>
                                     <li>
                                         <a href="#" class="product" title="Product 3">
                                                 <img src="../media/images/product-3.jpg" alt="Product Image 3" />
                                                 <span class="order model">Model Name</span>
-                                                <span class="order">catalog number: <span class="number">1264</span></span>
                                                 <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">$</span>15<span class="sub-text">.99</span></span></span>
                                         </a>	
                                     </li>
@@ -112,7 +116,6 @@
                                         <a href="#" class="product" title="Product 4">
                                                 <img src="../media/images/product-4.jpg" alt="Product Image 4" />
                                                 <span class="order model">Model Name</span>
-                                                <span class="order">catalog number: <span class="number">1111</span></span>
                                                 <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">$</span>1999<span class="sub-text">.99</span></span></span>
                                         </a>	
                                     </li>
@@ -127,7 +130,6 @@
                                         <a href="#" class="product" title="Product 5">
                                             <img src="../media/images/product-5.jpg" alt="Product Image 5" />
                                             <span class="order model">Model Name</span>
-                                            <span class="order">catalog number: <span class="number">357</span></span>
                                             <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">$</span>874<span class="sub-text">.99</span></span></span>
                                         </a>
                                     </li>
@@ -135,7 +137,6 @@
                                         <a href="#" class="product" title="Product 6">
                                             <img src="../media/images/product-6.jpg" alt="Product Image 6" />
                                             <span class="order model">Model Name</span>
-                                            <span class="order">catalog number: <span class="number">1926</span></span>
                                             <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">$</span>1199<span class="sub-text">.99</span></span></span>
                                         </a>	
                                     </li>
@@ -143,7 +144,6 @@
                                         <a href="#" class="product" title="Product 7">
                                             <img src="../media/images/product-7.jpg" alt="Product Image 7" />
                                             <span class="order model">Model Name</span>
-                                            <span class="order">catalog number: <span class="number">1321</span></span>
                                             <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">$</span>27<span class="sub-text">.99</span></span></span>
                                         </a>	
                                     </li>
@@ -151,7 +151,6 @@
                                         <a href="#" class="product" title="Product 8">
                                             <img src="../media/images/product-8.jpg" alt="Product Image 8" />
                                             <span class="order model">Model Name</span>
-                                            <span class="order">catalog number: <span class="number">299</span></span>
                                             <span class="order"><span class="buy-text">Buy Now</span><span class="price"><span class="dollar">$</span>4<span class="sub-text">.99</span></span></span>
                                         </a>	
                                     </li>
