@@ -13,11 +13,7 @@
 			<?php
 		}
 		?>
-		<?php
-		echo "<pre>";
-		print_R($this->cart->contents());
-		echo "</pre>";
-		?>
+		
 		<table width="100%" border="0" class="collapse bottom_space">
 			<tr>
 				<td width="10%" class="basket_headtd">Qty</td>
