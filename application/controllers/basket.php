@@ -53,22 +53,36 @@ class Basket extends CI_Controller {
 	}
 	
 	public function process_checkout(){
-		$price = $this->input->post('price', true);
-		$qty = $this->input->post('qty', true);
+		// $subtotal = $this->input->post('subtotal', true);
 		$order_data = array();
 		//grab all product info from post and pass to process payment
 		$i = 0;
+        $subtotal = 0;
 		foreach($this->input->post() AS $order):
-			$order_data[$i]['quantity']
+            $order_data[$i]['quantity'] = $order['qty'];
+            $order_data[$i]['price']    = $order['price'];
+            $order_data[$i]['name']     = $order['name'];
+            $order_data[$i]['currency'] = "GBP";
+            $order_data[$i]['sku']      = $order['pid'].",".$order['rowid'];
+            $subtotal = $subtotal + ($order['price'] * $order['qty']);
+            $i++;
 		endforeach;
-		echo "<pre>";
-		print_R($this->input->post());
-		echo "</pre>";
+        
+        $this->logger->info("order info: ".var_export($order_data, true));
+        $additional_prices = array('subtotal' => $subtotal, 
+                                    'currency' => 'GBP',
+                                    'tax'       => '0.00',
+                                    'shipping'  => '0.00'
+                                );
+        $additional_prices['total'] = $additional_prices['subtotal'] + $additional_prices['tax'] + $additional_prices['shipping'];
+        
+        //start processing paypal
+        $this->process_paypal($order_data, $additional_prices);
 
 	}
 
 
-	public function process_paypal($order_data=false){
+	private function process_paypal($order_data=false, $additional_prices){
 		$this->load->library("paypal");
 		$this->load->library("payment");
 		$paypal_token = $this->paypal->getAccessToken();
@@ -80,7 +94,7 @@ class Basket extends CI_Controller {
 
 			print_R($payment_session);
 			echo "</pre>";
-			$payment_result = $this->paypal->createPayment($paypal_token->access_token);
+			$payment_result = $this->paypal->createPayment($paypal_token->access_token, $order_data, $additional_prices);
 			$this->payment->destroyValues();
 			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
 				//redirect customer to get approval of sale

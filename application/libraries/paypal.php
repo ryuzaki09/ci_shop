@@ -35,7 +35,7 @@ class Paypal {
 	}
 
 
-	public function createPayment($access_token, $order_data=false){
+	public function createPayment($access_token, $order_data=false, $additional_prices){
 		$this->CI->logger->info("process create payment");
 		$payment_url = $this->CI->url ."/v1/payments/payment";
 		
@@ -47,24 +47,17 @@ class Paypal {
 							"transactions" => array(
 												array(
 													"amount" => array(
-																		"total" => "7.47", 
-																		"currency" => "USD",
+																		"total" => $additional_prices['total'], 
+																		"currency" => $additional_prices['currency'],
 																		"details" => array(
-																						"subtotal" => "5.00",
-																						"tax"	=> "1.00",
-																						"shipping"	=> "1.47"
+																						"subtotal" => $additional_prices['subtotal'],
+																						"tax"	=> $additional_prices['tax'],
+																						"shipping"	=> $additional_prices['shipping']
 																						)
 																	),
 													"description" => "This is a test payment transaction description",
 													"item_list" => array(
-																	"items" => array(
-																				array(
-																					"quantity" 	=> "1",
-																					"name" 	=> "Hat",
-																					"price"	=> "5.00",
-																					"currency"	=> "USD"
-																					 )	
-																					)
+																	"items" =>$order_data 
 																	)
 													)
 												)
