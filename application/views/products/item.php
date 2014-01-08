@@ -1,8 +1,9 @@
 <div class="product_container" style="margin-top:60px;">
 	<div class="clearfix bottom_space">
 		
-		<div class="nobreak" style="width:350px; margin-right:30px; margin-bottom:20px;">
-			<div class="nobreak main_prod_img">
+		<div class="nobreak block400" style="margin-right:30px; margin-bottom:20px;">
+            <div class="clearfix">
+			<div class="nobreak main_prod_img block350 top20">
 				<img style="max-width:300px;" src="/media/images/products/<?php echo $product->img1; ?>" alt="Product Image 1" />
 			</div>
 			
@@ -22,9 +23,14 @@
 			</div>
 			<?php } ?>
 						
-
+            </div>
+            <div class="clearfix top20 bottom_space bot_border">
+                <div class="nobreak itemtitle" style="width:90px;">Description:</div>
+                <div class="nobreak top20"><?php echo $product->desc; ?></div>
+            </div>
 		</div>
-		<div class="nobreak block350">
+        <div id="prod_right_col">
+            <div class="right_col_content">
 			<div class="clearfix itemtitle bottom_space" style="padding-bottom:15px;">		
 				<div class="nobreak" style="width:200px;"><?php echo $product->name; ?></div>
 			</div>
@@ -73,16 +79,31 @@
 					</form>
 				</div>
 			</div>-->	
-			
-		</div>
+		    </div><!-- right_col_content -->	
+		</div><!-- prod_right_col -->
 		
 	</div>
-    <div class="clearfix bottom_space bot_border">
-        <div class="nobreak" style="width:90px;">Description:</div>
-        <div class="nobreak" style="width:200px;"><?php echo $product->desc; ?></div>
-    </div>
 
 
 </div>
 
-<!--<script type="text/javascript">_cashieProductID=76044;document.write(unescape("%3Cscript src='" + ('https:' == document.location.protocol ? 'https://' : 'http://') + "cashie.s3.amazonaws.com/userjs/efb068e5d222bdaa78295e25fe20508e-details.js' type='text/javascript'%3E%3C/script%3E"));</script>-->
+<script>
+$(function(){
+    var top = $('.right_col_content').offset().top - parseFloat($('.right_col_content').css('marginTop').replace(/auto/, 0));
+      $(window).scroll(function (event) {
+          // what the y position of the scroll is
+          var y = $(this).scrollTop();
+                 
+          // whether that's below the form
+          if (y >= top) {
+            // if so, ad the fixed class
+            $('.right_col_content').addClass('fixed');
+          } else {
+            // otherwise remove it
+            $('.right_col_content').removeClass('fixed');
+          }
+        });
+
+});
+
+</script>
