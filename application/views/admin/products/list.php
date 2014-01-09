@@ -9,8 +9,8 @@ if (is_array($products)){
         <div class="go_left marg_right list_product" style="width:200px;"><img src="<?php echo base_url().'media/images/products/'.$list['img1'] ?>" /></div>
         <div class="go_left marg_right list_product" style="width:400px;">
             Name: <?php echo $list['name'] ?><br />
-            Description: <?php echo $list['desc'] ?><br />
-            Price: &pound;<?php echo $list['price'] ?><br />
+            Description: <?php echo substr($list['desc'], 0, 200); ?>...<br /><br />
+            Price: &pound;<?php echo $list['price']; ?><br />
         </div>        
         <div class="go_left marg_right list_product" style="width:120px;"><a href="<?php echo base_url().'admin/products/edit/'.$list['pid']; ?>">Edit</a><br />
         <!--<a href="album/<?php echo $list['pid']; ?>">View Product</a><br />-->
