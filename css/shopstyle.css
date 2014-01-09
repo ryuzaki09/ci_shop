@@ -277,7 +277,13 @@ a:hover.empty_basket { color:#fff; }
 
 .main_prod_img { width:300px; margin-bottom:10px; }
 
-.product_container { width:750px; margin:20px auto; min-height:600px; padding:20px; }
+.product_container { 
+    width:750px; 
+    margin:20px auto; 
+    min-height:600px; 
+    padding:20px; 
+    position:relative;
+}
 
 input.qty_field { width:30px; text-align:center; margin-left:10px; }
 .txtlabel205 { width:205px; float:left; }

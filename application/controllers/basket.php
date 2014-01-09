@@ -29,7 +29,7 @@ class Basket extends CI_Controller {
 
 			$this->cart->update($data);
 		}
-		
+	    $data['pagetitle']  = "Shopping Basket";	
 		$this->loadpage->loadpage('basket/list', @$data);
 	}
 	
@@ -53,8 +53,8 @@ class Basket extends CI_Controller {
 	}
 	
 	public function process_checkout(){
-		// $subtotal = $this->input->post('subtotal', true);
 		$order_data = array();
+        $customer_id = $this->session->userdata('uid');
 		//grab all product info from post and pass to process payment
 		$i = 0;
         $subtotal = 0;
@@ -65,6 +65,15 @@ class Basket extends CI_Controller {
             $order_data[$i]['currency'] = "GBP";
             $order_data[$i]['sku']      = $order['pid'].",".$order['rowid'];
             $subtotal = $subtotal + ($order['price'] * $order['qty']);
+            
+            //dbdata for insert
+            $insert_data[$i]['pid']     = $order['pid'];
+            $insert_data[$i]['qty']     = $order['qty'];
+            $insert_data[$i]['cid']     = $customer_id;
+            $insert_data[$i]['price']   = $order['price'];
+            $insert_data[$i]['currency']    = "GBP";
+            $insert_data[$i]['method']  = "paypal";
+
             $i++;
 		endforeach;
         
@@ -75,9 +84,20 @@ class Basket extends CI_Controller {
                                     'shipping'  => '0.00'
                                 );
         $additional_prices['total'] = $additional_prices['subtotal'] + $additional_prices['tax'] + $additional_prices['shipping'];
+
+        //insert order details into DB for customer
+        $this->load->model('ordersmodel');
+        try {
+            $result = $this->ordersmodel->create_order($insert_data, $additional_prices);
+        } catch(Exception $e){
+            $this->logger->info("Error: ".$e->getMessage());
+        }
         
-        //start processing paypal
-        $this->process_paypal($order_data, $additional_prices);
+        if($result)
+            //start processing paypal
+            $this->process_paypal($order_data, $additional_prices);
+        else
+            redirect(base_url()."basket/checkout");
 
 	}
 
