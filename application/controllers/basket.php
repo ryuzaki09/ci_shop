@@ -127,18 +127,23 @@ class Basket extends CI_Controller {
 	
 	//once customer approves, execute payment and save to DB
 	public function paypal_callback(){
+        $this->logger->info("Paypal callback received");
 		$this->load->library("paypal");
 		$this->load->library("payment");
-		$payer_id 	= $this->input->get("PAYERID", true);
+		$payer_id 	= $this->input->get("PayerID", true);
 		$token		= $this->input->get("token", true);
         $id = $this->payment->getValue("paypal_id");
         $this->payment->deleteValue("paypal_id");
-        echo $id;
+        // echo $id;
 
-		// if($payer_id && $token){
-		// 	$result = $this->paypal->execute_payment($payer_id, $token);
-		// 
-		// }
+		if($payer_id && $token){
+			$result = $this->paypal->execute_payment($id, $payer_id, $token);
+            if($result){
+                echo "<pre>";
+                print_R($result);
+                echo "</pre>";
+            }		
+		}
 
 	}
 
