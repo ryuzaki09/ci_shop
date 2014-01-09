@@ -109,18 +109,16 @@ class Basket extends CI_Controller {
 		if($paypal_token){
 			$this->payment->setValue("paypal_token", $paypal_token->access_token);
 			$this->payment->setValue("pay_method", "paypal");
-			echo "<pre>";
-			$payment_session = $this->session->all_userdata();
 
-			print_R($payment_session);
-			echo "</pre>";
 			$payment_result = $this->paypal->createPayment($paypal_token->access_token, $order_data, $additional_prices);
 			$this->payment->destroyValues();
 			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
+                $this->payment->setValue("paypal_id", $payment_result->id);
+                $payment_session = $this->session->all_userdata();
 				//redirect customer to get approval of sale
 				redirect($payment_result->links[1]->href);
 				// echo "<pre>";
-				// print_r($payment_result);
+				// print_r($payment_session);
 				// echo "</pre>";
 			}
 		}
@@ -130,12 +128,17 @@ class Basket extends CI_Controller {
 	//once customer approves, execute payment and save to DB
 	public function paypal_callback(){
 		$this->load->library("paypal");
+		$this->load->library("payment");
 		$payer_id 	= $this->input->get("PAYERID", true);
 		$token		= $this->input->get("token", true);
-		if($payer_id && $token){
-			$result = $this->paypal->execute_payment($payer_id, $token);
-		
-		}
+        $id = $this->payment->getValue("paypal_id");
+        $this->payment->deleteValue("paypal_id");
+        echo $id;
+
+		// if($payer_id && $token){
+		// 	$result = $this->paypal->execute_payment($payer_id, $token);
+		// 
+		// }
 
 	}
 

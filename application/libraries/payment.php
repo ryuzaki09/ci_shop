@@ -25,6 +25,15 @@ class Payment {
 
 	}
 
+    public function getValue($item){
+        $paymentdata = $this->CI->session->userdata("payment");
+        return $paymentdata[$item];
+    }
+
+    public function deleteValue($item){
+       unset($this->CI->payment_data["payment"][$item]); 
+    }
+
 	public function getAllValues(){
 
 		if($this->CI->session->userdata('payment')){
