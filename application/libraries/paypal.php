@@ -98,6 +98,7 @@ class Paypal {
 	
 	public function execute_payment($id, $payer_id, $access_token){
         $this->CI->logger->info("Starting to execute payment");
+        $this->CI->logger->info("id: ".$id." payerid: ".$payer_id." token: ".$access_token);
 
 		$execute_url = $this->CI->url."/v1/payments/payment/".$id."/execute";
         $postdata = array('payer_id' => $payer_id);
@@ -116,7 +117,8 @@ class Paypal {
 
             $response = $this->CI->curl->curlexec();
 			$this->CI->curl->closeCurl();
-	
+            $json_response = json_decode($response);
+            $this->CI->logger->info("response: ".var_export($json_response, true));	
 
 		} catch(Exception $e) {
 			$this->CI->logger->info("Something went wrong with paypal execution: ".$e->getMessage());

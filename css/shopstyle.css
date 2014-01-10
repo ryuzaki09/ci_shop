@@ -314,7 +314,7 @@ input.qty_field { width:30px; text-align:center; margin-left:10px; }
 	-webkit-border-radius:3px;
 	-moz-border-radius:3px;
 }
-.leftpane ul { font-size:11px; }
+.leftpane ul { font-size:12px; margin:0; }
 .leftpane li { padding: 2px 0px; }
 .leftpane li a { color: #000; text-decoration:none; }
 .leftpane li a:hover { text-decoration:underline; }

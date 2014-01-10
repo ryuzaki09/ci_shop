@@ -11,7 +11,8 @@ class Ordersmodel extends Commonmodel {
 	public function create_order($data, $additional_prices){
         if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices)){
             $orderData = array("customer_id" => $data[0]['cid'],
-                                "order_created" => date('Y-m-d H:i:s')
+                                "order_created" => date('Y-m-d H:i:s'),
+                                "total_price"   => $additional_prices['total']
                             );
 
             $orderNumber = $this->create_orderNumber($orderData); 
@@ -42,6 +43,12 @@ class Ordersmodel extends Commonmodel {
             ? "US000".$this->db->insert_id()
             : false;
 
+    }
+
+
+    public function createTransaction($data){
+        
+        $this->db->insert($this->table['transaction'], $data);
     }
 
 }

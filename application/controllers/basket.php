@@ -105,16 +105,19 @@ class Basket extends CI_Controller {
 	private function process_paypal($order_data=false, $additional_prices){
 		$this->load->library("paypal");
 		$this->load->library("payment");
+
+        //get access token for paypal
 		$paypal_token = $this->paypal->getAccessToken();
 		if($paypal_token){
 			$this->payment->setValue("paypal_token", $paypal_token->access_token);
 			$this->payment->setValue("pay_method", "paypal");
 
+            //request paypal to create payment
 			$payment_result = $this->paypal->createPayment($paypal_token->access_token, $order_data, $additional_prices);
 			$this->payment->destroyValues();
 			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
                 $this->payment->setValue("paypal_id", $payment_result->id);
-                $payment_session = $this->session->all_userdata();
+                // $payment_session = $this->session->all_userdata();
 				//redirect customer to get approval of sale
 				redirect($payment_result->links[1]->href);
 				// echo "<pre>";
@@ -130,15 +133,18 @@ class Basket extends CI_Controller {
         $this->logger->info("Paypal callback received");
 		$this->load->library("paypal");
 		$this->load->library("payment");
-		$payer_id 	= $this->input->get("PayerID", true);
-		$token		= $this->input->get("token", true);
-        $id = $this->payment->getValue("paypal_id");
-        $this->payment->deleteValue("paypal_id");
+		$payer_id 	    = $this->input->get("PayerID", true);
+		$token		    = $this->input->get("token", true);
+        $access_token   = $this->payment->getValue("paypal_token");
+        $id             = $this->payment->getValue("paypal_id");
         // echo $id;
 
 		if($payer_id && $token){
-			$result = $this->paypal->execute_payment($id, $payer_id, $token);
+			$result = $this->paypal->execute_payment($id, $payer_id, $access_token);
+            //successfully executed the paypal payment
             if($result){
+                //create a transaction in DB
+                $this->load->model('ordersmodel');
                 echo "<pre>";
                 print_R($result);
                 echo "</pre>";

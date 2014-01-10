@@ -47,8 +47,14 @@ class Account extends CI_Controller {
 			$uid = $this->session->userdata('uid');
 			
 			$result = $this->usermodel->db_update_userdetails($db_data, $uid);
-			//echo $this->db->last_query();
-			if($result){
+            
+            if($result){
+                //update the session details with the new data
+                $userdetails = $this->session->userdata("user_details");
+                $newdata = array("email" => $userdetails['email'],
+                                "address" => $db_data['address1'].", ".$db_data['address2'],
+                                "postcode" => $db_data['postcode']);
+                $this->session->set_userdata("user_details", $newdata);
 				$this->session->set_flashdata('message', 'Changes Updated');
 				redirect(base_url().'account/profile');
 			} else {
