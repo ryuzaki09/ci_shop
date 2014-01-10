@@ -10,7 +10,8 @@ class Commonmodel extends CI_Model {
                         'menus' => 'shoplongdestiny.admin_menu',
                         'style' => 'shoplongdestiny.global_settings',
                         'orders'    => 'shoplongdestiny.orders',
-                        'o_details' => 'shoplongdestiny.order_details'
+                        'o_details' => 'shoplongdestiny.order_details',
+                        'trx'       => 'shoplongdestiny.transactions'
                        );
 
     

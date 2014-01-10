@@ -17,11 +17,13 @@ class Ordersmodel extends Commonmodel {
 
             $orderNumber = $this->create_orderNumber($orderData); 
             if($orderNumber){
+                $this->load->library("payment");
+                $this->payment->setValue("order_id");
                 $i = 0;
                 $details = array();
                 foreach($data AS $newdata):
                     $details[$i] = $newdata;
-                    $details[$i]['order_no'] = $orderNumber;
+                    $details[$i]['order_no'] = "US000".$orderNumber;
                     $i++;
                 endforeach;
                 $this->db->insert_batch($this->table['o_details'], $details);
@@ -40,7 +42,7 @@ class Ordersmodel extends Commonmodel {
         $this->db->insert($this->table['orders'], $orderdata);
         
         return ($this->db->affected_rows()>0)
-            ? "US000".$this->db->insert_id()
+            ? $this->db->insert_id()
             : false;
 
     }

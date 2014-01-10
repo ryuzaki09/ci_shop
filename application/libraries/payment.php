@@ -43,7 +43,7 @@ class Payment {
 
 	public function destroyValues(){
 		$this->CI->session->unset_userdata("payment");
-		$this->CI->session->unset_userdata("paypal_token");
+		// $this->CI->session->unset_userdata("paypal_token");
 	}
 
 }
