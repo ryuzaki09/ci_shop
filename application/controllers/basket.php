@@ -113,8 +113,33 @@ class Basket extends CI_Controller {
 		$payer_id 	= $this->input->get("PAYERID", true);
 		$token		= $this->input->get("token", true);
 		if($payer_id && $token){
+<<<<<<< Updated upstream
 			$result = $this->paypal->execute_payment($payer_id, $token);
 		
+=======
+			$result = $this->paypal->execute_payment($id, $payer_id, $access_token);
+            //successfully executed the paypal payment
+            if($result){
+                //create a transaction in DB
+                $this->load->model('ordersmodel');
+                $order_id = $this->payment->getValue("order_id");
+                $external_ref = array('paypal_id' => $result->id,
+                                        'sales_id' => $result->transactions[0]->related_resources[0]->sale->id);
+                $insertdata = array('oid'   => $order_id,
+                                    'customer_id'   => $this->session->userdata("uid"),
+                                    'subtotal'  => $result->transactions[0]->amount->details->subtotal,
+                                    'total' => $result->transactions[0]->amount->total,
+                                    'external_ref'  => json_encode($external_ref),
+                                    'date_created'  => date('Y-m-d H:i:s'));
+                $this->logger->info("inserting transaction data: ".var_export($insertdata, true));
+                $trx_result = $this->ordersmodel->createTransaction($insertdata);
+				if($trx_result)
+					echo "transaction completed";
+                // echo "<pre>";
+                // print_R($result);
+                // echo "</pre>";
+            }		
+>>>>>>> Stashed changes
 		}
 
 	}
