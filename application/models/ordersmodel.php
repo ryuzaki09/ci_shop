@@ -2,15 +2,12 @@
 
 class Ordersmodel extends Commonmodel {
 
-	public funciton __construct(){
+	public function __construct(){
 		parent::__construct();
         $this->load->model('commonmodel');
 	}
 
 	
-<<<<<<< Updated upstream
-	public function create_order($data){
-=======
 	public function create_order($data, $additional_prices){
         if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices)){
             $orderData = array("customer_id" => $data[0]['cid'],
@@ -38,13 +35,19 @@ class Ordersmodel extends Commonmodel {
                 throw new Exception("Cannot create order number");
             }
         }
->>>>>>> Stashed changes
 
 	}
 
+    private function create_orderNumber($orderdata){
+        $this->db->insert($this->table['orders'], $orderdata);
+        
+        return ($this->db->affected_rows()>0)
+            ? $this->db->insert_id()
+            : false;
 
-<<<<<<< Updated upstream
-=======
+    }
+
+
     public function createTransaction($data){
         
         $this->db->insert($this->table['trx'], $data);
@@ -52,6 +55,5 @@ class Ordersmodel extends Commonmodel {
 				? true
 				: false;
     }
->>>>>>> Stashed changes
 
 }

@@ -8,7 +8,10 @@ class Commonmodel extends CI_Model {
                         'pending_users' => 'shoplongdestiny.pending_users',
                         'forgot_pwds' => 'shoplongdestiny.forgotten_passwords',
                         'menus' => 'shoplongdestiny.admin_menu',
-                        'style' => 'shoplongdestiny.global_settings'
+                        'style' => 'shoplongdestiny.global_settings',
+                        'orders'    => 'shoplongdestiny.orders',
+                        'o_details' => 'shoplongdestiny.order_details',
+                        'trx'       => 'shoplongdestiny.transactions'
                        );
 
     

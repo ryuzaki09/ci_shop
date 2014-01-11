@@ -78,7 +78,7 @@ class Paypal {
 			$this->CI->curl->postfields($sale_json);
 			
 			$response = $this->CI->curl->curlexec();
-			$this->CI->curl->closeCurl();
+			// $this->CI->curl->closeCurl();
 		
 		} catch(Exception $e){
 			$this->CI->logger->info($e->getMessage());	
@@ -96,18 +96,42 @@ class Paypal {
 	}
 
 	
-	public function execute_payment($payer_id, $token){
-		$execute_url .= $this->CI->url."/v1/payments/payment/";
+	public function execute_payment($id, $payer_id, $access_token){
+        $this->CI->logger->info("Starting to execute payment");
+        $this->CI->logger->info("id: ".$id." payerid: ".$payer_id." token: ".$access_token);
+
+		$execute_url = $this->CI->url."/v1/payments/payment/".$id."/execute";
+        $postdata = array('payer_id' => $payer_id);
+        $post_json = json_encode($postdata);
+        $headers_data = array("Content-Type: application/json",
+								"Authorization: Bearer ".$access_token,
+								"Content-length: ".strlen($post_json));
 		try {
 			$this->CI->curl->curl_url($execute_url);
 			$this->CI->curl->headers(false);
-			$this->CI->curl->ssl(false);
+			$this->CI->curl->curl_ssl(false);
+			$this->CI->curl->curl_post(true);
 			$this->CI->curl->returnTransfer(true);
+            $this->CI->curl->http_header($headers_data);
+			$this->CI->curl->postfields($post_json);
 
+            $response = $this->CI->curl->curlexec();
+			$this->CI->curl->closeCurl();
+            $json_response = json_decode($response);
+            $this->CI->logger->info("response: ".var_export($json_response, true));	
 
 		} catch(Exception $e) {
-			echo $e->getMessage();
+			$this->CI->logger->info("Something went wrong with paypal execution: ".$e->getMessage());
 		}
+
+        if(($response) && !empty($response)){
+			$this->CI->logger->info("Payment executed successfully");
+			return json_decode($response);
+
+		} else {
+			return;
+		}
+
 
 	}
 
