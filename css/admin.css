@@ -153,6 +153,7 @@ li.clearfix {
 .marg7_0 { margin:7px 0; }
 .marg_right { margin-right:10px; }
 
+.order_list_div { padding:5px; border-top:1px solid #cacaca; }
 .namefld { width:130px; float:left; padding:10px 5px; }
 .note { font-size:11px; font-style: italic; }
 .pad2 { padding:2px; }

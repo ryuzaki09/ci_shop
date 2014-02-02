@@ -4,10 +4,8 @@ class Ordersmodel extends Commonmodel {
 
 	public function __construct(){
 		parent::__construct();
-        $this->load->model('commonmodel');
 	}
 
-	
 	public function create_order($data, $additional_prices){
         if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices)){
             $orderData = array("customer_id" => $data[0]['cid'],
@@ -74,14 +72,16 @@ class Ordersmodel extends Commonmodel {
 
 	public function get_order_details($order_no){
 		$this->logger->info("retrieving order details");
-		$this->db->select('total, external_ref');
-		$this->db->from('order_details');
-		$this->db->join($this->table['trx'], 'order_details.oid='.$this->table['trx'].'.oid');
+		$this->db->select('firstname, lastname, name, products.price, qty, cid, order_no, total, date_created, external_ref, method');
+		$this->db->from('products');
+		$this->db->join($this->table['o_details'], 'products.pid=order_details.pid');
+		$this->db->join($this->table['trx'], 'order_details.oid='.$this->table['trx'].'.oid', 'left');
+		$this->db->join('users', 'cid=uid');
 		$this->db->where('order_no', $order_no);
 		$result = $this->db->get();
 
 		return ($result->num_rows()>0)
-				? $result->row()
+				? $result->result_array()
 				: false;
 
 	}
