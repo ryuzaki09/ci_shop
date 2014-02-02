@@ -132,9 +132,31 @@ class Paypal {
 			return;
 		}
 
-
 	}
 
+	public function get_payment_resource($access_token, $paypal_id){
+		$this->CI->logger->info("Getting payment resource from paypal");
+		
+        $headers_data = array("Content-Type: application/json",
+								"Authorization: Bearer ".$access_token);
+								// "Content-length: ".strlen($post_json));
 
+		$url = $this->CI->url."/v1/payments/payment/".$paypal_id;
+
+		$this->CI->curl->curl_url($execute_url);
+		$this->CI->curl->headers(false);
+		$this->CI->curl->curl_ssl(false);
+		$this->CI->curl->curl_post(true);
+		$this->CI->curl->returnTransfer(true);
+		$this->CI->curl->http_header($headers_data);
+		$this->CI->curl->postfields($post_json);
+
+		$response = $this->CI->curl->curlexec();
+		$this->CI->curl->closeCurl();
+		$json_response = json_decode($response);
+		$this->CI->logger->info("response: ".var_export($json_response, true));	
+
+
+	}
 
 }

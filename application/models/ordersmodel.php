@@ -15,6 +15,7 @@ class Ordersmodel extends Commonmodel {
                                 "total_price"   => $additional_prices['total']
                             );
 
+			//insert into order table to create order no.
             $orderNumber = $this->create_orderNumber($orderData); 
             if($orderNumber){
                 $this->load->library("payment");
@@ -55,5 +56,34 @@ class Ordersmodel extends Commonmodel {
 				? true
 				: false;
     }
+
+	public function get_pending_orders(){
+		$this->db->select('status, order_no, order_created, total_price');
+		$this->db->from('orders');
+		$this->db->join('order_details', 'orders.oid=order_details.oid');
+		// $this->db->join('transactions', 'order_details.oid=transactions.oid');
+		$this->db->group_by('order_no');
+
+		$result = $this->db->get();
+
+		return ($result->num_rows()>0)
+				? $result->result_array()
+				: false;
+	}
+
+
+	public function get_order_details($order_no){
+		$this->logger->info("retrieving order details");
+		$this->db->select('total, external_ref');
+		$this->db->from('order_details');
+		$this->db->join($this->table['trx'], 'order_details.oid='.$this->table['trx'].'.oid');
+		$this->db->where('order_no', $order_no);
+		$result = $this->db->get();
+
+		return ($result->num_rows()>0)
+				? $result->row()
+				: false;
+
+	}
 
 }

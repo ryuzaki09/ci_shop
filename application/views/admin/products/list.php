@@ -1,4 +1,3 @@
-<!--<div class="content_block go_left">-->
 <div class="page_title"><?php echo $pagetitle; ?></div>
 <?php
 if (is_array($products)){
@@ -78,18 +77,6 @@ function delete_item(id, imgname){
             }
         });
         
-        /*
-        $.post(url, {'id': id, 'foldername': foldername}, function(data){
-            if(data == "all deleted"){
-                alert('All images and album are deleted');
-                $('#item_'+id).hide('slow');
-            } else if(data == "noimages"){
-                alert('Album deleted, there are no images inside to delete');
-                $('#item_'+id).hide('slow');
-            } else {
-                alert(data);
-            }
-        });*/
     }
 }
 </script>

@@ -171,4 +171,6 @@ li.clearfix {
 .sub_menu a { text-decoration:underline; cursor:pointer; }
 .title_parent { color:#fff; background-color:#64AEEF; padding:5px; margin-bottom:5px; }
 .title_parent a { color:#fff; text-decoration:underline; cursor:pointer; }
+
+.top_border { border-top:1px solid #cacaca; }
 .top_space { margin-top:10px; }
