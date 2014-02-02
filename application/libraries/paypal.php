@@ -132,9 +132,44 @@ class Paypal {
 			return;
 		}
 
-
 	}
 
+	public function get_payment_resource($access_token, $paypal_id){
+		$this->CI->logger->info("Getting payment resource from paypal");
+		$this->CI->logger->info("token: ".$access_token." paypal id: ".$paypal_id);
+		
+        $headers_data = array("Content-Type: application/json",
+								"Authorization: Bearer ".$access_token);
+								// "Content-length: ".strlen($post_json));
 
+		$url = $this->CI->url."/v1/payments/payment/".$paypal_id;
+
+		try {
+			$this->CI->curl->curl_url($url);
+			$this->CI->curl->headers(false);
+			$this->CI->curl->curl_ssl(false);
+			$this->CI->curl->curl_get(true);
+			$this->CI->curl->returnTransfer(true);
+			$this->CI->curl->http_header($headers_data);
+
+			$response = $this->CI->curl->curlexec();
+			$this->CI->curl->closeCurl();
+			$json_response = json_decode($response);
+			$this->CI->logger->info("response: ".var_export($json_response, true));	
+		
+		} catch (Exception $e) {
+			$this->CI->logger->info("Cannot get payment resource: ".$e->getMessage());
+		}
+
+		if(($response) && !empty($response)){
+			$this->CI->logger->info("Payment resource retreived");
+			return $json_response;
+
+		} else {
+			return;
+		}
+
+
+	}
 
 }

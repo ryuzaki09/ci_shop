@@ -51,6 +51,11 @@ class Curl {
 			curl_setopt($this->CI->ch, CURLOPT_HTTPHEADER, $http_headers);
 	}
 
+	public function curl_get($get){
+		if(is_bool($get) && ($get))
+			curl_setopt($this->CI->ch, CURLOPT_HTTPGET, $get);
+	}
+
 	public function curlexec(){
 		$result = curl_exec($this->CI->ch);
 		return $result;

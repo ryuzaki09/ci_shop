@@ -4,10 +4,8 @@ class Ordersmodel extends Commonmodel {
 
 	public function __construct(){
 		parent::__construct();
-        $this->load->model('commonmodel');
 	}
 
-	
 	public function create_order($data, $additional_prices){
         if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices)){
             $orderData = array("customer_id" => $data[0]['cid'],
@@ -15,6 +13,7 @@ class Ordersmodel extends Commonmodel {
                                 "total_price"   => $additional_prices['total']
                             );
 
+			//insert into order table to create order no.
             $orderNumber = $this->create_orderNumber($orderData); 
             if($orderNumber){
                 $this->load->library("payment");
@@ -55,5 +54,36 @@ class Ordersmodel extends Commonmodel {
 				? true
 				: false;
     }
+
+	public function get_pending_orders(){
+		$this->db->select('status, order_no, order_created, total_price');
+		$this->db->from('orders');
+		$this->db->join('order_details', 'orders.oid=order_details.oid');
+		// $this->db->join('transactions', 'order_details.oid=transactions.oid');
+		$this->db->group_by('order_no');
+
+		$result = $this->db->get();
+
+		return ($result->num_rows()>0)
+				? $result->result_array()
+				: false;
+	}
+
+
+	public function get_order_details($order_no){
+		$this->logger->info("retrieving order details");
+		$this->db->select('firstname, lastname, name, products.price, qty, cid, order_no, total, date_created, external_ref, method');
+		$this->db->from('products');
+		$this->db->join($this->table['o_details'], 'products.pid=order_details.pid');
+		$this->db->join($this->table['trx'], 'order_details.oid='.$this->table['trx'].'.oid', 'left');
+		$this->db->join('users', 'cid=uid');
+		$this->db->where('order_no', $order_no);
+		$result = $this->db->get();
+
+		return ($result->num_rows()>0)
+				? $result->result_array()
+				: false;
+
+	}
 
 }

@@ -1,3 +1,6 @@
+Version 0.3.0
+ - orders pending have been added and order details can look up paypal payment resource
+
 Version 0.2.0
  - paypal fully integrated on checkout.
 
