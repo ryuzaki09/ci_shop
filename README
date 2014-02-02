@@ -1,3 +1,6 @@
+Version 0.2.0
+ - orders pending have been added and order details can look up paypal payment resource
+
 Version 0.1.0
  - styling have been applied to front page of site and product details page.
  - right column on product details page to follow as you scroll..
