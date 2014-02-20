@@ -14,23 +14,24 @@ class Ordersmodel extends Commonmodel {
 							);
 
 			//insert into order table to create order no.
-			$orderNumber = $this->create_orderNumber($orderData); 
-            if($orderNumber){
-                $this->load->library("payment");
-                $this->payment->setValue("order_id", $orderNumber);
-                $i = 0;
-                $details = array();
-                foreach($data AS $newdata):
-                    $details[$i] = $newdata;
+			$orderNumber = $this->create_orderNumber($orderData);
+			if($orderNumber){
+				$this->load->library("payment");
+				$this->payment->setValue("order_id", $orderNumber);
+				$i = 0;
+				$details = array();
+				foreach($data AS $newdata):
+					$details[$i] = $newdata;
                     $details[$i]['order_no'] = "US000".$orderNumber;
                     $i++;
                 endforeach;
-                $this->db->insert_batch($this->table['o_details'], $details);
-                if($this->db->affected_rows()>0)
-                    return true;
-                else
-                    throw new Exception("Cannot insert order details");
-            } else {
+				
+				$this->db->insert_batch($this->table['o_details'], $details);
+				if($this->db->affected_rows()>0)
+					return true;
+				else
+					throw new Exception("Cannot insert order details");
+			} else {
                 throw new Exception("Cannot create order number");
 			}
 		}
