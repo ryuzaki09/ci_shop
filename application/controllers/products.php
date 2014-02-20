@@ -37,9 +37,9 @@ class Products extends CI_Controller {
                                 );
 				//insert data into basket
                 $data['rowID'] = $this->cart->insert($basket_data);
-					
-			} else { //if theres basket session
-				//if the same product is there then add 1 to qty
+            
+            } else { //if theres basket session
+                //if the same product is there then add 1 to qty
                 if(@$basket[$rowID]){
                     $basket_data = array('rowid' => $rowID, 'qty' => ($basket[$rowID]['qty']+1));
 
@@ -69,22 +69,23 @@ class Products extends CI_Controller {
         } else {
             //if not then select most recent album
             $where = array('pid' => 1);
-        }       
+        }
+
         //get product item
-		$data['product'] = $this->productsmodel->db_get_product($where);
-		
+        $data['product'] = $this->productsmodel->db_get_product($where);
+
         //if no rowID
-		if(@$data['rowID']==""){
+        if(@$data['rowID']==""){
 			
 			if(!empty($basket)){  //if theres a basket session
 				foreach ($this->cart->contents() as $items): 
 					if($items['id'] == $data['product']->pid && $items['price'] == $data['product']->price && $items['name'] == $data['product']->name){
-						$data['rowID'] = $items['rowid'];
-						
-					}
-					
-				endforeach;				
-			}
+                        $data['rowID'] = $items['rowid'];
+
+                    }
+
+                endforeach;
+            }
 		}
 		$data['pagetitle'] = "Product: ".$data['product']->name;
         
