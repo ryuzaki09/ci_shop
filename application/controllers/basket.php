@@ -13,14 +13,14 @@ class Basket extends CI_Controller {
     public function index(){
         $this->shoppingbasket();
     }
-	
-	//Update the shopping basket at the basket page
+
+    //Update the shopping basket at the basket page
 	public function shoppingbasket(){
         if($this->input->post('update') == "Update Cart"){
             foreach($this->input->post() AS $postdata => $value):
                 $data[] = $value;
             endforeach;
-            
+
             $this->cart->update($data);
         }
         $data['pagetitle']  = "Shopping Basket";
@@ -87,39 +87,38 @@ class Basket extends CI_Controller {
         } catch(Exception $e){
             $this->logger->info("Error: ".$e->getMessage());
         }
-        
+
         if($result)
             //start processing paypal
             $this->process_paypal($order_data, $additional_prices);
         else
             redirect(base_url()."basket/checkout");
 
-	}
+    }
 
-
-	private function process_paypal($order_data=false, $additional_prices){
-		$this->load->library("paypal");
-		$this->load->library("payment");
+    private function process_paypal($order_data=false, $additional_prices){
+        $this->load->library("paypal");
+        $this->load->library("payment");
 
         //get access token for paypal
         $paypal_token = $this->paypal->getAccessToken();
         if($paypal_token){
-	        $this->payment->setValue("paypal_token", $paypal_token->access_token);
-			$this->payment->setValue("pay_method", "paypal");
+            $this->payment->setValue("paypal_token", $paypal_token->access_token);
+            $this->payment->setValue("pay_method", "paypal");
 
             //request paypal to create payment
             $payment_result = $this->paypal->createPayment($paypal_token->access_token, $order_data, $additional_prices);
             $this->payment->destroyValues();
             if($payment_result && $payment_result->links[1]->rel == "approval_url"){
                 $this->payment->setValue("paypal_id", $payment_result->id);
-                
+
                 //redirect customer to get approval of sale
                 redirect($payment_result->links[1]->href);
                 // echo "<pre>";
                 // print_r($payment_session);
 				// echo "</pre>";
-			}
-	    }
+            }
+        }
     }
 
     //once customer approves, execute payment and save to DB
@@ -151,7 +150,7 @@ class Basket extends CI_Controller {
                 $this->logger->info("inserting transaction data: ".var_export($insertdata, true));
                 $trx_result = $this->ordersmodel->createTransaction($insertdata);
                 if($trx_result)
-					echo "transaction completed";
+                    echo "transaction completed";
             }
         }
     }
