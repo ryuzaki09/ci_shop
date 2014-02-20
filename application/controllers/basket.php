@@ -6,15 +6,14 @@ class Basket extends CI_Controller {
         parent::__construct();
         $this->load->model('commonmodel');
         $this->load->model('productsmodel');
-		$this->load->library('loadpage');
-		$this->load->library('auth');
+        $this->load->library('loadpage');
+        $this->load->library('auth');
 				
     }
-	
-	
-	function index(){
+
+    public function index(){
 		
-		$this->shoppingbasket();
+        $this->shoppingbasket();
 		
 	}
 	
@@ -29,15 +28,15 @@ class Basket extends CI_Controller {
 
 			$this->cart->update($data);
 		}
-	    $data['pagetitle']  = "Shopping Basket";	
+        $data['pagetitle']  = "Shopping Basket";	
 		$this->loadpage->loadpage('basket/list', @$data);
 	}
 	
 	//confirmation page to checkout and require customer to be logged in.
 	public function checkout(){
 		$data['environment'] = (ENVIRONMENT == "development")
-								? true
-								:false;
+                        	? true
+							:false;
 
 		if($this->auth->is_logged_in()){
 			$this->load->model('usermodel');
@@ -134,14 +133,14 @@ class Basket extends CI_Controller {
 		$this->load->library("paypal");
 		$this->load->library("payment");
 		$payer_id 	    = $this->input->get("PayerID", true);
-		$token		    = $this->input->get("token", true);
+        $token		    = $this->input->get("token", true);
         $access_token   = $this->payment->getValue("paypal_token");
         $id             = $this->payment->getValue("paypal_id");
         // echo $id;
 
 		if($payer_id && $token){
-		
-			$result = $this->paypal->execute_payment($id, $payer_id, $access_token);
+
+            $result = $this->paypal->execute_payment($id, $payer_id, $access_token);
             //successfully executed the paypal payment
             if($result){
                 //create a transaction in DB
@@ -164,12 +163,5 @@ class Basket extends CI_Controller {
 
 	}
 
-		
-	// private function createPaypalPayment($access_token){
-	// 	$this->load->library("paypal");
-	// 	$payment = $this->paypal->createPayment($access_token);
-	// }
-	
 	
 }
-?>
