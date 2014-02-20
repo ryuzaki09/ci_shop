@@ -83,10 +83,10 @@ class User extends CI_Controller {
 				//if there is no existing account
 				if(!$result){
 					$insertdata = array('email' => $email,
-                                        'password' => $this->input->post('password1', true),
-                                        'firstname' => $this->input->post('firstname', true),
-                                        'lastname' => $this->input->post('lastname', true),
-                                        'activation_code' => $verification_code);
+										'password' => $this->input->post('password1', true),
+										'firstname' => $this->input->post('firstname', true),
+										'lastname' => $this->input->post('lastname', true),
+										'activation_code' => $verification_code);
 
                     $result = $this->usermodel->insert_new_pending_account($insertdata);
 
@@ -196,12 +196,9 @@ class User extends CI_Controller {
             } else {
             	$data['message'] = "Please enter a valid email address";
             }
-            	
-			
 		}
-		
+
 		$data['pagetitle'] = "Forgot Password";
-		
 		$data['loginpage'] = "forgotpassword";
 		
 		$this->loadpage->loadpage('/user/login', $data);

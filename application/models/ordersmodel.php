@@ -7,14 +7,14 @@ class Ordersmodel extends Commonmodel {
 	}
 
 	public function create_order($data, $additional_prices){
-        if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices)){
-            $orderData = array("customer_id" => $data[0]['cid'],
-                                "order_created" => date('Y-m-d H:i:s'),
-                                "total_price"   => $additional_prices['total']
-                            );
+		if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices)){
+			$orderData = array("customer_id" => $data[0]['cid'],
+								"order_created" => date('Y-m-d H:i:s'),
+								"total_price"   => $additional_prices['total']
+							);
 
 			//insert into order table to create order no.
-            $orderNumber = $this->create_orderNumber($orderData); 
+			$orderNumber = $this->create_orderNumber($orderData); 
             if($orderNumber){
                 $this->load->library("payment");
                 $this->payment->setValue("order_id", $orderNumber);
@@ -32,9 +32,8 @@ class Ordersmodel extends Commonmodel {
                     throw new Exception("Cannot insert order details");
             } else {
                 throw new Exception("Cannot create order number");
-            }
-        }
-
+			}
+		}
 	}
 
     private function create_orderNumber($orderdata){
