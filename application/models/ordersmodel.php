@@ -47,14 +47,13 @@ class Ordersmodel extends Commonmodel {
 
     }
 
-
-    public function createTransaction($data){
+	public function createTransaction($data){
         
         $this->db->insert($this->table['trx'], $data);
 		return ($this->db->affected_rows()>0)
 				? true
 				: false;
-    }
+	}
 
 	public function get_pending_orders(){
 		$this->db->select('status, order_no, order_created, total_price');
