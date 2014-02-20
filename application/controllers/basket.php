@@ -50,21 +50,22 @@ class Basket extends CI_Controller {
 		}
 		
 	}
-	
-	public function process_checkout(){
-		$order_data = array();
+    
+    public function process_checkout(){
+        $order_data = array();
         $customer_id = $this->session->userdata('uid');
-		//grab all product info from post and pass to process payment
-		$i = 0;
+        
+        //grab all product info from post and pass to process payment
+        $i = 0;
         $subtotal = 0;
-		foreach($this->input->post() AS $order):
+        foreach($this->input->post() AS $order):
             $order_data[$i]['quantity'] = $order['qty'];
             $order_data[$i]['price']    = $order['price'];
             $order_data[$i]['name']     = $order['name'];
             $order_data[$i]['currency'] = "GBP";
             $order_data[$i]['sku']      = $order['pid'].",".$order['rowid'];
             $subtotal = $subtotal + ($order['price'] * $order['qty']);
-            
+
             //dbdata for insert
             $insert_data[$i]['pid']     = $order['pid'];
             $insert_data[$i]['qty']     = $order['qty'];
@@ -72,9 +73,9 @@ class Basket extends CI_Controller {
             $insert_data[$i]['price']   = $order['price'];
             $insert_data[$i]['currency']    = "GBP";
             $insert_data[$i]['method']  = "paypal";
-
+            
             $i++;
-		endforeach;
+        endforeach;
         
         $this->logger->info("order info: ".var_export($order_data, true));
         $additional_prices = array('subtotal' => $subtotal, 
@@ -106,29 +107,28 @@ class Basket extends CI_Controller {
 		$this->load->library("payment");
 
         //get access token for paypal
-		$paypal_token = $this->paypal->getAccessToken();
-		if($paypal_token){
-			$this->payment->setValue("paypal_token", $paypal_token->access_token);
+        $paypal_token = $this->paypal->getAccessToken();
+        if($paypal_token){
+	        $this->payment->setValue("paypal_token", $paypal_token->access_token);
 			$this->payment->setValue("pay_method", "paypal");
 
             //request paypal to create payment
-			$payment_result = $this->paypal->createPayment($paypal_token->access_token, $order_data, $additional_prices);
-			$this->payment->destroyValues();
-			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
+            $payment_result = $this->paypal->createPayment($paypal_token->access_token, $order_data, $additional_prices);
+            $this->payment->destroyValues();
+            if($payment_result && $payment_result->links[1]->rel == "approval_url"){
                 $this->payment->setValue("paypal_id", $payment_result->id);
-
-				//redirect customer to get approval of sale
-				redirect($payment_result->links[1]->href);
-				// echo "<pre>";
-				// print_r($payment_session);
+                
+                //redirect customer to get approval of sale
+                redirect($payment_result->links[1]->href);
+                // echo "<pre>";
+                // print_r($payment_session);
 				// echo "</pre>";
 			}
-		}
-	}
+	    }
+    }
 
-	
-	//once customer approves, execute payment and save to DB
-	public function paypal_callback(){
+    //once customer approves, execute payment and save to DB
+    public function paypal_callback(){
         $this->logger->info("Paypal callback received");
         $this->load->library("paypal");
         $this->load->library("payment");
@@ -136,8 +136,8 @@ class Basket extends CI_Controller {
         $token          = $this->input->get("token", true);
         $access_token   = $this->payment->getValue("paypal_token");
         $id             = $this->payment->getValue("paypal_id");
-
-		if($payer_id && $token){
+        
+        if($payer_id && $token){
 
             $result = $this->paypal->execute_payment($id, $payer_id, $access_token);
             //successfully executed the paypal payment
