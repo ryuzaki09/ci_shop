@@ -2,59 +2,57 @@
 
 class Products extends CI_Controller {
     
-    function __construct(){
+    public function __construct(){
         parent::__construct();
         $this->load->model('commonmodel');
         $this->load->model('productsmodel');
-		$this->load->library('loadpage');
-		$this->load->library('auth');
-				
+        $this->load->library('loadpage');
+        $this->load->library('auth');
     }
-    
-    function index($id=false){        
+
+    public function index($id=false){        
                 
         $this->item($id);
         /*foreach($albums AS $folders){
             $where = array('albumID' => $folders['albumID']);
         }*/
     }
-    
-    function item($id){        
-        
+
+    public function item($id){
         if($this->input->post('add_basket') == "Add to Basket"){
-        	$rowID = $this->input->post('rowID', true);
-			$pid = $this->input->post('pid', true)*1;
-			$pname = $this->input->post('pname', true);
+            $rowID = $this->input->post('rowID', true);
+            $pid = $this->input->post('pid', true)*1;
+            $pname = $this->input->post('pname', true);
 			$price = $this->input->post('price', true);
 			
 			//check for basket session
-			$basket = is_basket();
+            $basket = is_basket();
 			
 			//echo $rowID;
-			if(empty($basket)){	//if no basket session	
-				$basket_data = array('id' => $pid, 
-									 'qty' => 1,
-									 'price' => $price,
-									 'name' => $pname									 
-									 );
-				//insert data into basket	
-				$data['rowID'] = $this->cart->insert($basket_data);
+            if(empty($basket)){	//if no basket session	
+				$basket_data = array('id' => $pid,
+                                    'qty' => 1,
+                                    'price' => $price,
+                                    'name' => $pname
+                                );
+				//insert data into basket
+                $data['rowID'] = $this->cart->insert($basket_data);
 					
 			} else { //if theres basket session
 				//if the same product is there then add 1 to qty
-				if(@$basket[$rowID]){
-					$basket_data = array('rowid' => $rowID, 'qty' => ($basket[$rowID]['qty']+1));
-					
-					$this->cart->update($basket_data);
-					$data['rowID'] = $rowID;
+                if(@$basket[$rowID]){
+                    $basket_data = array('rowid' => $rowID, 'qty' => ($basket[$rowID]['qty']+1));
+
+                    $this->cart->update($basket_data);
+                    $data['rowID'] = $rowID;
 					
 				} else {
 					//if product is not in the basket session then create one.
-					$basket_data = array('id' => $pid, 
-									 'qty' => 1,
-									 'price' => $price,
-									 'name' => $pname									 
-									 );
+					$basket_data = array('id' => $pid,
+                                        'qty' => 1,
+                                        'price' => $price,
+                                        'name' => $pname
+                                        );
 					//insert data into basket	
 					$data['rowID'] = $this->cart->insert($basket_data);						
 				}			
@@ -106,7 +104,6 @@ class Products extends CI_Controller {
 		$dompdf->load_html($html);
 		$dompdf->render();
 		$dompdf->stream("sample.pdf");
-		
 		
 	}
 	
