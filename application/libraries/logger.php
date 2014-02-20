@@ -17,7 +17,13 @@ class Logger {
 		}
 	}
 
-
-
-
+    public function error($error){
+        if($error){
+			$file = "/var/log/dev/shoplongdestiny/shoplongdestiny.log";
+			$date = date('Y/m/d H:i:s');
+			$fp = fopen($file, "a");
+			fwrite($fp, "[".$date."][ERROR] - ".$error."\n");
+			fclose($fp);
+		}
+    }
 }

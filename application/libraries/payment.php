@@ -2,13 +2,13 @@
 
 class Payment {
 	private $payment_session;
-	private $payment_data = array( "payment" => array(
-												"paypal_token" => false,
-												"pay_method"	=> false
-												)
-								);
-
-	public function __construct(){
+	private $payment_data = array(
+                                "payment" => array(
+                                                "paypal_token" => false,
+                                                "pay_method"	=> false
+                                            )
+                            );
+    public function __construct(){
 		$this->CI =& get_instance();
 		$this->CI->payment_session = $this->CI->session->userdata("payment");
 	}
