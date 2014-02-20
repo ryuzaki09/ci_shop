@@ -8,38 +8,33 @@ class Basket extends CI_Controller {
         $this->load->model('productsmodel');
         $this->load->library('loadpage');
         $this->load->library('auth');
-				
     }
-
+    
     public function index(){
-		
         $this->shoppingbasket();
-		
-	}
+    }
 	
 	//Update the shopping basket at the basket page
 	public function shoppingbasket(){
-		
-		if($this->input->post('update') == "Update Cart"){
-			foreach($this->input->post() AS $postdata => $value):
-				$data[] = $value;
-			
-			endforeach;
+        if($this->input->post('update') == "Update Cart"){
+            foreach($this->input->post() AS $postdata => $value):
+                $data[] = $value;
+            endforeach;
+            
+            $this->cart->update($data);
+        }
+        $data['pagetitle']  = "Shopping Basket";
+        $this->loadpage->loadpage('basket/list', @$data);
+    }
 
-			$this->cart->update($data);
-		}
-        $data['pagetitle']  = "Shopping Basket";	
-		$this->loadpage->loadpage('basket/list', @$data);
-	}
-	
-	//confirmation page to checkout and require customer to be logged in.
-	public function checkout(){
-		$data['environment'] = (ENVIRONMENT == "development")
-                        	? true
-							:false;
-
-		if($this->auth->is_logged_in()){
-			$this->load->model('usermodel');
+    //confirmation page to checkout and require customer to be logged in.
+    public function checkout(){
+        $data['environment'] = (ENVIRONMENT == "development")
+                            ? true
+                            :false;
+        
+        if($this->auth->is_logged_in()){
+            $this->load->model('usermodel');
 			$uid = $this->session->userdata('uid');
 			$data['userdata'] = $this->usermodel->db_get_userdetails($uid);
 			
@@ -157,10 +152,8 @@ class Basket extends CI_Controller {
                 $trx_result = $this->ordersmodel->createTransaction($insertdata);
                 if($trx_result)
 					echo "transaction completed";
-            }		
-		}
+            }
+        }
+    }
 
-	}
-
-	
 }
