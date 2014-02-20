@@ -130,13 +130,12 @@ class Basket extends CI_Controller {
 	//once customer approves, execute payment and save to DB
 	public function paypal_callback(){
         $this->logger->info("Paypal callback received");
-		$this->load->library("paypal");
-		$this->load->library("payment");
-		$payer_id 	    = $this->input->get("PayerID", true);
-        $token		    = $this->input->get("token", true);
+        $this->load->library("paypal");
+        $this->load->library("payment");
+        $payer_id       = $this->input->get("PayerID", true);
+        $token          = $this->input->get("token", true);
         $access_token   = $this->payment->getValue("paypal_token");
         $id             = $this->payment->getValue("paypal_id");
-        // echo $id;
 
 		if($payer_id && $token){
 
@@ -156,7 +155,7 @@ class Basket extends CI_Controller {
                                     'date_created'  => date('Y-m-d H:i:s'));
                 $this->logger->info("inserting transaction data: ".var_export($insertdata, true));
                 $trx_result = $this->ordersmodel->createTransaction($insertdata);
-				if($trx_result)
+                if($trx_result)
 					echo "transaction completed";
             }		
 		}
