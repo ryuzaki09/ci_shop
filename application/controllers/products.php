@@ -1,7 +1,7 @@
 <?php
 
 class Products extends CI_Controller {
-    
+
     public function __construct(){
         parent::__construct();
         $this->load->model('commonmodel');
@@ -10,8 +10,8 @@ class Products extends CI_Controller {
         $this->load->library('auth');
     }
 
-    public function index($id=false){        
-                
+    public function index($id=false){
+
         $this->item($id);
         /*foreach($albums AS $folders){
             $where = array('albumID' => $folders['albumID']);
@@ -28,7 +28,7 @@ class Products extends CI_Controller {
 
             //check for basket session
             $basket = is_basket();
-            
+
             //echo $rowID;
             if(empty($basket)){	//if no basket session
                 $basket_data = array('id' => $pid,
@@ -38,7 +38,7 @@ class Products extends CI_Controller {
                                 );
 				//insert data into basket
                 $data['rowID'] = $this->cart->insert($basket_data);
-            
+
             } else { //if theres basket session
                 //if the same product is there then add 1 to qty
                 if(@$basket[$rowID]){
