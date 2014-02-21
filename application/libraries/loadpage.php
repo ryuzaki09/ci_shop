@@ -7,7 +7,7 @@ class Loadpage {
         $this->CI =& get_instance();
     }
     
-    function loadpage($page, $data=false)
+    public function loadpage($page, $data=false)
     {          
         	
             $this->CI->load->view('header', $data);
@@ -17,21 +17,17 @@ class Loadpage {
                
     }
     
-    function set($type=false, $source=false){
-        if ($type == 'css'){                       
-            $data = "<link rel='stylesheet' type='text/css' href='".$source."' />\n";        
-            
-        }
-        
-        if ($type == 'js'){            
-            $data = "<script type='text/javascript' src='".$source."'></script>\n";                    
-        }
-        
-        return $data;
-    }  
+    public function set($type=false, $source=false){
+        if ($type == 'css')
+            $data = "<link rel='stylesheet' type='text/css' href='".$source."' />\n";
 
-    
-    
+        if ($type == 'js')
+            $data = "<script type='text/javascript' src='".$source."'></script>\n";
+
+        return $data;
+
+    }
+
 }//END OF CLASS
 
 
