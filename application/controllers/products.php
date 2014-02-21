@@ -19,18 +19,19 @@ class Products extends CI_Controller {
     }
 
     public function item($id){
+
         if($this->input->post('add_basket') == "Add to Basket"){
             $rowID = $this->input->post('rowID', true);
             $pid = $this->input->post('pid', true)*1;
             $pname = $this->input->post('pname', true);
-			$price = $this->input->post('price', true);
-			
-			//check for basket session
+            $price = $this->input->post('price', true);
+
+            //check for basket session
             $basket = is_basket();
-			
-			//echo $rowID;
-            if(empty($basket)){	//if no basket session	
-				$basket_data = array('id' => $pid,
+            
+            //echo $rowID;
+            if(empty($basket)){	//if no basket session
+                $basket_data = array('id' => $pid,
                                     'qty' => 1,
                                     'price' => $price,
                                     'name' => $pname
@@ -93,7 +94,7 @@ class Products extends CI_Controller {
     }
 	
 	
-	function add_basket(){
+	public function add_basket(){
 		error_reporting(E_ALL);
 		
 		require_once($_SERVER['DOCUMENT_ROOT']."/dompdf/dompdf_config.inc.php");
