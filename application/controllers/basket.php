@@ -15,7 +15,7 @@ class Basket extends CI_Controller {
     }
 
     //Update the shopping basket at the basket page
-	public function shoppingbasket(){
+    public function shoppingbasket(){
         if($this->input->post('update') == "Update Cart"){
             foreach($this->input->post() AS $postdata => $value):
                 $data[] = $value;
@@ -35,16 +35,17 @@ class Basket extends CI_Controller {
         
         if($this->auth->is_logged_in()){
             $this->load->model('usermodel');
-			$uid = $this->session->userdata('uid');
-			$data['userdata'] = $this->usermodel->db_get_userdetails($uid);
+
+	    $uid = $this->session->userdata('uid');
+	    $data['userdata'] = $this->usermodel->db_get_userdetails($uid);
 			
-			$data['pagetitle'] = "Confirmation Page";
-			$this->loadpage->loadpage('basket/confirm', $data);
-		} else {
-			redirect(base_url().'user/login');
-		}
-		
+	    $data['pagetitle'] = "Confirmation Page";
+	    $this->loadpage->loadpage('basket/confirm', $data);
+	} else {
+	    redirect(base_url().'user/login');
 	}
+		
+    }
     
     public function process_checkout(){
         $order_data = array();
