@@ -32,14 +32,14 @@ class Products extends CI_Controller {
             //echo $rowID;
             if(empty($basket)){	//if no basket session
                 $basket_data = array('id' => $pid,
-                                    'qty' => 1,
-                                    'price' => $price,
-                                    'name' => $pname
-                                );
+									'qty' => 1,
+									'price' => $price,
+									'name' => $pname
+									);
 				//insert data into basket
-                $data['rowID'] = $this->cart->insert($basket_data);
+				$data['rowID'] = $this->cart->insert($basket_data);
 
-            } else { //if theres basket session
+			} else { //if theres basket session
                 //if the same product is there then add 1 to qty
                 if(@$basket[$rowID]){
                     $basket_data = array('rowid' => $rowID, 'qty' => ($basket[$rowID]['qty']+1));
@@ -47,15 +47,15 @@ class Products extends CI_Controller {
                     $this->cart->update($basket_data);
                     $data['rowID'] = $rowID;
 
-                } else {
+				} else {
 					//if product is not in the basket session then create one.
 					$basket_data = array('id' => $pid,
-                                        'qty' => 1,
+										'qty' => 1,
                                         'price' => $price,
-                                        'name' => $pname
-                                        );
+										'name' => $pname
+										);
 					//insert data into basket
-                    $data['rowID'] = $this->cart->insert($basket_data);	
+					$data['rowID'] = $this->cart->insert($basket_data);	
 				}	
 			
             }
