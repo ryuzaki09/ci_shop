@@ -33,26 +33,27 @@ class Adminpage {
         return $data;
     }
 	
-	private function __nav_menus(){
+    private function __nav_menus(){
         $left_menu = $this->CI->commonmodel->db_get_left_menus();
         $sub_leftmenu = $this->CI->commonmodel->db_get_left_menus($submenu=true);
 
         $menu_count=0;
         while($menu_count < count($left_menu)): //loop through parent
-			$menu_array[$menu_count] = $left_menu[$menu_count]; //build into new array
+	    $menu_array[$menu_count] = $left_menu[$menu_count]; //build into new array
 			
-			$subcount=0;
-			while($subcount < count($sub_leftmenu)): //loop through sub menus
-				//echo $left_menu[$i]['parent_id']." ".$sub_leftmenu[$y]['parent_id']."<br />";
-				if($left_menu[$menu_count]['parent_id'] == $sub_leftmenu[$subcount]['parent_id']){
-							
-					$menu_array[$menu_count]['submenu'][] = $sub_leftmenu[$subcount]; // build submenu into new array
-				} 
-				$subcount++;
+	    $subcount=0;
+	    while($subcount < count($sub_leftmenu)): //loop through sub menus
+		//echo $left_menu[$i]['parent_id']." ".$sub_leftmenu[$y]['parent_id']."<br />";
+		if($left_menu[$menu_count]['parent_id'] == $sub_leftmenu[$subcount]['parent_id']){
+    					
+		    $menu_array[$menu_count]['submenu'][] = $sub_leftmenu[$subcount]; // build submenu into new array
+		} 
+		$subcount++;
 				
-			endwhile;
-			$menu_count++;
-		endwhile;
+	    endwhile;
+	    
+	    $menu_count++;
+	endwhile;
 		
 		return $menu_array;
 	}
