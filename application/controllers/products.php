@@ -30,7 +30,7 @@ class Products extends CI_Controller {
 			$basket = is_basket();
 
 			//echo $rowID;
-			if(empty($basket)){	//if no basket session
+			if(empty($basket)){ //if no basket session
 				$basket_data = array('id' => $pid,
 									'qty' => 1,
 									'price' => $price,
@@ -68,7 +68,7 @@ class Products extends CI_Controller {
 		} else {
 			//if not then select most recent album
 			$where = array('pid' => 1);
-        }
+		}
 
 		//get product item
 		$data['product'] = $this->productsmodel->db_get_product($where);
@@ -77,18 +77,18 @@ class Products extends CI_Controller {
         if(@$data['rowID']==""){
 
 			if(!empty($basket)){  //if theres a basket session
-				foreach ($this->cart->contents() as $items): 
+				foreach ($this->cart->contents() as $items):
 					if($items['id'] == $data['product']->pid && $items['price'] == $data['product']->price && $items['name'] == $data['product']->name){
-                        $data['rowID'] = $items['rowid'];
+						$data['rowID'] = $items['rowid'];
 
 					}
 
-                endforeach;
-            }
+				endforeach;
+			}
 		}
 		$data['pagetitle'] = "Product: ".$data['product']->name;
- 
-        $this->loadpage->loadpage('products/item', $data);
+
+		$this->loadpage->loadpage('products/item', $data);
     }
 
     public function add_basket(){
