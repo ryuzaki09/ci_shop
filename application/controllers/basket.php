@@ -86,7 +86,7 @@ class Basket extends CI_Controller {
         try {
             $result = $this->ordersmodel->create_order($insert_data, $additional_prices);
         } catch(Exception $e){
-            $this->logger->info("Error: ".$e->getMessage());
+            $this->logger->error($e->getMessage());
         }
 
         if($result)
@@ -142,6 +142,7 @@ class Basket extends CI_Controller {
                 $order_id = $this->payment->getValue("order_id");
                 $external_ref = array('paypal_id' => $result->id,
                                         'sales_id' => $result->transactions[0]->related_resources[0]->sale->id);
+
                 $insertdata = array('oid'   => $order_id,
                                     'customer_id'   => $this->session->userdata("uid"),
                                     'subtotal'  => $result->transactions[0]->amount->details->subtotal,
@@ -150,10 +151,35 @@ class Basket extends CI_Controller {
                                     'date_created'  => date('Y-m-d H:i:s'));
                 $this->logger->info("inserting transaction data: ".var_export($insertdata, true));
                 $trx_result = $this->ordersmodel->createTransaction($insertdata);
-                if($trx_result)
-                    echo "transaction completed";
+
+		//if transaction completed then redirect
+                if($trx_result){
+		    $this->logger->info("Transaction Completed: ".$order_id);
+		    $this->cart->destroy(); //destroy the shopping cart session now that transaction is completed.
+		    redirect("/basket/orderComplete");
+		} else {
+		    $this->session->set_flashdata("error_msg", "Transaction cannot be completed. Please try again later.");
+		    redirect("/basket/checkout");
+		}
             }
-        }
+        } //end of if theres a payer_id and token
+    }
+
+    //redirect here after transaction is completed
+    public function orderComplete(){
+	$this->load->library("payment");
+	$paymentvalues = $this->payment->getAllValues();
+	
+	//check if theres any order/payment info first before showing the page otherwise redirect to homepage
+	if(is_array($paymentvalues) && !empty($paymentvalues)){
+	    $data['order_info'] = $paymentvalues; //assign order info to show on the view
+	    $this->payment->destroyValues(); //delete all payment info in the session
+	    $this->loadpage->loadpage("basket/transaction_complete", $data);
+
+	} else {
+	    redirect(base_url());
+	}
+
     }
 
 }
