@@ -1,3 +1,6 @@
+Version 0.3.1
+ - customer is now redirected to Order Completed page once the paypal payment is completed.
+
 Version 0.3.0
  - orders pending have been added and order details can look up paypal payment resource
 
