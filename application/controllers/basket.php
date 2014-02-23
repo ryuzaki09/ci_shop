@@ -1,6 +1,8 @@
 <?php
 
 class Basket extends CI_Controller {
+    private $tax = "0.00";
+    private $shipping = "0.00";
     
     public function __construct(){
         parent::__construct();
@@ -76,8 +78,8 @@ class Basket extends CI_Controller {
         $this->logger->info("order info: ".var_export($order_data, true));
         $additional_prices = array('subtotal' => $subtotal, 
                                     'currency' => 'GBP',
-                                    'tax'       => '0.00',
-                                    'shipping'  => '0.00'
+                                    'tax'       => $this->tax,
+                                    'shipping'  => $this->shipping
                                 );
         $additional_prices['total'] = $additional_prices['subtotal'] + $additional_prices['tax'] + $additional_prices['shipping'];
 
@@ -177,7 +179,7 @@ class Basket extends CI_Controller {
 
 	    $data['pagetitle'] = "Order Completed";
 
-	    $this->loadpage->loadpage("basket/transaction_complete", $data);
+	    $this->loadpage->loadpage("basket/order_complete", $data);
 
 	} else {
 	    redirect(base_url());
