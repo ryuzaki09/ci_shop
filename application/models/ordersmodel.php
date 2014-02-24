@@ -18,6 +18,9 @@ class Ordersmodel extends Commonmodel {
 	    $order_id = $this->create_orderNumber($orderData);
 	    if($order_id){
 		$order_no = $this->order_no_prefix.$order_id; 
+                $this->logger->info("Order No: ".$order_no);
+
+                //set order info into session
 		$this->load->library("payment");
 		$this->payment->setValue("order_id", $order_id);
 		$this->payment->setValue("order_no", $order_no);		
@@ -28,7 +31,8 @@ class Ordersmodel extends Commonmodel {
 		//loop through each product to give order number
 		foreach($data AS $newdata):
 		    $details[$i] = $newdata;
-		    $details[$i]['order_no'] = $order_no;
+		    $details[$i]['oid']         = $order_id;
+		    $details[$i]['order_no']    = $order_no;
 		
 		    $i++;
 		endforeach;
@@ -64,10 +68,10 @@ class Ordersmodel extends Commonmodel {
     }
 
     public function get_pending_orders(){
+        $this->logger->info("Getting pending orders");
 	$this->db->select('status, order_no, order_created, total_price');
 	$this->db->from('orders');
 	$this->db->join('order_details', 'orders.oid=order_details.oid');
-	// $this->db->join('transactions', 'order_details.oid=transactions.oid');
 	$this->db->group_by('order_no');
 
 	$result = $this->db->get();
@@ -80,13 +84,15 @@ class Ordersmodel extends Commonmodel {
 
     public function get_order_details($order_no){
 	$this->logger->info("retrieving order details");
-	$this->db->select('firstname, lastname, name, products.price, qty, cid, order_no, total, date_created, external_ref, method');
+	$this->db->select('firstname, lastname, name, products.price, qty, cid, order_no, total, order_created, external_ref, method');
 	$this->db->from('products');
 	$this->db->join($this->table['o_details'], 'products.pid=order_details.pid');
+	$this->db->join('orders', 'orders.oid=order_details.oid');
 	$this->db->join($this->table['trx'], 'order_details.oid='.$this->table['trx'].'.oid', 'left');
 	$this->db->join('users', 'cid=uid');
 	$this->db->where('order_no', $order_no);
 	$result = $this->db->get();
+echo $this->db->last_query();
 
 	return ($result->num_rows()>0)
 		? $result->result_array()

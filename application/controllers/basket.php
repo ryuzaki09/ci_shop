@@ -171,7 +171,7 @@ class Basket extends CI_Controller {
     public function orderComplete(){
 	$this->load->library("payment");
 	$paymentvalues = $this->payment->getAllValues();
-	$paymentvalues = array('order_id' => 4, 'order_no' => 'US0004', 'pay_method' => 'paypal');	
+	// $paymentvalues = array('order_id' => 4, 'order_no' => 'US0004', 'pay_method' => 'paypal');	
 	//check if theres any order/payment info first before showing the page otherwise redirect to homepage
 	if(is_array($paymentvalues) && !empty($paymentvalues)){
 	    $data['order_info'] = $paymentvalues; //assign order info to show on the view
