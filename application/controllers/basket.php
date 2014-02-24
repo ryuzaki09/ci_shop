@@ -151,6 +151,7 @@ class Basket extends CI_Controller {
                                     'total' => $result->transactions[0]->amount->total,
                                     'external_ref'  => json_encode($external_ref),
                                     'date_created'  => date('Y-m-d H:i:s'));
+
                 $this->logger->info("inserting transaction data: ".var_export($insertdata, true));
                 $trx_result = $this->ordersmodel->createTransaction($insertdata);
 

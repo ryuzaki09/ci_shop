@@ -84,7 +84,7 @@ class Ordersmodel extends Commonmodel {
 
     public function get_order_details($order_no){
 	$this->logger->info("retrieving order details");
-	$this->db->select('firstname, lastname, name, products.price, qty, cid, order_no, total, order_created, external_ref, method');
+	$this->db->select('firstname, lastname, name, orders.oid, products.price, qty, cid, order_no, total, order_created, external_ref, method');
 	$this->db->from('products');
 	$this->db->join($this->table['o_details'], 'products.pid=order_details.pid');
 	$this->db->join('orders', 'orders.oid=order_details.oid');
@@ -92,7 +92,6 @@ class Ordersmodel extends Commonmodel {
 	$this->db->join('users', 'cid=uid');
 	$this->db->where('order_no', $order_no);
 	$result = $this->db->get();
-echo $this->db->last_query();
 
 	return ($result->num_rows()>0)
 		? $result->result_array()

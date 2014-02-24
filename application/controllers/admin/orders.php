@@ -55,4 +55,14 @@ class Orders extends CI_Controller {
 
     }
 
+
+    public function approve_order($oid){
+	
+	if($this->input->post('approve_order', true) == "Approve"){
+	    echo $oid; 
+	
+	}
+
+    }
+
 }

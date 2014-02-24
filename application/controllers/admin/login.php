@@ -10,8 +10,7 @@ class Login extends CI_Controller{
     
     public function index(){
         
-	$data['css'][] = $this->adminpage->set('css', '/js/bootstrap/css/bootstrap.css');
-        $this->adminpage->loadpage('admin/login', $data, false);
+        $this->adminpage->loadpage('admin/login');
         
     }
     
