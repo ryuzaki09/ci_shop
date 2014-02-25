@@ -72,6 +72,7 @@ class Ordersmodel extends Commonmodel {
 	$this->db->select('status, order_no, order_created, total_price');
 	$this->db->from('orders');
 	$this->db->join('order_details', 'orders.oid=order_details.oid');
+	$this->db->where('status', 'pending');
 	$this->db->group_by('order_no');
 
 	$result = $this->db->get();
@@ -95,6 +96,18 @@ class Ordersmodel extends Commonmodel {
 
 	return ($result->num_rows()>0)
 		? $result->result_array()
+		: false;
+
+    }
+
+    public function admin_approve_order($oid){
+	$data = array('status' => 'approved');
+
+	$this->db->where('oid', $oid);
+	$this->db->update('orders', $data);
+
+	return ($this->db->affected_rows()>0)
+		? true
 		: false;
 
     }

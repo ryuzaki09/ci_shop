@@ -1,23 +1,15 @@
 <?php
 class Productsmodel extends Commonmodel {
     
-    
-    function __construct(){
+    public function __construct(){
         parent::__construct();
-        $this->load->model('commonmodel');
     }
     
     
-    function db_get_product($where){
+    public function db_get_product($where){
         $this->db->where($where);
         
-        //if($table == "album"){
-            $get_table = $this->table['products'];
-        //}
-        /*
-        if($table == "photos"){
-            $get_table = $this->table['albumPhotos'];
-        }*/
+	$get_table = $this->table['products'];
         
         $result = $this->db->get($get_table);
         
@@ -25,10 +17,9 @@ class Productsmodel extends Commonmodel {
                 ? $result->row()
                 : false;
             
-        
     }
     
-    function db_allproducts(){
+    public function db_allproducts(){
         $result = $this->db->get($this->table['products']);
         
         return ($result->num_rows()>0)
@@ -36,7 +27,7 @@ class Productsmodel extends Commonmodel {
                 : false;
     }
     
-    function db_delete_product($id){
+    public function db_delete_product($id){
         $this->db->where('pid', $id);
         $this->db->delete($this->table['products']);
         
@@ -71,7 +62,7 @@ class Productsmodel extends Commonmodel {
         
     }
     
-    function db_insert_update_products($id=false, $name, $desc, $img1=false, $img2=false, $img3=false, $img4=false, $price, $category, $subcat){
+    public function db_insert_update_products($id=false, $name, $desc, $img1=false, $img2=false, $img3=false, $img4=false, $price, $category, $subcat){
         
         $data = array('name' =>$name,
                       'desc' => $desc,
@@ -104,7 +95,7 @@ class Productsmodel extends Commonmodel {
                 : false;
     }
     
-    function db_get_albumPhotos($where){
+    public function db_get_albumPhotos($where){
         $this->db->where($where);
         $result = $this->db->get($this->table['albumPhotos']);
         
@@ -115,5 +106,3 @@ class Productsmodel extends Commonmodel {
     
 }
 
-
-?>

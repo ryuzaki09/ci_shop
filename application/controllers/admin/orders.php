@@ -4,7 +4,6 @@ class Orders extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
-        $this->load->model('commonmodel');
 	$this->load->model('ordersmodel');
         $this->load->library('adminpage');
         $this->auth->is_logged_in();        
@@ -59,8 +58,21 @@ class Orders extends CI_Controller {
     public function approve_order($oid){
 	
 	if($this->input->post('approve_order', true) == "Approve"){
-	    echo $oid; 
-	
+	    $this->logger->info("Admin approving order: ".$oid);
+
+	    if(!is_numeric($oid)){
+		$this->session->set_flashdata("error_msg", "Order Number invalid");
+		redirect("/admin/orders/pending");
+	    }
+
+	    $result = $this->ordersmodel->admin_approve_order($oid);
+	    if($result)
+		$this->session->set_flashdata("message", "Order $oid has been approved");
+	    else
+		$this->session->set_flashdata("message", "Order $oid cannot be approved");
+
+	    redirect("/admin/orders/pending");
+		
 	}
 
     }
