@@ -2,106 +2,104 @@
 
 <?php
 if($pagetitle == "Admin Menu Setup"){
-	?>
+    ?>
 	
-	<?php echo form_open(); ?>
+    <?php echo form_open(); ?>
+    <div class="clearfix">
+	<div class="block150 go_left">Name of link: </div>
+	<div class="block250 go_left"><input type="text" name="linkname" /></div>
+    </div>
+    <div class="clearfix">
+	<div class="block150 go_left">Parent Menu? </div>
+	<div class="block250 go_left">
+	    <select id="parentmenu" name="parentmenu" onchange="submenu();">
+		<option>Yes</option>
+		<option>No</option>		
+	    </select>
+	</div>
+    </div>
+    <div style="display:none;" id="submenu_div"><!-- Show Hide Sub Menu fields -->
 	<div class="clearfix">
-		<div class="block150 go_left">Name of link: </div>
-		<div class="block250 go_left"><input type="text" name="linkname" /></div>
+	    <div class="block150 go_left">Which Parent Menu is this part of? </div>
+	    <div class="block250 go_left">
+		<select name="parent_id">
+		    <option value=""></option>
+		    <?php 
+		    if(is_array($parentmenus) && !empty($parentmenus)):
+			foreach($parentmenus AS $parent):
+			    echo "<option value='".$parent['parent_id']."'>".$parent['link_name']."</option>";
+			
+			endforeach;
+		    endif;
+		    ?>
+		</select>
+	    </div>
 	</div>
-	<div class="clearfix">
-		<div class="block150 go_left">Parent Menu? </div>
-		<div class="block250 go_left">
-			<select id="parentmenu" name="parentmenu" onchange="submenu();">
-				<option>Yes</option>
-				<option>No</option>		
-			</select>
-		</div>
-	</div>
-	<div style="display:none;" id="submenu_div"><!-- Show Hide Sub Menu fields -->
-		<div class="clearfix">
-			<div class="block150 go_left">Which Parent Menu is this part of? </div>
-			<div class="block250 go_left">
-				<select name="parent_id">
-					<option value=""></option>
-					<?php 
-					if(is_array($parentmenus) && !empty($parentmenus)):
-						foreach($parentmenus AS $parent):
-							echo "<option value='".$parent['parent_id']."'>".$parent['link_name']."</option>";
-						
-						endforeach;
-					endif;
-					?>
-						
-				</select>
-			</div>
-		</div>
-		<div class="clearfix">
-			<div class="block150 go_left">Url: <br /><span class="note">shop.longdestiny.com/</span></div>
-			<div class="block250 go_left"><input type="text" name="linkurl" /></div>
-		</div>
-	</div>
+	    <div class="clearfix">
+		<div class="block150 go_left">Url: <br /><span class="note">shop.longdestiny.com/</span></div>
+		<div class="block250 go_left"><input type="text" name="linkurl" /></div>
+	    </div>
+    </div>
 	
-	
-	<div class="clearfix">
-		<div class="block250 go_left"><input type="submit" name="add_menu" value="Add Menu" /></div>
-	</div>
-	<?php echo form_close(); ?>
-	<?php
+    <div class="clearfix">
+	<div class="block250 go_left"><input type="submit" name="add_menu" value="Add Menu" class="btn btn-primary btn-small" /></div>
+    </div>
+    <?php echo form_close(); ?>
+    <?php
 }
 
 if($pagetitle == "Admin Menu List"){ //ADMIN MENU LIST PAGE
 
-	if(is_array($menu_array)){
-		echo "<div class='error'>".$this->session->flashdata('message')."</div>";
+    if(is_array($menu_array)){
+	echo "<div class='error'>".$this->session->flashdata('message')."</div>";
+	
+	echo "To re-arrange the order, simply drag and drop.";
+	//WRAPPER
+	echo "<div class='block_top_bord' id='parentlist'>";
+	
+	$counter=0;
+	while($counter < count($menu_array)): //loop through parent
+	    //PARENT MENUS
+	    echo "<div class='menu_wrapper' id='parent_".$menu_array[$counter]['id']."'>"; //Parent Menu wrapper including sub menu window
+	    echo "<div class='clearfix title_parent'>"; //Parent Menu Row
+	    echo "<div class='block250 go_left'>".$menu_array[$counter]['link_name']."</div>";
+	    echo "<div class='block100 go_left'><a class='show_parent' data-parent='".$menu_array[$counter]['id']."'>Show/Hide</a></div>";
+	    echo "<div class='block100 go_left'><a id='edit_parent' data-parent-item='".$menu_array[$counter]['id']."' data-parent-name='".$menu_array[$counter]['link_name']."'>Edit</a></div>";
+	    echo "<div class='block100 go_left'><a id='delete_parent' data-menu-id='".$menu_array[$counter]['id']."' data-parent-id='".$menu_array[$counter]['parent_id']."'>Delete</a></div>";
+	    echo "</div>"; // end of parent menu row div
+	    
+	    
+	    echo "<div id='sub_window_".$menu_array[$counter]['id']."'  class='sub_menu'>"; //sub window wrapper
+	    $counter2=0;
+						    
+	    while($counter2 < count($menu_array[$counter]['submenu'])): //loop through sub menus
+		    ?>					
+		    <!--IF THERE ARE SUB MENUS -->				
+		    <div class='clearfix bot5' id='sub_menulist_<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>'> <!-- Sub Menu Row -->
+			    <div class='pad2 block250 go_left'><?php echo $menu_array[$counter]['submenu'][$counter2]['link_name']; ?></div>
+			    <div class='block100 go_left'>
+				    <a class='show_sub' data-submenu_id='<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>' 
+					    data-submenu_name='<?php echo $menu_array[$counter]['submenu'][$counter2]['link_name']; ?>'
+					    data-submenu_url='<?php echo $menu_array[$counter]['submenu'][$counter2]['url']; ?>'>Edit</a>
+			    </div>
+			    <div class='block100 go_left'>
+				    <a id='delete_sub' data-menu_id='<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>'>Delete</a>
+			    </div>
+		    </div><!-- End of Sub Menu Row -->
+		    
+		    <?php	
+		    $counter2++;
+		    
+	    endwhile;
+	    
+	    echo "</div>"; //close subwindow div
+	    echo "</div>";
+	    $counter++;
 		
-		echo "To re-arrange the order, simply drag and drop.";
-		//WRAPPER
-		echo "<div class='block_top_bord' id='parentlist'>";
-		
-		$counter=0;
-		while($counter < count($menu_array)): //loop through parent
-			//PARENT MENUS
-			echo "<div class='menu_wrapper' id='parent_".$menu_array[$counter]['id']."'>"; //Parent Menu wrapper including sub menu window
-			echo "<div class='clearfix title_parent'>"; //Parent Menu Row
-			echo "<div class='block250 go_left'>".$menu_array[$counter]['link_name']."</div>";
-			echo "<div class='block100 go_left'><a class='show_parent' data-parent='".$menu_array[$counter]['id']."'>Show/Hide</a></div>";
-			echo "<div class='block100 go_left'><a id='edit_parent' data-parent-item='".$menu_array[$counter]['id']."' data-parent-name='".$menu_array[$counter]['link_name']."'>Edit</a></div>";
-			echo "<div class='block100 go_left'><a id='delete_parent' data-menu-id='".$menu_array[$counter]['id']."' data-parent-id='".$menu_array[$counter]['parent_id']."'>Delete</a></div>";
-			echo "</div>"; // end of parent menu row div
-			
-			
-			echo "<div id='sub_window_".$menu_array[$counter]['id']."'  class='sub_menu'>"; //sub window wrapper
-			$counter2=0;
-								
-			while($counter2 < count($menu_array[$counter]['submenu'])): //loop through sub menus
-				?>					
-				<!--IF THERE ARE SUB MENUS -->				
-				<div class='clearfix bot5' id='sub_menulist_<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>'> <!-- Sub Menu Row -->
-					<div class='pad2 block250 go_left'><?php echo $menu_array[$counter]['submenu'][$counter2]['link_name']; ?></div>
-					<div class='block100 go_left'>
-						<a class='show_sub' data-submenu_id='<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>' 
-							data-submenu_name='<?php echo $menu_array[$counter]['submenu'][$counter2]['link_name']; ?>'
-							data-submenu_url='<?php echo $menu_array[$counter]['submenu'][$counter2]['url']; ?>'>Edit</a>
-					</div>
-					<div class='block100 go_left'>
-						<a id='delete_sub' data-menu_id='<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>'>Delete</a>
-					</div>
-				</div><!-- End of Sub Menu Row -->
-				
-				<?php	
-				$counter2++;
-				
-			endwhile;
-			
-			echo "</div>"; //close subwindow div
-			echo "</div>";
-			$counter++;
-			
-		endwhile;
-		
-		echo "</div>";	 
-	}
+	endwhile;
+	
+	echo "</div>";	 
+    }
 
 }
 ?>

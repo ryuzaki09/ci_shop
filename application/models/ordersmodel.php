@@ -67,12 +67,12 @@ class Ordersmodel extends Commonmodel {
 		: false;
     }
 
-    public function get_pending_orders(){
-        $this->logger->info("Getting pending orders");
-	$this->db->select('status, order_no, order_created, total_price');
+    public function get_pending_approved_orders($status){
+        $this->logger->info("Getting $status orders");
+	$this->db->select('orders.oid, status, order_no, order_created, total_price');
 	$this->db->from('orders');
 	$this->db->join('order_details', 'orders.oid=order_details.oid');
-	$this->db->where('status', 'pending');
+	$this->db->where('status', $status);
 	$this->db->group_by('order_no');
 
 	$result = $this->db->get();

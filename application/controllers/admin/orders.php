@@ -11,7 +11,7 @@ class Orders extends CI_Controller {
 
 	
     public function pending(){
-        $data['result'] = $this->ordersmodel->get_pending_orders();
+        $data['result'] = $this->ordersmodel->get_pending_approved_orders('pending');
 
         $data['pagetitle'] = "Orders | Pending";
 
@@ -54,6 +54,13 @@ class Orders extends CI_Controller {
 
     }
 
+    public function approved(){
+	
+        $data['result'] = $this->ordersmodel->get_pending_approved_orders('approved');
+	$data['pagetitle'] = "Approved Orders";
+
+	$this->adminpage->loadpage("admin/orders/approved", $data);
+    }
 
     public function approve_order($oid){
 	
@@ -67,9 +74,9 @@ class Orders extends CI_Controller {
 
 	    $result = $this->ordersmodel->admin_approve_order($oid);
 	    if($result)
-		$this->session->set_flashdata("message", "Order $oid has been approved");
+		$this->session->set_flashdata("message", "<div class='alert alert-success'>Order $oid has been approved</div>");
 	    else
-		$this->session->set_flashdata("message", "Order $oid cannot be approved");
+		$this->session->set_flashdata("message", "<div class='alert alert-danger'>Order $oid cannot be approved</div>");
 
 	    redirect("/admin/orders/pending");
 		
