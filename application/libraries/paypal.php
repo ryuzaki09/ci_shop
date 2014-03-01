@@ -1,16 +1,21 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Paypal {
-    private $url = false;
-    private $secret = false;
-    private $clientId = false;
+    private $url;
+    private $secret;
+    private $clientId;
+    private $return_url; 
+    private $cancel_url;
 
     public function __construct(){
+	parent::__construct();
 	$this->CI =& get_instance();
 	$this->CI->load->library('curl');
 	$this->CI->url		= commonclass::getConfig("shoplongdestiny.paypal_endpoint");
 	$this->CI->clientId 	= commonclass::getConfig("shoplongdestiny.paypal_client_id");
 	$this->CI->secret 	= commonclass::getConfig("shoplongdestiny.paypal_secret");
+	$this->CI->return_url	= base_url()."basket/paypal_callback";
+	$this->CI->cancel_url	= base_url()."basket/checkout";
     }
 
     public function getAccessToken(){
@@ -27,7 +32,7 @@ class Paypal {
 	$response = $this->CI->curl->curlexec();
 
 	if(empty($response))
-	    $this->CI->logger->info("cannot get paypal access token");
+	    $this->CI->logger->error("cannot get paypal access token");
 	else {
 	    $this->CI->logger->info("paypal access token received");
 	    return (json_decode($response));	
@@ -41,8 +46,8 @@ class Paypal {
 		
 	//put all sale data together
 	$saledata = array("intent" => "sale",
-			"redirect_urls" => array("return_url" => "http://shoplongdestiny.dev/basket/paypal_callback", 
-						"cancel_url" => "http://www.ebuyer.com"
+			"redirect_urls" => array("return_url" => $this->CI->return_url,
+						"cancel_url" => $this->CI->cancel_url,
 						),
 						"payer" => array("payment_method" => "paypal"),
 						"transactions" => array(
@@ -61,6 +66,7 @@ class Paypal {
 									    )
 						)
 			);
+	$this->CI->logger->info("sale data: ".var_export($saledata, true));
 	$sale_json = json_encode($saledata);
 		
 	//send request to paypal
@@ -170,4 +176,10 @@ class Paypal {
 
     }
 
+    
+    public function list_payments(){
+	$access_token = $this->getAccessToken();
+	return $access_token;
+
+    }
 }

@@ -6,10 +6,8 @@ class Basket extends CI_Controller {
     
     public function __construct(){
         parent::__construct();
-        $this->load->model('commonmodel');
         $this->load->model('productsmodel');
         $this->load->library('loadpage');
-        $this->load->library('auth');
     }
     
     public function index(){
@@ -31,6 +29,7 @@ class Basket extends CI_Controller {
 
     //confirmation page to checkout and require customer to be logged in.
     public function checkout(){
+
         $data['environment'] = (ENVIRONMENT == "development")
                             ? true
                             :false;

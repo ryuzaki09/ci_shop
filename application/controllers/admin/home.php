@@ -41,8 +41,8 @@ class Home extends CI_Controller {
 		    $result = $this->commonmodel->db_insert_menu($linkname, $parentID, $linkurl);
 		    
 		    $data['message'] = ($result)
-			    ? "Sub Menu Added!"
-			    : "Failed to add Sub Menu!";
+			    ? "<div class='alert alert-success'>Sub Menu Added!</div>"
+			    : "<div class='alert alert-danger'>Failed to add Sub Menu!</div>";
 	    } else {
 		    $data['message'] = "Cannot Add. Please try again!";
 	    }			
@@ -73,21 +73,21 @@ class Home extends CI_Controller {
 	    
 	    //check if parent id or submenu id is submitted and build array to update	
 	    if($parentmenu_id>0){
-		    $menu_id = $parentmenu_id;
-		    $updatedata = array('link_name' => $this->input->post('parentname', true));
+		$menu_id = $parentmenu_id;
+		$updatedata = array('link_name' => $this->input->post('parentname', true));
 	    } elseif($submenu_id>0){
-		    $menu_id = $submenu_id;	
-		    $updatedata = array('link_name' => $this->input->post('subname', true),
-					'url' => $this->input->post('suburl', true));
+		$menu_id = $submenu_id;	
+		$updatedata = array('link_name' => $this->input->post('subname', true),
+				    'url' => $this->input->post('suburl', true));
 		    
 	    }			
 				    
 	    $result = $this->commonmodel->db_update_submenu($updatedata, $menu_id);
 	    
 	    if($result)
-		$this->session->set_flashdata('message', 'Changes updated!');
+		$this->session->set_flashdata('message', '<div class="alert alert-success">Changes updated!</div>');
 	     else 
-		$this->session->set_flashdata('message', 'Cannot Update!');
+		$this->session->set_flashdata('message', '<div class="alert alert-danger">Cannot Update!</div>');
 	    
 	    
 	    redirect(base_url().'admin/home/menulist');
