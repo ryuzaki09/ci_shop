@@ -181,17 +181,23 @@ class Paypal {
 	if(!$access_details)
 	    return;
 
-	$url = $this->CI->url."/v1/payments/payment/";
+	$url = $this->CI->url."/v1/payments/payment/?start_time=2014-03-01T11:00:00Z";
 
-        $headers_data = array("Content-Type: application/json",
+	$headers_data = array("Content-Type: application/json",
 				"Authorization: Bearer ".$access_details->access_token);
+	// $saledata = array( "start_time : 2014-02-15T12:00:22Z");
+	
+	// $sale_json = json_encode($saledata);
+
 	try {
 	    $this->CI->curl->curl_url($url);
 	    $this->CI->curl->headers(false);
 	    $this->CI->curl->curl_ssl(false);
 	    $this->CI->curl->curl_get(true);
+	    // $this->CI->curl->curl_post(true);
 	    $this->CI->curl->returnTransfer(true);
 	    $this->CI->curl->http_header($headers_data);
+	    // $this->CI->curl->postfields($sale_json);
 
 	    $response = $this->CI->curl->curlexec();
 	    $this->CI->curl->closeCurl();

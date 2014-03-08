@@ -136,6 +136,7 @@ li.clearfix {
 .go_left { float:left; }
 .go_right { float:right; }
 .label2 { width:150px; margin-right:10px; }
+.list:hover { background-color: #ede2dc; }
 .list_div { padding:10px; margin-bottom:5px; }
 .list_product { height: 190px; overflow: hidden; }
 .list_product img { max-width:190px; max-height:190px;}

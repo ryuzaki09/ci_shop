@@ -33,8 +33,8 @@ class Home extends CI_Controller {
 		    $result = $this->commonmodel->db_insert_menu($linkname);
 						    
 		    $data['message'] = ($result)
-			    ? "Parent Menu Added!"
-			    : "Failed to add Parent Menu!";				
+			    ? "<div class='alert alert-success'>Parent Menu Added!</div>"
+			    : "<div class='alert alert-danger'>Failed to add Parent Menu!</div>";
 	    //Add submenu - check inputs	
 	    } elseif($linkname != "" && $parent =="No" && $linkurl != "" && $parentID >0){
 		    

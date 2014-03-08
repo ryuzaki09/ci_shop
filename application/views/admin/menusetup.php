@@ -76,20 +76,20 @@ if($pagetitle == "Admin Menu List"){ //ADMIN MENU LIST PAGE
 	    while($counter2 < count(@$menu_array[$counter]['submenu'])): //loop through sub menus
 		    ?>					
 		    <!--IF THERE ARE SUB MENUS -->				
-		    <div class='clearfix bot5' id='sub_menulist_<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>'> <!-- Sub Menu Row -->
-			    <div class='pad2 block250 go_left'><?php echo $menu_array[$counter]['submenu'][$counter2]['link_name']; ?></div>
-			    <div class='block100 go_left'>
-				    <a class='show_sub' data-submenu_id='<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>' 
-					    data-submenu_name='<?php echo $menu_array[$counter]['submenu'][$counter2]['link_name']; ?>'
-					    data-submenu_url='<?php echo $menu_array[$counter]['submenu'][$counter2]['url']; ?>'>Edit</a>
-			    </div>
-			    <div class='block100 go_left'>
-				    <a id='delete_sub' data-menu_id='<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>'>Delete</a>
-			    </div>
-		    </div><!-- End of Sub Menu Row -->
-		    
-		    <?php	
-		    $counter2++;
+		<div class='clearfix bot5 list' id='sub_menulist_<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>'><!-- Sub Menu Row -->
+			<div class='pad2 block250 go_left'><?php echo $menu_array[$counter]['submenu'][$counter2]['link_name']; ?></div>
+			<div class='block100 go_left'>
+				<a class='show_sub' data-submenu_id='<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>' 
+					data-submenu_name='<?php echo $menu_array[$counter]['submenu'][$counter2]['link_name']; ?>'
+					data-submenu_url='<?php echo $menu_array[$counter]['submenu'][$counter2]['url']; ?>'>Edit</a>
+			</div>
+			<div class='block100 go_left'>
+				<a id='delete_sub' data-menu_id='<?php echo $menu_array[$counter]['submenu'][$counter2]['id']; ?>'>Delete</a>
+			</div>
+		</div><!-- End of Sub Menu Row -->
+		
+		<?php	
+		$counter2++;
 		    
 	    endwhile;
 	    
@@ -203,7 +203,7 @@ $('.sub_menu #delete_sub').click(function(){
 	}
 });
 
-$(document).ready(function(){
+$(function(){
     $(function() {
 	$( "#sub_dialog, #parent_dialog" ).dialog({
 	    autoOpen: false,
