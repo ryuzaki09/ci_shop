@@ -8,7 +8,6 @@ class Paypal {
     private $cancel_url;
 
     public function __construct(){
-	parent::__construct();
 	$this->CI =& get_instance();
 	$this->CI->load->library('curl');
 	$this->CI->url		= commonclass::getConfig("shoplongdestiny.paypal_endpoint");
@@ -145,7 +144,6 @@ class Paypal {
 		
         $headers_data = array("Content-Type: application/json",
 				"Authorization: Bearer ".$access_token);
-				// "Content-length: ".strlen($post_json));
 
 	$url = $this->CI->url."/v1/payments/payment/".$paypal_id;
 
@@ -178,8 +176,36 @@ class Paypal {
 
     
     public function list_payments(){
-	$access_token = $this->getAccessToken();
-	return $access_token;
+	$access_details = $this->getAccessToken();
+
+	if(!$access_details)
+	    return;
+
+	$url = $this->CI->url."/v1/payments/payment/";
+
+        $headers_data = array("Content-Type: application/json",
+				"Authorization: Bearer ".$access_details->access_token);
+	try {
+	    $this->CI->curl->curl_url($url);
+	    $this->CI->curl->headers(false);
+	    $this->CI->curl->curl_ssl(false);
+	    $this->CI->curl->curl_get(true);
+	    $this->CI->curl->returnTransfer(true);
+	    $this->CI->curl->http_header($headers_data);
+
+	    $response = $this->CI->curl->curlexec();
+	    $this->CI->curl->closeCurl();
+	    $json_response = json_decode($response);
+	    $this->CI->logger->info("response: ".var_export($json_response, true));	
+
+	} catch(Exception $e) {
+
+	    $this->CI->logger->error("Cannot retreive list payments :".$e->getMessage());
+	}
+
+	return (($response) && !empty($response))
+		? $json_response
+		: false;
 
     }
 }

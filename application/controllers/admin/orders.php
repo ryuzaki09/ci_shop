@@ -84,4 +84,21 @@ class Orders extends CI_Controller {
 
     }
 
+    public function payments_lookup(){
+
+	if($this->input->post("search") == "List Payments!"){
+	    $this->load->library('paypal');
+	    $data['result'] = $this->paypal->list_payments();
+	    echo "<pre>";
+	    print_r($data);
+	    echo "</pre>";
+
+	}
+
+	$data['pagetitle'] = "List paypal payments";
+	$this->adminpage->loadpage("admin/orders/list_payments", $data);
+
+
+    }
+
 }
