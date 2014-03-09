@@ -175,19 +175,21 @@ class Paypal {
     }
 
     
-    public function list_payments(){
+    public function list_payments($filter=false){
 	$access_details = $this->getAccessToken();
 
 	if(!$access_details)
 	    return;
+	
 
-	$url = $this->CI->url."/v1/payments/payment/?start_time=2014-03-01T11:00:00Z";
+	$url = $this->CI->url."/v1/payments/payment/";
+
+	if($filter)
+	    $url .= "?".$filter;
 
 	$headers_data = array("Content-Type: application/json",
 				"Authorization: Bearer ".$access_details->access_token);
-	// $saledata = array( "start_time : 2014-02-15T12:00:22Z");
 	
-	// $sale_json = json_encode($saledata);
 
 	try {
 	    $this->CI->curl->curl_url($url);

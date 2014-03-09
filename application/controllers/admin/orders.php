@@ -87,8 +87,19 @@ class Orders extends CI_Controller {
     public function payments_lookup(){
 
 	if($this->input->post("search") == "List Payments!"){
+	    $filter = null;
+	    foreach($this->input->post() AS $formdata => $value):
+		if($value && $formdata != "search"){
+		    if($formdata == "start_time" || $formdata == "end_time"){
+			$date = new DateTime($value);
+			$filter .= $formdata."=".$date->format("Y-m-d")."T00:00:00Z&";
+		    } else {
+			$filter .= $formdata."=".$value."&";
+		    }
+		}
+	    endforeach;
 	    $this->load->library('paypal');
-	    $data['result'] = $this->paypal->list_payments();
+	    $data['result'] = $this->paypal->list_payments($filter);
 	    echo "<pre>";
 	    print_r($data);
 	    echo "</pre>";

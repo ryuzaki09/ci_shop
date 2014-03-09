@@ -167,3 +167,8 @@ li.clearfix {
 
 .top_border { border-top:1px solid #cacaca; }
 .top_space { margin-top:10px; }
+
+
+/* FORMS */
+label.wid150 { width:150px; display:inline-block; }
+.datepick { width:100px; }
