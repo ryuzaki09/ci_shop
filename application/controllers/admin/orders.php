@@ -43,9 +43,6 @@ class Orders extends CI_Controller {
 	    }
 	}
 		
-        // echo "<pre>";
-        // print_r($paypal_result);
-        // echo "</pre>";
         $data['order_info']	= $result;
         $data['paypal_result'] = $paypal_result;
         $data['pagetitle'] 	= "Order Details";
@@ -87,6 +84,7 @@ class Orders extends CI_Controller {
     public function payments_lookup(){
 
 	if($this->input->post("search") == "List Payments!"){
+	    //loop through POST to concatenate the filter string
 	    $filter = null;
 	    foreach($this->input->post() AS $formdata => $value):
 		if($value && $formdata != "search"){
@@ -98,11 +96,13 @@ class Orders extends CI_Controller {
 		    }
 		}
 	    endforeach;
+
+	    $this->logger->info("Paypal filter string: ".$filter);
 	    $this->load->library('paypal');
 	    $data['result'] = $this->paypal->list_payments($filter);
-	    echo "<pre>";
-	    print_r($data);
-	    echo "</pre>";
+	    // echo "<pre>";
+	    // print_r($data);
+	    // echo "</pre>";
 
 	}
 

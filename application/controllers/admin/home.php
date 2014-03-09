@@ -44,7 +44,7 @@ class Home extends CI_Controller {
 			    ? "<div class='alert alert-success'>Sub Menu Added!</div>"
 			    : "<div class='alert alert-danger'>Failed to add Sub Menu!</div>";
 	    } else {
-		    $data['message'] = "Cannot Add. Please try again!";
+		    $data['message'] = "<div class='alert alert-danger'>Cannot Add. Please try again!</div>";
 	    }			
 			
 	}

@@ -8,8 +8,9 @@ class Login extends CI_Controller{
     }
     
     public function index(){
-        
-        $this->adminpage->loadpage('admin/login', false, false);
+
+	$data['pagetitle'] =" Admin Login";
+        $this->adminpage->loadpage('admin/login', $data, false);
         
     }
     
