@@ -1,3 +1,12 @@
+Version 0.3.2
+ - added check in shopping basket to show message if there is no items.
+ - fixed bug where it was not inserting oid in order_details table when completing purchase.
+ - bootstrap css added to admin templates.
+ - admin is now able to approve orders from the pending orders list.
+ - approved orders list have been added.
+ - buttons have been update to twitter bootstrap buttons
+ - admin footer 'year' have been made dynamic and changed title to be same as page title.
+
 Version 0.3.1
  - customer is now redirected to Order Completed page once the paypal payment is completed.
 
