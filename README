@@ -1,3 +1,7 @@
+Version 0.3.3
+ - added jquery validation file 
+ - added voucher controller and create voucher view
+
 Version 0.3.2
  - added check in shopping basket to show message if there is no items.
  - fixed bug where it was not inserting oid in order_details table when completing purchase.
