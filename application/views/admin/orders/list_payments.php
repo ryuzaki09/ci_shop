@@ -40,11 +40,3 @@ if(@$result && !empty($result)){
 ?>
 
 
-<script>
-$(function(){
-
-    $('.datepick').datepicker();
-
-});
-
-</script>

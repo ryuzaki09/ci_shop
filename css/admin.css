@@ -170,5 +170,7 @@ li.clearfix {
 
 
 /* FORMS */
+input[type=text].price { width:100px; }
 label.wid150 { width:150px; display:inline-block; }
+label.wid250 { width:250px; display:inline-block; }
 .datepick { width:100px; }

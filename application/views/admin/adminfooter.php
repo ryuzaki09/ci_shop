@@ -12,5 +12,14 @@
 <div id="footer" class="clearfix" style="margin-top:30px;">
 	Copyrights &copy; All Reserved by L Luong <?php echo date('Y'); ?>.
 </div>
+
+<script>
+$(function(){
+
+    $('.datepick').datepicker();
+
+});
+
+</script>
 </body>
 </html>
