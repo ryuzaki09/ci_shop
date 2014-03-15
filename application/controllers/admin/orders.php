@@ -78,7 +78,6 @@ class Orders extends CI_Controller {
 	    redirect("/admin/orders/pending");
 		
 	}
-
     }
 
     public function payments_lookup(){

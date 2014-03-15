@@ -8,8 +8,7 @@ class Login extends CI_Controller{
     }
     
     public function index(){
-
-	$data['pagetitle'] =" Admin Login";
+	$data['pagetitle'] = "Admin Login";
         $this->adminpage->loadpage('admin/login', $data, false);
         
     }

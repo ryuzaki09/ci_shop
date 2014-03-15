@@ -11,8 +11,10 @@ class Home extends CI_Controller {
     }
     
     public function index(){        
+
+	$data['pagetitle'] = "Admin Home";
         
-        $this->adminpage->loadpage('admin/adminpage');
+        $this->adminpage->loadpage('admin/adminpage', $data);
         
     }
     
