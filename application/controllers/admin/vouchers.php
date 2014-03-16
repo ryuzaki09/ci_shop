@@ -24,13 +24,15 @@ class Vouchers extends CI_Controller {
 				'date_created'	=> date('Y-m-d H:i:s')
 				);
 
+	    $this->logger->info("creating voucher: ".var_export($insertdata, true));
+
 	    $result = $this->ordersmodel->insertVoucher($insertdata);
 
 	    if($result){
-		$this->session->set_flashdata('message', 'Voucher code created!');
+		$this->session->set_flashdata('message', '<div class="alert alert-success">Voucher code created!</div>');
 		redirect('/admin/vouchers/listing');
 	    } else {
-		$data['message'] = "Something went wrong! Cannot create voucher!";
+		$data['message'] = "<div class='alert alert-danger'>Something went wrong! Cannot create voucher!</div>";
 	    }
 
 	}

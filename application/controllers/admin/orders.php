@@ -99,9 +99,6 @@ class Orders extends CI_Controller {
 	    $this->logger->info("Paypal filter string: ".$filter);
 	    $this->load->library('paypal');
 	    $data['result'] = $this->paypal->list_payments($filter);
-	    // echo "<pre>";
-	    // print_r($data);
-	    // echo "</pre>";
 
 	}
 
