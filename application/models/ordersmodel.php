@@ -7,6 +7,14 @@ class Ordersmodel extends Commonmodel {
 	parent::__construct();
     }
 
+    /**
+     * create_order 
+     * 
+     * @param mixed $data 
+     * @param mixed $additional_prices 
+     * @access public
+     * @return void
+     */
     public function create_order($data, $additional_prices){
 	if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices)){
 	    $orderData = array("customer_id" => $data[0]['cid'],
@@ -50,6 +58,13 @@ class Ordersmodel extends Commonmodel {
 	}
     }
 
+    /**
+     * create_orderNumber 
+     * 
+     * @param mixed $orderdata 
+     * @access private
+     * @return void
+     */
     private function create_orderNumber($orderdata){
         $this->db->insert($this->table['orders'], $orderdata);
         
@@ -59,6 +74,13 @@ class Ordersmodel extends Commonmodel {
 
     }
 
+    /**
+     * createTransaction 
+     * 
+     * @param mixed $data 
+     * @access public
+     * @return void
+     */
     public function createTransaction($data){
         
         $this->db->insert($this->table['trx'], $data);
@@ -67,6 +89,13 @@ class Ordersmodel extends Commonmodel {
 		: false;
     }
 
+    /**
+     * get_pending_approved_orders 
+     * 
+     * @param mixed $status 
+     * @access public
+     * @return void
+     */
     public function get_pending_approved_orders($status){
         $this->logger->info("Getting $status orders");
 	$this->db->select('orders.oid, status, order_no, order_created, total_price');
@@ -83,6 +112,13 @@ class Ordersmodel extends Commonmodel {
     }
 
 
+    /**
+     * get_order_details 
+     * 
+     * @param mixed $order_no 
+     * @access public
+     * @return void
+     */
     public function get_order_details($order_no){
 	$this->logger->info("retrieving order details");
 	$this->db->select('firstname, lastname, name, orders.oid, products.price, qty, cid, order_no, total, order_created, external_ref, method');
@@ -100,6 +136,13 @@ class Ordersmodel extends Commonmodel {
 
     }
 
+    /**
+     * admin_approve_order 
+     * 
+     * @param mixed $oid 
+     * @access public
+     * @return void
+     */
     public function admin_approve_order($oid){
 	$data = array('status' => 'approved');
 
@@ -111,5 +154,16 @@ class Ordersmodel extends Commonmodel {
 		: false;
 
     }
+    
+    /**
+     * insertVoucher 
+     * 
+     * @param mixed $code 
+     * @param mixed $expiry_date 
+     * @access public
+     * @return void
+     */
+    public function insertVoucher($code, $expiry_date){
 
+    }
 }
