@@ -158,12 +158,28 @@ class Ordersmodel extends Commonmodel {
     /**
      * insertVoucher 
      * 
-     * @param mixed $code 
-     * @param mixed $expiry_date 
+     * @param mixed $data 
      * @access public
      * @return void
      */
-    public function insertVoucher($code, $expiry_date){
+    public function insertVoucher($data){
 
+	if(is_array($data) && !empty($data)){
+	    $this->db->insert('vouchers', $data);
+
+	    return ($this->db->affected_rows()>0)
+		    ? true
+		    : false;
+	}
+
+    }
+
+
+    public function getVoucherList(){
+	$result = $this->db->get('vouchers');
+
+	return ($result->num_rows()>0)
+		? $result->result_array()
+		: false;
     }
 }

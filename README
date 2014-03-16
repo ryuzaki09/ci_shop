@@ -1,3 +1,6 @@
+Version 0.3.4
+ - added voucher generation and listing.
+
 Version 0.3.3
  - added jquery validation file 
  - added voucher controller and create voucher view
