@@ -108,4 +108,10 @@ class Orders extends CI_Controller {
 
     }
 
+    
+    public function paypalrefund($oid, $sale_id){
+        
+        $this->load->library('paypal');
+
+    }
 }

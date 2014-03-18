@@ -98,9 +98,10 @@ class Ordersmodel extends Commonmodel {
      */
     public function get_pending_approved_orders($status){
         $this->logger->info("Getting $status orders");
-	$this->db->select('orders.oid, status, order_no, order_created, total_price');
+	$this->db->select('orders.oid, status, order_no, order_created, total_price, external_ref');
 	$this->db->from('orders');
 	$this->db->join('order_details', 'orders.oid=order_details.oid');
+	$this->db->join('transactions', 'orders.oid=transactions.oid');
 	$this->db->where('status', $status);
 	$this->db->group_by('order_no');
 
