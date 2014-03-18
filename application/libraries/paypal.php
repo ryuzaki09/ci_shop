@@ -216,4 +216,41 @@ class Paypal {
 		: false;
 
     }
+
+    public function refund($sale_id){
+	
+	$access_details = $this->getAccessToken();
+
+	if(!$access_details)
+	    throw new Exception("Cannot get access details");
+
+	$url = $this->CI->url."/v1/payments/sale/".$sale_id."/refund";
+	
+	$postdata = array( 
+			"amount" => array(
+					"total" => "2.20",
+					"currency" => "USD"
+					)
+			);
+	$post_json = json_encode($postdata);				    
+        $headers_data = array("Content-Type: application/json",
+				"Authorization: Bearer ".$access_details->access_token,
+				"Content-length: ".strlen($post_json));
+
+	$this->CI->curl->curl_url($url);
+	$this->CI->curl->headers(false);
+	$this->CI->curl->curl_ssl(false);
+	$this->CI->curl->curl_post(true);
+	$this->CI->curl->returnTransfer(true);
+	$this->CI->curl->http_header($headers_data);
+	$this->CI->curl->postfields($post_json);
+
+	$response = $this->CI->curl->curlexec();
+	$this->CI->curl->closeCurl();
+	$json_response = json_decode($response);
+	$this->CI->logger->info("response: ".var_export($json_response, true));	
+
+		
+
+    }
 }
