@@ -96,7 +96,7 @@ class Ordersmodel extends Commonmodel {
      * @access public
      * @return void
      */
-    public function get_pending_approved_orders($status){
+    public function get_orders($status){
         $this->logger->info("Getting $status orders");
 	$this->db->select('orders.oid, status, order_no, order_created, total_price, external_ref');
 	$this->db->from('orders');
@@ -144,8 +144,8 @@ class Ordersmodel extends Commonmodel {
      * @access public
      * @return void
      */
-    public function admin_approve_order($oid){
-	$data = array('status' => 'approved');
+    public function admin_approve_disapprove_order($oid, $status){
+	$data = array('status' => $status);
 
 	$this->db->where('oid', $oid);
 	$this->db->update('orders', $data);

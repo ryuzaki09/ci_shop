@@ -23,7 +23,15 @@ if(is_array($result) && !empty($result)){
 <script>
 $('#disapprove').click(function(){
     var oid = $(this).data('oid');
-    $('#list_'+oid).slideUp();
+    var response = confirm("Disapprove order "+oid+"?");
+    if(response){
+	$.post("disapprove_order", {"oid": oid}, function(data){
+	    if(data == "true")
+		$('#list_'+oid).slideUp();
+	    else
+		alert("Cannot disapprove order "+oid);
+	});
+    }
 });
 
 $('#refund').click(function(){

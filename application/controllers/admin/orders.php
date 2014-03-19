@@ -53,10 +53,17 @@ class Orders extends CI_Controller {
 
     public function approved(){
 	
-        $data['result'] = $this->ordersmodel->get_pending_approved_orders('approved');
+        $data['result'] = $this->ordersmodel->get_orders('approved');
 	$data['pagetitle'] = "Approved Orders";
 
 	$this->adminpage->loadpage("admin/orders/approved", $data);
+    }
+
+    public function disapproved(){
+	$data['result'] = $this->ordersmodel->get_orders('disapproved');
+	$data['pagetitle'] = "Disapproved Orders";
+
+	$this->adminpage->loadpage("admin/orders/disapproved", $data);
     }
 
     public function approve_order($oid){
@@ -69,7 +76,7 @@ class Orders extends CI_Controller {
 		redirect("/admin/orders/pending");
 	    }
 
-	    $result = $this->ordersmodel->admin_approve_order($oid);
+	    $result = $this->ordersmodel->admin_approve_disapprove_order($oid, 'approved');
 	    if($result)
 		$this->session->set_flashdata("message", "<div class='alert alert-success'>Order $oid has been approved</div>");
 	    else
@@ -78,6 +85,20 @@ class Orders extends CI_Controller {
 	    redirect("/admin/orders/pending");
 		
 	}
+    }
+
+    public function disapprove_order(){
+	if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
+		$oid = $this->input->post('oid', true);
+		$this->logger->info("Disapprove order: ".$oid);
+
+		$result = $this->ordersmodel->admin_approve_disapprove_order($oid, 'disapproved');
+		echo ($result)
+		    ? "true"
+		    : "false";
+		
+	}
+
     }
 
     public function payments_lookup(){
