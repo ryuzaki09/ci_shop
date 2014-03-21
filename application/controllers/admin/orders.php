@@ -132,7 +132,20 @@ class Orders extends CI_Controller {
     
     public function paypalrefund($oid, $sale_id){
         
-        $this->load->library('paypal');
+	$this->load->library('paypal');
+	// $this->paypal->refund($sale_id);
 
+    }
+
+    public function ajaxApproveOrder(){
+	
+	if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')){
+	    $oid = $this->input->post("oid", true);    
+	    $result = $this->ordersmodel->admin_approve_disapprove_order($oid, 'approved');
+
+	    echo ($result)
+		? "true"
+		: "false";
+	}
     }
 }

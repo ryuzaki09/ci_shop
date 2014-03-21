@@ -248,9 +248,15 @@ class Paypal {
 	$response = $this->CI->curl->curlexec();
 	$this->CI->curl->closeCurl();
 	$json_response = json_decode($response);
-	$this->CI->logger->info("response: ".var_export($json_response, true));	
 
-		
+	if(!$response)
+	    throw new Exception("There is no response from trying to refund a sale");
+	else
+	    $this->CI->logger->info("response: ".var_export($json_response, true));	
+
+	return (($response) && !empty($response))
+		? $json_response
+		: false;
 
     }
 }

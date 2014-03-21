@@ -11,8 +11,8 @@ if(is_array($result) && !empty($result)){
 	    Order No. <a href="#"><?php echo $data['order_no']; ?></a><br />
 	    Total Price: &pound;<?php echo $data['total_price']; ?><br />
 	    Order Created: <?php echo $data['order_created']; ?><br /><br />
-	    <input type="button" id="disapprove" class="btn btn-primary btn-small" value="Disapprove" data-oid="<?php echo $data['oid']; ?>" />
-            <input type="button" id="refund" class="btn btn-primary btn-small" value="Refund" 
+	    <input type="button" class="disapprove btn btn-primary btn-small" value="Disapprove" data-oid="<?php echo $data['oid']; ?>" />
+            <input type="button" class="refund btn btn-primary btn-small" value="Refund" 
                 data-oid="<?php echo $data['oid']; ?>" data-saleid="<?php echo $external_ref->sales_id; ?>" />
 	</div>
 	<?php
@@ -21,7 +21,7 @@ if(is_array($result) && !empty($result)){
 ?>
 
 <script>
-$('#disapprove').click(function(){
+$('.disapprove').click(function(){
     var oid = $(this).data('oid');
     var response = confirm("Disapprove order "+oid+"?");
     if(response){
