@@ -78,12 +78,14 @@ class Account extends CI_Controller {
 	    $config['total_rows'] = $total[0]['count'];
 	    $config['per_page'] = 10;
 	    $config['uri_segment'] = 3;
+	    $config['full_tag_open'] = "<div class='page_links'>";
+	    $config['full_tag_close'] = "</div>";
 
 	    $this->pagination->initialize($config);
 
 	    $data['result'] = $this->ordersmodel->getCustomerOrders($uid, $config['per_page'], $offset);
 
-	    $data['pagetitle'] = "Order history";
+	    $data['pagetitle'] = "Order History";
 
 	    $this->loadpage->loadpage("user/orders", $data);
 	

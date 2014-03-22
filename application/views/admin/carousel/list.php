@@ -37,13 +37,16 @@ if (is_array($result) && !empty($result)){ ?>
 		    <input type="text" id="position_<?php echo $output['id']; ?>" value="<?php echo $output['position']; ?>" />
 		</div><br/><br/>
         	<div class="go_left block150">
-		    <input type="button" name="update" value="Update" onclick="update_item('<?php echo $output['id']; ?>');" />
+		    <input type="button" name="update" class="btn btn-small btn-primary" 
+			    value="Update" onclick="update_item('<?php echo $output['id']; ?>');" />
 		</div>
 	    </div>
 	</li>
-<?php } ?>
+	<?php 
+	} 
+	?>
     </ul>
-<?php
+    <?php
 }
 
 ?>
