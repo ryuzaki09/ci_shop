@@ -1,3 +1,6 @@
+Version 0.3.6
+ - customers order history page is now showing the orders list along with pagination.
+
 Version 0.3.5
  - added customer orders page. returning the results but still need to style page.
 

@@ -184,11 +184,20 @@ class Ordersmodel extends Commonmodel {
 		: false;
     }
     
-    public function getCustomerOrders($uid){
-	$this->db->select("orders.order_created, status, order_details.order_no, order_details.price, qty, currency, products.name");
+    public function getCustomerOrders($uid, $limit=false, $offset=false, $total=false){
+	//if selecting total then just select the count
+	if($total == "total")
+	    $this->db->select("count(*) AS count");
+	else
+	    $this->db->select("orders.order_created, status, order_details.order_no, 
+				order_details.price, qty, currency, products.name");
+
 	$this->db->join("order_details", "orders.oid=order_details.oid");
 	$this->db->join("products", "order_details.pid=products.pid");
 	$this->db->where("customer_id", $uid);
+
+	if($limit)
+	    $this->db->limit($limit, $offset);
 	
 	$result = $this->db->get("orders");
 
@@ -197,4 +206,5 @@ class Ordersmodel extends Commonmodel {
 		: false;
 
     }
+    
 }

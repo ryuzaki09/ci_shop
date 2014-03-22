@@ -24,18 +24,19 @@ class User extends CI_Controller {
                 $result = $this->usermodel->db_get_user($email, $pwd);
                 if($result){
                     $address = implode(",", array($result->address1, $result->address2));
-                    $session_data= array('customer' => $result->firstname." ".$result->lastname,
-                                            'uid' => $result->uid,
-                                            'is_logged_in' => true,
-                                            'user_details' => array('email' => $email,
-                                                                    'address' => $address,
-                                                                    'postcode' => $result->postcode
-                                                                    )
-                                        );
+                    $session_data = array
+				    ('customer' => $result->firstname." ".$result->lastname,
+					'uid' => $result->uid,
+					'is_logged_in' => true,
+					'user_details' => array
+							    ('email' => $email,
+							     'address' => $address,
+							     'postcode' => $result->postcode
+							    )
+                                    );
 
                     $this->session->set_userdata($session_data);
 
-                    //$data['message'] = "Logged in!";
                     redirect(base_url());
 
                 } else {
@@ -46,7 +47,6 @@ class User extends CI_Controller {
             }
              
         }//end if
-        //$data['msg2'] = md5("Password1");
 
         $data['pagetitle'] = "Customer Login";
         $this->loadpage->loadpage('user/login', $data);
@@ -59,7 +59,7 @@ class User extends CI_Controller {
         $this->load->helper('form');
 	$this->load->library('form_validation');
 
-        $this->form_validation->set_rules('email', 'Email',  'trim|required|valid_email|is_unique[users.email]'); //checks for duplicate email in DB
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]'); //checks for duplicate email in DB
 	$this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
 	$this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
 	$this->form_validation->set_rules('password1', 'Password', 'trim|required|matches[password2]|md5');
@@ -170,7 +170,8 @@ class User extends CI_Controller {
                     $this->load->helper('string');
                     $maildata['reset_code'] = random_string('unique');
 		    $maildata['uid'] = $result->uid;
-		    $result2 = $this->usermodel->insert_forgot_pwd($maildata['uid'], $maildata['reset_code']);
+		    $result2 = $this->usermodel->insert_forgot_pwd($maildata['uid'], 
+								    $maildata['reset_code']);
     
                     if($result2){
                         $this->load->library('email');	

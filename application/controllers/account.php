@@ -65,16 +65,23 @@ class Account extends CI_Controller {
 		
     }
 
-    public function orders(){
+    public function orders($offset=false){
 
 	if($this->auth->is_logged_in()){
 	    $uid = $this->session->userdata('uid');
+	    $this->load->library("pagination");
 	    $this->load->model('ordersmodel');
 
-	    $data['result'] = $this->ordersmodel->getCustomerOrders($uid);
-	    echo "<pre>";
-	    print_R($data);
-	    echo "</pre>";
+	    $total = $this->ordersmodel->getCustomerOrders($uid, false, false, 'total');
+
+	    $config['base_url'] = "/".strtolower(__CLASS__)."/".__FUNCTION__."/";
+	    $config['total_rows'] = $total[0]['count'];
+	    $config['per_page'] = 10;
+	    $config['uri_segment'] = 3;
+
+	    $this->pagination->initialize($config);
+
+	    $data['result'] = $this->ordersmodel->getCustomerOrders($uid, $config['per_page'], $offset);
 
 	    $data['pagetitle'] = "Order history";
 
@@ -82,6 +89,5 @@ class Account extends CI_Controller {
 	
 	}
     }
-	
 	
 } 

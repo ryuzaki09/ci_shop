@@ -357,6 +357,8 @@ a:hover.empty_basket { color:#fff; }
 	padding-bottom:10px; border-bottom:1px solid #cacaca;
 }
 
+.list_list_bot_border { padding:10px; border-bottom:1px solid #cacaca; }
+
 .register_block {
 	border: 1px solid #cacaca;
 	padding:10px;
@@ -366,3 +368,7 @@ a:hover.empty_basket { color:#fff; }
 }
 
 .user_details { margin-top:15px; padding-top:10px; border-top:1px solid #cacaca; }
+
+/*FORM */
+label.wid150 { width:150px; display:inline-block; }
+label.wid250 { width:250px; display:inline-block; }
