@@ -4,6 +4,6 @@
 			<li><a href="/account/profile">My Account</a></li>
 			<li><a href="/account/edit">Edit Account Details</a></li>
 			<li><a href="#">Change Payment Details</a></li>
-			<li><a href="#">View Order History</a></li>
+			<li><a href="/account/orders">View Order History</a></li>
 		</ul>
 	</div>

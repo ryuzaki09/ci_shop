@@ -11,7 +11,7 @@ class Orders extends CI_Controller {
 
 	
     public function pending(){
-        $data['result'] = $this->ordersmodel->get_pending_approved_orders('pending');
+        $data['result'] = $this->ordersmodel->get_orders('pending');
 
         $data['pagetitle'] = "Orders | Pending";
 

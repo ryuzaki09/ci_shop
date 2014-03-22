@@ -6,7 +6,6 @@ class Account extends CI_Controller {
 	parent::__construct();
 	$this->load->library('loadpage');
 	$this->load->library('auth');
-	$this->load->model('commonmodel');
 	$this->load->model('usermodel');
     }
 	
@@ -64,6 +63,24 @@ class Account extends CI_Controller {
 	    }
 	}
 		
+    }
+
+    public function orders(){
+
+	if($this->auth->is_logged_in()){
+	    $uid = $this->session->userdata('uid');
+	    $this->load->model('ordersmodel');
+
+	    $data['result'] = $this->ordersmodel->getCustomerOrders($uid);
+	    echo "<pre>";
+	    print_R($data);
+	    echo "</pre>";
+
+	    $data['pagetitle'] = "Order history";
+
+	    $this->loadpage->loadpage("user/orders", $data);
+	
+	}
     }
 	
 	
