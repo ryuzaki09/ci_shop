@@ -1,3 +1,6 @@
+Version 0.3.7
+ - added email confirmation to send when completing an order purchase.
+
 Version 0.3.6
  - customers order history page is now showing the orders list along with pagination.
 
