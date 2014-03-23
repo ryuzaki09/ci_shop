@@ -6,7 +6,6 @@ class Shoppage extends CI_Controller {
         parent::__construct();
         $this->load->library('loadpage');
         $this->load->library('auth');
-        $this->load->model('commonmodel');
         $this->load->model('productsmodel');
     }
     

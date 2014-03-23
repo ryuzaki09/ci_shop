@@ -87,6 +87,8 @@ class User extends CI_Controller {
 					'firstname' => $this->input->post('firstname', true),
 					'lastname' => $this->input->post('lastname', true),
 					'activation_code' => $verification_code);
+		    
+		    $this->logger->info("creating user: ".var_export($insertdata, true));
 
                     $result = $this->usermodel->insert_new_pending_account($insertdata);
 
@@ -98,20 +100,18 @@ class User extends CI_Controller {
 			$maildata['uid'] = $this->db->insert_id();
 			$maildata['code'] = $verification_code;
 			$maildata['email_title'] = "Account Activation";
-			$this->load->library('email', $config);					
-						
+			$this->load->library('email');	
+
 			$this->email->set_newline("\r\n");
 			$this->email->set_mailtype("html");
-						
+
 			//put data into email
 			$email_message = $this->load->view('user/htmlemail', $maildata, true);
-						
+
 			$this->email->from('arlong2k8@googlemail.com', 'Longdestiny');
 			$this->email->to($email);
 			$this->email->subject('Account Activation');
 			$this->email->message($email_message);
-			//$this->email->message('Thank you registering! Please click on the link below to activate your account. <br />http://shop.longdestiny.com/user/verify_email/'.$uid.'/'.$verification_code.' ');
-			//$this->email->set_alt_message('Thank you registering! Please click on the link below to activate your account. <br />http://shop.longdestiny.com/user/verify_email/'.$uid.'/'.$verification_code.' ');
                         $this->email->send();
 
                         $register_success = true;

@@ -179,6 +179,8 @@ class Basket extends CI_Controller {
 	    //send confirmation email
 	    $this->load->library('email');
 	    $useremail = $this->session->userdata('user_details');
+	    $this->logger->info("Sending Confirmation email to ".$useremail['email']);
+
 	    $this->email->from("noreply@shoplongdestiny.com");
 	    $this->email->to($useremail['email']);
 	    $this->email->subject("Your Order Confirmation");
