@@ -21,7 +21,7 @@ class User extends CI_Controller {
             
             if(valid_email($email)){
                 
-                $result = $this->usermodel->db_get_user($email, $pwd);
+                $result = $this->usermodel->db_get_user($email, md5($pwd));
                 if($result){
                     $address = implode(",", array($result->address1, $result->address2));
                     $session_data = array
