@@ -8,13 +8,13 @@
     <?php
     if(@$page == "forgot_password"){ ?>
 	You have requested to reset your password, please click on the link below to continue. <br />
-	http://shop.longdestiny.com/user/reset_password/<?php echo $uid; ?>/<?php echo $reset_code; ?>
+	http://shoplongdestiny.dev/user/reset_password/<?php echo $uid; ?>/<?php echo $reset_code; ?>
 
 	<?php
     } else {
 	?>
 	Thank you registering! Please click on the link below to activate your account. <br />
-	http://shop.longdestiny.com/user/verify_email/<?php echo $uid; ?>/<?php echo $code; ?>
+	http://shoplongdestiny.dev/user/verify_email/<?php echo $uid; ?>/<?php echo $code; ?>
 	<?php 
     }
     ?>

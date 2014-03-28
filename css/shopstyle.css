@@ -149,10 +149,11 @@ h1#logo { width: 298px; float: left; display: inline; }
 
 #footer, #footer-push { overflow: hidden; }
 #footer { 
-	/*background: #1a719e url(media/images/footer-bg.png) repeat-x 0 0; */
-	background-color:#2552CF;
-	color:#fff; 
-	padding:6px; 
+    /*background: #1a719e url(media/images/footer-bg.png) repeat-x 0 0; */
+    background-color:#2552CF;
+    color:#fff; 
+    padding:6px; 
+    font-size:11px;
 }
 #footer a { color:#fff; }
 #footer .cols { width: 980px; overflow: hidden; min-height: 238px; }

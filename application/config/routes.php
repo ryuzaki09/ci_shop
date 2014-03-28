@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "shoppage";
+$route['default_controller'] = "shop";
 $route['404_override'] = '';
 
 $route['admin/login/logout/(:any)'] = "admin/login";

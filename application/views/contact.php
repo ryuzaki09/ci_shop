@@ -3,20 +3,29 @@
 <form method="POST" action="#" id="contactform">                                            
     <div class="clearfix bottom_space top20">
         <div class="label110"><label for="name">Name:  <font size="1">(required)</font></label></div>
-        <div class="txtlabel205"><input type="text" class="blueborder" name="name" id="name" maxlength="30" size="30" /></div>&nbsp;&nbsp;<span class="error"><?php echo($message1); ?></span>
+        <div class="txtlabel205">
+	    <input type="text" class="blueborder" name="name" id="name" maxlength="30" size="30" />
+	</div>&nbsp;&nbsp;
+	<span class="error"><?php if(isset($message1)) echo($message1); ?></span>
     </div>
     <div class="clearfix bottom_space">  
         <div class="label110"><label for="email">Email:  <font size="1">(required)</font></label></div>
-        <div class="txtlabel205"><input type="text" class="blueborder" name="email" id="email" size="30" /></div>&nbsp;&nbsp;<span class="error"><?php echo($message2); ?></span>
+        <div class="txtlabel205">
+	    <input type="text" class="blueborder" name="email" id="email" size="30" />
+	</div>&nbsp;&nbsp;
+	<span class="error"><?php if(isset($message2)) echo($message2); ?></span>
     </div>
     <div class="clearfix bottom_space">
         <div class="label110"><label for="message">Message:  <font size="1">(required)</font></label></div>
         <div class="go_left" style="width:245px;">
-        	<textarea style="padding:5px;" class="blueborder" name="message" id="message" rows="5" cols="40"></textarea>
-        </div>&nbsp;&nbsp;<span class="error"><?php echo($message3); ?></span>
+	    <textarea style="padding:5px;" class="blueborder" name="message" id="message" rows="5" cols="40"></textarea>
+        </div>&nbsp;&nbsp;<span class="error"><?php if(isset($message3)) echo($message3); ?></span>
     </div>
     <div class="clearfix bottom_space">
-        <div style="float:left; width: 220px;"><input type="checkbox" name="copy" id="copy" style="width:15px;" value="mailcopy" />&nbsp;<label for="copy">Send me a copy</label></div>                              
+        <div style="width: 220px;">
+	    <input type="checkbox" name="copy" id="copy" style="width:15px;" value="mailcopy" />&nbsp;
+	    <span for="copy">Send me a copy</span>
+	</div>
     </div>
     <div class="clearfix bottom_space">
         <div class="txtlabel205"><input type="button" id="send" value="send" name="send" /></div>

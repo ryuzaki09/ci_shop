@@ -1,6 +1,6 @@
 <?php
 
-class Shoppage extends CI_Controller {
+class Shop extends CI_Controller {
     
     public function __construct(){
         parent::__construct();

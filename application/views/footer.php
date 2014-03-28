@@ -5,11 +5,14 @@
  * and open the template in the editor.
  */
 ?>
-		<div id="footer">
-        	<div class="block150 go_left left20">Shop Longdestiny</div>
-        	<div class="block100 go_right right20"><a href="#">Contact</a></div>
-    	</div>
+	    <div id="footer">
+	    <div class="block150 go_left left20">Shop Longdestiny</div>
+	    <div class="block100 go_right right20">
+		<a href="/shop/tnc">T & C</a> | 
+		<a href="/contact">Contact</a>
+	    </div>
 	</div>
-	<!-- End Wrapper -->
+    </div>
+    <!-- End Wrapper -->
 </body>
 </html>
