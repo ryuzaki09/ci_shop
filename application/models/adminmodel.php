@@ -144,6 +144,21 @@ class Adminmodel extends Commonmodel {
         $this->db->set('folder_name', $foldername);        
         return $this->db->insert($this->table['photoalbum']);
     }
+
+    public function create_update_page_content(){
+
+
+    }
+
+    public function getPageContentList(){
+	
+	$result = $this->db->get("page_content");
+
+	return ($result->num_rows()>0)
+		? $result->result_array()
+		: false;
+
+    }
     
     
 }
