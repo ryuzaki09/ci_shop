@@ -15,6 +15,7 @@ class Settings extends CI_Controller {
 	$data['result'] = $this->adminmodel->getPageContentList();
 	$data['pagetitle'] = "Page Content";
 
+        $data['js'][] = $this->adminpage->set('js', '/js/ckeditor/ckeditor.js'); 
 	$this->adminpage->loadpage("admin/settings/page_content", $data);
     }
 }
