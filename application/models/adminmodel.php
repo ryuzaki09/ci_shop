@@ -145,8 +145,18 @@ class Adminmodel extends Commonmodel {
         return $this->db->insert($this->table['photoalbum']);
     }
 
-    public function create_update_page_content(){
+    public function create_update_page_content($data, $where=false){
+	
+	if($where){
+	    $this->db->where("id", $where);
+	    $this->db->update("page_content", $data);
+	} else {
+	    $this->db->insert("page_content", $data);
+	}
 
+	return ($this->db->affected_rows()>0)
+		? true
+		: false;
 
     }
 
@@ -156,6 +166,18 @@ class Adminmodel extends Commonmodel {
 
 	return ($result->num_rows()>0)
 		? $result->result_array()
+		: false;
+
+    }
+
+    public function getPageContent($id){
+	
+	$this->db->where("id", $id);
+
+	$result = $this->db->get("page_content");
+
+	return ($result->num_rows()>0)
+		? $result->row()
 		: false;
 
     }
