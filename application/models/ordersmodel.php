@@ -101,11 +101,17 @@ class Ordersmodel extends Commonmodel {
      */
     public function get_orders($status){
         $this->logger->info("Getting $status orders");
-		$this->db->select('orders.oid, status, order_no, order_created, total_price, currency, external_ref');
+		$this->db->select('orders.oid, status, order_no, order_created, date_created, total_price, currency, external_ref');
 		$this->db->from('orders');
 		$this->db->join('order_details', 'orders.oid=order_details.oid');
 		$this->db->join('transactions', 'orders.oid=transactions.oid');
 		$this->db->where('status', $status);
+
+		if($status == self::STATUS_REFUND){
+			$this->db->like("external_ref", "refund");
+			$this->db->order_by("date_created", "desc");
+		}
+
 		$this->db->group_by('order_no');
 
 		$result = $this->db->get();
