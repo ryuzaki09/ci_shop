@@ -3,7 +3,6 @@
 <?php
 
 if(is_array($result) && !empty($result)){
-	var_dump($result);
 
     foreach($result AS $data):
         $external_ref = json_decode($data['external_ref']);

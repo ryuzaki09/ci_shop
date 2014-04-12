@@ -16,8 +16,8 @@ class Basket extends CI_Controller {
 
     //Update the shopping basket at the basket page
     public function shoppingbasket(){
-	$useremail = $this->session->userdata('user_details');
-	var_dump($useremail);
+		$useremail = $this->session->userdata('user_details');
+
         if($this->input->post('update') == "Update Cart"){
             foreach($this->input->post() AS $postdata => $value):
                 $data[] = $value;
@@ -39,14 +39,14 @@ class Basket extends CI_Controller {
         if($this->auth->is_logged_in()){
             $this->load->model('usermodel');
 
-	    $uid = $this->session->userdata('uid');
-	    $data['userdata'] = $this->usermodel->db_get_userdetails($uid);
-			
-	    $data['pagetitle'] = "Confirmation Page";
-	    $this->loadpage->loadpage('basket/confirm', $data);
-	} else {
-	    redirect(base_url().'user/login');
-	}
+			$uid = $this->session->userdata('uid');
+			$data['userdata'] = $this->usermodel->db_get_userdetails($uid);
+				
+			$data['pagetitle'] = "Confirmation Page";
+			$this->loadpage->loadpage('basket/confirm', $data);
+		} else {
+			redirect(base_url().'user/login');
+		}
 		
     }
     
@@ -86,6 +86,7 @@ class Basket extends CI_Controller {
 
         //insert order details into DB for customer
         $this->load->model('ordersmodel');
+
         try {
             $result = $this->ordersmodel->create_order($insert_data, $additional_prices);
         } catch(Exception $e){
@@ -171,32 +172,32 @@ class Basket extends CI_Controller {
 
     //redirect here after transaction is completed
     public function orderComplete(){
-	$this->load->library("payment");
-	$paymentvalues = $this->payment->getAllValues();
-	
-	//check if theres any order/payment info first before showing the page otherwise redirect to homepage
-	if(is_array($paymentvalues) && !empty($paymentvalues)){
-	    //send confirmation email
-	    $this->load->library('email');
-	    $useremail = $this->session->userdata('user_details');
-	    $this->logger->info("Sending Confirmation email to ".$useremail['email']);
+		$this->load->library("payment");
+		$paymentvalues = $this->payment->getAllValues();
+		
+		//check if theres any order/payment info first before showing the page otherwise redirect to homepage
+		if(is_array($paymentvalues) && !empty($paymentvalues)){
+			//send confirmation email
+			$this->load->library('email');
+			$useremail = $this->session->userdata('user_details');
+			$this->logger->info("Sending Confirmation email to ".$useremail['email']);
 
-	    $this->email->from("noreply@shoplongdestiny.com");
-	    $this->email->to($useremail['email']);
-	    $this->email->subject("Your Order Confirmation");
-	    $this->email->message("Thank you for your order!");
-	    $this->email->send();
-	    
-	    $data['order_info'] = $paymentvalues; //assign order info to show on the view
-	    $this->payment->destroyValues(); //delete all payment info in the session
+			$this->email->from("noreply@shoplongdestiny.com");
+			$this->email->to($useremail['email']);
+			$this->email->subject("Your Order Confirmation");
+			$this->email->message("Thank you for your order!");
+			$this->email->send();
+			
+			$data['order_info'] = $paymentvalues; //assign order info to show on the view
+			$this->payment->destroyValues(); //delete all payment info in the session
 
-	    $data['pagetitle'] = "Order Completed";
+			$data['pagetitle'] = "Order Completed";
 
-	    $this->loadpage->loadpage("basket/order_complete", $data);
+			$this->loadpage->loadpage("basket/order_complete", $data);
 
-	} else {
-	    redirect(base_url());
-	}
+		} else {
+			redirect(base_url());
+		}
 
     }
 

@@ -2,6 +2,9 @@
 
 class Ordersmodel extends Commonmodel {
     private $order_no_prefix = "US000";
+	const STATUS_REFUND = "refunded";
+	const STATUS_APPROVED = "approved";
+	const STATUS_PENDING = "pending";
 
     public function __construct(){
 		parent::__construct();
@@ -195,6 +198,7 @@ class Ordersmodel extends Commonmodel {
 		$this->db->join("order_details", "orders.oid=order_details.oid");
 		$this->db->join("products", "order_details.pid=products.pid");
 		$this->db->where("customer_id", $uid);
+		$this->db->order_by("orders.oid", "desc");
 
 		if($limit)
 			$this->db->limit($limit, $offset);
@@ -209,17 +213,18 @@ class Ordersmodel extends Commonmodel {
 
 	public function refundsale($data=array()){
 		if(is_array($data) && !empty($data)){
+			$this->logger->info("creating transaction for refund: ".var_export($data, true));
 			
-			$result = $this->db->insert("transactions", $data);
+			$this->db->insert("transactions", $data);
 
-			if($result->affected_rows()>0){
+			if($this->db->affected_rows()>0){
 				$this->logger->info("refund transaction created");
 
 				$this->db->set("status", "refunded");
 				$this->db->where("oid", $data['oid']);
-				$update = $this->db->update("orders");
+				$this->db->update("orders");
 
-				if($update->affected_rows()>0)
+				if($this->db->affected_rows()>0)
 					return true;
 				else
 					throw new Exception("Cannot update order status to refund: ".$data['oid']);

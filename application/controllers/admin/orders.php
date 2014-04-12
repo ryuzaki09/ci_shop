@@ -11,7 +11,7 @@ class Orders extends CI_Controller {
 
 	
     public function pending(){
-        $data['result'] = $this->ordersmodel->get_orders('pending');
+        $data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_PENDING);
 
         $data['pagetitle'] = "Orders | Pending";
 
@@ -53,7 +53,7 @@ class Orders extends CI_Controller {
 
     public function approved(){
 	
-        $data['result'] = $this->ordersmodel->get_orders('approved');
+        $data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_APPROVED);
 		$data['pagetitle'] = "Approved Orders";
 
 		$this->adminpage->loadpage("admin/orders/approved", $data);
@@ -132,7 +132,7 @@ class Orders extends CI_Controller {
     
     public function paypalrefund($oid, $sale_id, $total, $currency){
         
-		$this->logger->info("refund sale id: ".$sale_id." ".$total." ".$currency);
+		$this->logger->info("processing refund - sale id: ".$sale_id." ".$total." ".$currency);
 
 		$this->load->library('paypal');
 
@@ -141,17 +141,19 @@ class Orders extends CI_Controller {
 
 			$uid = $this->session->userdata("uid");
 
-			if($response && $response->state == "completed"){
+			if($response && @$response->state == "completed"){
+				$this->logger->info("Refund response received");
 				$transaction_data = array("oid" => $oid,
 											"customer_id" => $uid,
 											"subtotal" => $total,
 											"total" => $total,
-											"external_ref" => "paypal refund"
+											"external_ref" => "paypal refund",
+											"date_created" => date("Y-m-d H:i:s")
 											);
-				$this->ordermodel->refundsale($transaction_data);
+				$this->ordersmodel->refundsale($transaction_data);
 
-				redirect("/admin/orders/approved");
 			}
+			redirect("/admin/orders/approved");
 
 		} catch(Exception $e) {
 			$this->logger->error("cannot refund payment: ".$e->getMessage());
@@ -171,4 +173,13 @@ class Orders extends CI_Controller {
 			: "false";
 		}
     }
+
+
+	public function refunded(){
+		
+        $data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_REFUND);
+		$data['pagetitle'] = "Refunded Orders";
+
+		$this->adminpage->loadpage("admin/orders/refunded", $data);
+	}
 }
