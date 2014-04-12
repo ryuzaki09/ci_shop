@@ -190,7 +190,7 @@ class Ordersmodel extends Commonmodel {
 			$this->db->select("count(*) AS count");
 		else
 			$this->db->select("orders.order_created, status, order_details.order_no, 
-					order_details.price, qty, currency, products.name");
+							order_details.price, qty, currency, products.name");
 
 		$this->db->join("order_details", "orders.oid=order_details.oid");
 		$this->db->join("products", "order_details.pid=products.pid");
@@ -206,5 +206,29 @@ class Ordersmodel extends Commonmodel {
 			: false;
 
     }
+
+	public function refundsale($data=array()){
+		if(is_array($data) && !empty($data)){
+			
+			$result = $this->db->insert("transactions", $data);
+
+			if($result->affected_rows()>0){
+				$this->logger->info("refund transaction created");
+
+				$this->db->set("status", "refunded");
+				$this->db->where("oid", $data['oid']);
+				$update = $this->db->update("orders");
+
+				if($update->affected_rows()>0)
+					return true;
+				else
+					throw new Exception("Cannot update order status to refund: ".$data['oid']);
+			}				
+			else
+				throw new Exception("Cannot insert refund transaction: ".var_export($data, true));
+
+		}
+
+	}
     
 }

@@ -217,7 +217,7 @@ class Paypal {
 
     }
 
-    public function refund($sale_id){
+    public function refund($sale_id, $total, $currency){
 	
 		$access_details = $this->getAccessToken();
 

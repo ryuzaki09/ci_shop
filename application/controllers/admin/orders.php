@@ -72,15 +72,15 @@ class Orders extends CI_Controller {
 			$this->logger->info("Admin approving order: ".$oid);
 
 			if(!is_numeric($oid)){
-			$this->session->set_flashdata("error_msg", "Order Number invalid");
-			redirect("/admin/orders/pending");
+				$this->session->set_flashdata("error_msg", "Order Number invalid");
+				redirect("/admin/orders/pending");
 			}
 
 			$result = $this->ordersmodel->admin_approve_disapprove_order($oid, 'approved');
 			if($result)
-			$this->session->set_flashdata("message", "<div class='alert alert-success'>Order $oid has been approved</div>");
+				$this->session->set_flashdata("message", "<div class='alert alert-success'>Order $oid has been approved</div>");
 			else
-			$this->session->set_flashdata("message", "<div class='alert alert-danger'>Order $oid cannot be approved</div>");
+				$this->session->set_flashdata("message", "<div class='alert alert-danger'>Order $oid cannot be approved</div>");
 
 			redirect("/admin/orders/pending");
 			
@@ -133,13 +133,30 @@ class Orders extends CI_Controller {
     public function paypalrefund($oid, $sale_id, $total, $currency){
         
 		$this->logger->info("refund sale id: ".$sale_id." ".$total." ".$currency);
-		exit;
 
 		$this->load->library('paypal');
-		$response =	$this->paypal->refund($sale_id, $total, $currency);
-		echo "<pre>";
-		print_r($response);
-		echo "</pre>";
+
+		try {
+			$response =	$this->paypal->refund($sale_id, $total, $currency);
+
+			$uid = $this->session->userdata("uid");
+
+			if($response && $response->state == "completed"){
+				$transaction_data = array("oid" => $oid,
+											"customer_id" => $uid,
+											"subtotal" => $total,
+											"total" => $total,
+											"external_ref" => "paypal refund"
+											);
+				$this->ordermodel->refundsale($transaction_data);
+
+				redirect("/admin/orders/approved");
+			}
+
+		} catch(Exception $e) {
+			$this->logger->error("cannot refund payment: ".$e->getMessage());
+		}
+
 
     }
 
