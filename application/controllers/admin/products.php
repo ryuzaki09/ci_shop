@@ -82,7 +82,7 @@ class Products extends CI_Controller {
             
     }
     
-    function edit($id){ 
+	public function edit($id){ 
        $id = $id*1; 
        $where = array('pid' => $id);      
        if ($this->input->post('update') == "Update"){
@@ -138,7 +138,8 @@ class Products extends CI_Controller {
 			   $count++;          
 			}
 			//update record in the database after the upload
-			$result = $this->productsmodel->db_insert_update_products($id, $name, $desc, $imgs[0], $imgs[1], $imgs[2], $imgs[3], $price, $category, $sub_cat);
+			$result = $this->productsmodel->db_insert_update_products($id, $name, $desc, $imgs[0], $imgs[1], 
+																		$imgs[2], $imgs[3], $price, $category, $sub_cat);
        }// end of update
               
        $data['item'] = $this->productsmodel->db_get_product($where);
@@ -151,7 +152,7 @@ class Products extends CI_Controller {
    
    
     
-    function album($id){
+	public function album($id){
                   
         $id = $id*1;            
         
@@ -169,7 +170,7 @@ class Products extends CI_Controller {
     }
     
                
-    function delete_product(){        
+	public function delete_product(){        
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
             $id         = ($this->input->post('id', true)*1);
             $imgname    = $this->input->post('imgname', true);
@@ -195,7 +196,7 @@ class Products extends CI_Controller {
         }
     }
     
-    function update_album(){
+    public function update_album(){
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
             $albumID = ($this->input->post('albumID', true)*1);
             $old_name = $this->input->post('old_album_name', true);
@@ -213,7 +214,7 @@ class Products extends CI_Controller {
         
     }
    
-    function delete_photo(){
+    public function delete_photo(){
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
             $id = ($this->input->post('id', true)*1);
             $foldername = $this->input->post('foldername', true);
@@ -230,7 +231,7 @@ class Products extends CI_Controller {
         }
     }
     
-    function update_photo(){
+    public function update_photo(){
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
             $id = ($this->input->post('id', true)*1);
             $title = $this->input->post('title', true);
@@ -242,6 +243,14 @@ class Products extends CI_Controller {
                 : "Cannot update";
         }
     }
+
+	public function addOption($pid){
+		
+		if($this->input->post("add") == "Add"){
+
+		}
+
+	}
     
 }
 
