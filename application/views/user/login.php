@@ -3,8 +3,8 @@
     if(isset($loginpage) && $loginpage =="forgotpassword"){ ?>
 	<form method="POST" action="forgot_password">    
 	<div class="loginblock">
-	    <div class="logintitle">Forgot Password</div>
-	    <div class="bottom_space" style="color:#0252AA;">
+	    <div class="boldtitle">Forgot Password</div>
+	    <div class="bottom_space">
 		Please enter your email address and we will send you a link to reset your password:
 	    </div>
 	    <div class="bottom_space"><input type="text" size="25" name="email" /></div>
@@ -21,7 +21,7 @@
 	<form method="POST" action="login">    
 	<div class="loginblock">
 	    <?php if(isset($message)){ echo "<div class='error'>".$message."</div>"; } ?>
-	    <div class="logintitle">Customer Login</div>
+	    <div class="boldtitle">Customer Login</div>
 	    <div class="bottom_space">Email:</div>
 	    <div class="bottom_space"><input type="text" size="25" name="email" /></div>
 	    <div class="bottom_space">Password:</div>

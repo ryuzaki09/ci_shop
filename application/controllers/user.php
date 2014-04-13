@@ -25,7 +25,7 @@ class User extends CI_Controller {
                 if($result){
                     $address = implode(",", array($result->address1, $result->address2));
                     $session_data = array
-				    ('customer' => $result->firstname." ".$result->lastname,
+					('customer' => $result->firstname." ".$result->lastname,
 					'uid' => $result->uid,
 					'is_logged_in' => true,
 					'user_details' => array
@@ -33,7 +33,7 @@ class User extends CI_Controller {
 							     'address' => $address,
 							     'postcode' => $result->postcode
 							    )
-                                    );
+					);
 
                     $this->session->set_userdata($session_data);
 

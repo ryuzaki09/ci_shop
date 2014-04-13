@@ -714,6 +714,14 @@ a.empty_basket {
 a:hover.empty_basket {
   color: #fff; }
 
+.boldtitle {
+  color: #a66500;
+  font-weight: bold;
+  font-size: 22px;
+  border-bottom: 2px solid #a66500;
+  padding: 10px 0px 20px 0;
+  margin-bottom: 20px; }
+
 .collapse {
   border-collapse: collapse; }
 
@@ -826,15 +834,15 @@ a:hover.empty_basket {
   border-bottom: 1px solid #cacaca; }
 
 .register_block {
-  border: 1px solid #cacaca;
-  padding: 10px;
-  border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px; }
+  border: 2px solid #ffb540;
+  padding: 20px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px; }
 
 .user_details {
   margin-top: 15px;
-  padding-top: 10px;
+  padding-top: 20px;
   border-top: 1px solid #cacaca; }
 
 /*FORM */
