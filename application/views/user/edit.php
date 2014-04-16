@@ -39,6 +39,21 @@
 	
 </div>
 <script>
-
+$('form').validate({
+    rules: {
+	expiry_date: {
+	    required: true,
+	    date: true
+	},
+	min_amount: {
+	    required: true,
+	    number: true
+	},
+	voucher_amount: {
+	    required: true,
+	    number: true
+	}
+    }
+});
 
 </script>

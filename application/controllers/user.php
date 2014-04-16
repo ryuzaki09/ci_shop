@@ -143,12 +143,12 @@ class User extends CI_Controller {
 			
 			$result = $this->usermodel->activate_account($where);
 			if($result){
-			$data['pagetitle'] = "Account Activated!";
-			$data['successpage'] = "account activated";
-			$this->loadpage->loadpage('user/registersuccess', $data);
+				$data['pagetitle'] = "Account Activated!";
+				$data['successpage'] = "account activated";
+				$this->loadpage->loadpage('user/registersuccess', $data);
 			//if there is no user	
 			} else {
-			redirect(base_url());
+				redirect(base_url());
 			}
 				
 		} else {
