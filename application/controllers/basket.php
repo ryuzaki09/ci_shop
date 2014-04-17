@@ -116,12 +116,11 @@ class Basket extends CI_Controller {
             $this->payment->destroyValues();
             if($payment_result && $payment_result->links[1]->rel == "approval_url"){
                 $this->payment->setValue("paypal_id", $payment_result->id);
+				$this->logger->info("redirecting customer to: ".$payment_result->links[1]->href);
 
                 //redirect customer to get approval of sale
                 redirect($payment_result->links[1]->href);
-                // echo "<pre>";
-                // print_r($payment_session);
-				// echo "</pre>";
+				
             }
         }
     }

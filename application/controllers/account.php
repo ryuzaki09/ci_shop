@@ -63,7 +63,7 @@ class Account extends CI_Controller {
 				$this->session->set_flashdata('message', 'Changes Updated');
 				redirect(base_url().'account/profile');
 			} else {
-				$this->session->set_flashdata('message', 'Cannot Update');
+				$this->logger->info('Cannot Update');
 				redirect(base_url().'account/profile');
 			}
 		}

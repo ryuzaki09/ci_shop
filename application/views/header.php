@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 <head>
 	<title><?php if($pagetitle){ echo $pagetitle;} else{  base_url(); }  ?></title>
@@ -14,20 +14,19 @@
             echo $value;
         }
     }
+	?>
+	<script src="/js/jquery-1.9.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>	
+	<?php
     if (isset($js) && $js){                    
         foreach($js AS $script => $key){
             echo $key;
         }
     }
-	
 	//sessiondata
 	$sessiondata = $this->session->all_userdata();
     ?>
-	<script src="/js/jquery-1.9.0.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript" charset="utf-8"></script>
-	<!--<script src="js/jquery.jcarousel.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/jquery-func.js" type="text/javascript" charset="utf-8"></script>-->
-	<script src="/js/bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>	
 </head>
 <body>
 <!-- Wrapper -->
