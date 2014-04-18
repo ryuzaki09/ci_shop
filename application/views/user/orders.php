@@ -4,7 +4,7 @@
     ?>
     <div class="contentpane">
 	<?php echo $this->session->flashdata('message'); ?>
-	<div class="darkgreytitle"><?php echo $pagetitle; ?></div>
+	<div class="boldtitle"><?php echo $pagetitle; ?></div>
 	<?php
 	if($result && is_array($result)){
 	    foreach($result AS $list):

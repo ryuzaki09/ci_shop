@@ -236,7 +236,7 @@ input[type=submit]:hover, input[type=button]:hover { background-color:$link-hove
     padding:10px;
     min-height:500px;
     width:700px;
-    border:1px solid #0252AA; 
+    border:2px solid $header-color; 
     border-radius:3px;
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
@@ -379,14 +379,14 @@ a:hover.empty_basket { color:#fff; }
 .block500 { width:500px; margin-right:10px;}
 
 .leftpane { 
-	float:left; 
-	padding:10px; 
-	max-width:180px; 
-	min-height:200px; 
-	border:1px solid #0252AA; 
-	border-radius:3px;
-	-webkit-border-radius:3px;
-	-moz-border-radius:3px;
+    float:left; 
+    padding:10px; 
+    max-width:180px; 
+    min-height:200px; 
+    border:2px solid $header-color; 
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
 }
 .leftpane ul { font-size:12px; margin:0; }
 .leftpane li { padding: 2px 0px; }
@@ -395,19 +395,20 @@ a:hover.empty_basket { color:#fff; }
 
 
 .darkgreytitle { 
-	font-weight:bold; 
-	font-size:22px; 
-	color:#494949;
-	margin-bottom:10px;
-	padding:10px 0px 20px 0; 
-	border-bottom:1px solid #cacaca;
+    font-weight:bold; 
+    font-size:22px; 
+    color:#494949;
+    margin-bottom:10px;
+    padding:10px 0px 20px 0; 
+    border-bottom:1px solid #cacaca;
 }
 
-.lightgreytitle { 
-	font-size:16px; 
-	color:#696969;
-	margin-bottom:10px;
-	padding-bottom:10px; border-bottom:1px solid #cacaca;
+.lighttitle { 
+    font-size:16px; 
+    font-weight:bold;
+    color:$footer-color;
+    margin-bottom:10px;
+    padding-bottom:10px; border-bottom:2px solid $footer-color;
 }
 
 .list_list_bot_border { padding:10px; border-bottom:1px solid #cacaca; }

@@ -577,7 +577,7 @@ input[type=submit]:hover, input[type=button]:hover {
   padding: 10px;
   min-height: 500px;
   width: 700px;
-  border: 1px solid #0252AA;
+  border: 2px solid #ffb540;
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -795,7 +795,7 @@ a:hover.empty_basket {
   padding: 10px;
   max-width: 180px;
   min-height: 200px;
-  border: 1px solid #0252AA;
+  border: 2px solid #ffb540;
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px; }
@@ -822,12 +822,13 @@ a:hover.empty_basket {
   padding: 10px 0px 20px 0;
   border-bottom: 1px solid #cacaca; }
 
-.lightgreytitle {
+.lighttitle {
   font-size: 16px;
-  color: #696969;
+  font-weight: bold;
+  color: #a66500;
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #cacaca; }
+  border-bottom: 2px solid #a66500; }
 
 .list_list_bot_border {
   padding: 10px;
