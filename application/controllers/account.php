@@ -28,6 +28,7 @@ class Account extends CI_Controller {
 			$uid = $this->session->userdata('uid');
 			$data['userdata'] = $this->usermodel->db_get_userdetails($uid);
 
+			$data['form_action'] = "/account/update_details";
 			$data['pagetitle'] = "Edit Account Details";
 			$data['js'][] = $this->loadpage->set("js", "/js/jquery.validate.min.js");
 			$this->loadpage->loadpage('user/edit', $data);
