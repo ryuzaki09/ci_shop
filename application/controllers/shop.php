@@ -26,6 +26,12 @@ class Shop extends CI_Controller {
         $this->loadpage->loadpage('shop', $data);
     }
     
+    public function tnc(){
+	
+	$data['content'] = $this->
+	$data['pagetitle'] = "Terms & Conditions";
 
+	$this->loadpage->loadpage('content', $data);
+    }
     
 }
