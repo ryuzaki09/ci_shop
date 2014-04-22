@@ -147,5 +147,11 @@ class Commonmodel extends CI_Model {
 		: false;
 	    
     }
+
+	public function getPageContent($page){
+
+
+	}
+
 }
 ?>

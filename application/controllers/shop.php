@@ -28,10 +28,10 @@ class Shop extends CI_Controller {
     
     public function tnc(){
 	
-	$data['content'] = $this->
-	$data['pagetitle'] = "Terms & Conditions";
+		$data['content'] = $this->commonmodel->getPageContent("tnc");
+		$data['pagetitle'] = "Terms & Conditions";
 
-	$this->loadpage->loadpage('content', $data);
+		$this->loadpage->loadpage('content', $data);
     }
     
 }
