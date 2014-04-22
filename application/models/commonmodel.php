@@ -81,7 +81,7 @@ class Commonmodel extends CI_Model {
 		: false;
 	}
 	
-	function db_sort_menu_position($position, $id){
+	public function db_sort_menu_position($position, $id){
 		$this->db->set('order_no', $position);
 		$this->db->where('id', $id);
 		
@@ -91,60 +91,60 @@ class Commonmodel extends CI_Model {
 	
 	
     public function db_update_submenu($data, $id){
-	if(is_array($data) && !empty($data)){
-	    $this->db->where('id', $id);
-	    $result = $this->db->update($this->table['menus'], $data);
-	    
-	    return ($this->db->affected_rows()>0)
-		    ? TRUE
-		    : false;	
-		
-	}
+		if(is_array($data) && !empty($data)){
+			$this->db->where('id', $id);
+			$result = $this->db->update($this->table['menus'], $data);
+			
+			return ($this->db->affected_rows()>0)
+				? TRUE
+				: false;	
+			
+		}
     }
 
 	
     public function db_delete_menu($parent_id=false, $menu_id=false){
-	if($parent_id){
-	    $this->db->where('parent_id', $parent_id);
-	} elseif($menu_id) {
-	    $this->db->where('id', $menu_id);
-	}
-	
-	$this->db->delete($this->table['menus']);
-	
-	return ($this->db->affected_rows()>0)
-		? TRUE
-		: false;
+		if($parent_id){
+			$this->db->where('parent_id', $parent_id);
+		} elseif($menu_id) {
+			$this->db->where('id', $menu_id);
+		}
+		
+		$this->db->delete($this->table['menus']);
+		
+		return ($this->db->affected_rows()>0)
+			? TRUE
+			: false;
     }
 	
     public function db_addstyle($insertdata){
 	    
-	if(is_array($insertdata) && !empty($insertdata)){
-		
-	    $result = $this->db->insert($this->table['style'], $insertdata);
-	    
-	    return ($this->db->affected_rows()>0)
-		    ? TRUE
-		    : false;
-		
-	}
+		if(is_array($insertdata) && !empty($insertdata)){
+			
+			$result = $this->db->insert($this->table['style'], $insertdata);
+			
+			return ($this->db->affected_rows()>0)
+				? TRUE
+				: false;
+			
+		}
     }
 
     public function db_get_styles(){
-	$result = $this->db->get($this->table['style']);
-	
-	return ($result->num_rows()>0)
-		? $result->result_array()
-		: false;
+		$result = $this->db->get($this->table['style']);
+		
+		return ($result->num_rows()>0)
+			? $result->result_array()
+			: false;
     }
 	
     public function db_get_styledata($id){
-	$this->db->where('id', $id);
-	
-	$result = $this->db->get($this->table['style']);
-	return ($result->num_rows()>0)
-		? $result->row()
-		: false;
+		$this->db->where('id', $id);
+		
+		$result = $this->db->get($this->table['style']);
+		return ($result->num_rows()>0)
+			? $result->row()
+			: false;
 	    
     }
 
