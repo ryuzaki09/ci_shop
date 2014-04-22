@@ -10,11 +10,6 @@ class Shop extends CI_Controller {
     }
     
     public function index(){
-	$this->load->library("payment");
-	$values = $this->payment->getAllValues();
-	echo "<pre>";
-	print_r($values);
-	echo "</pre>";
         // echo 4 + "4<br />";
         $this->load->model('carouselmodel');
         //carousel data

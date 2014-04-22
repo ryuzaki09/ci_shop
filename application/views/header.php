@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 <head>
-	<title><?php if($pagetitle){ echo $pagetitle;} else{  base_url(); }  ?></title>
+	<title><?php if($pagetitle){ echo $pagetitle;} else {  echo base_url(); }  ?></title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="/css/images/favicon.ico" />
@@ -10,9 +10,9 @@
 	
 	<?php
     if (isset($css) && $css){                    
-        foreach($css AS $style => $value){
+        foreach($css AS $style => $value):
             echo $value;
-        }
+        endforeach;
     }
 	?>
 	<script src="/js/jquery-1.9.0.min.js" type="text/javascript" charset="utf-8"></script>
@@ -20,9 +20,9 @@
 	<script src="/js/bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>	
 	<?php
     if (isset($js) && $js){                    
-        foreach($js AS $script => $key){
+        foreach($js AS $script => $key):
             echo $key;
-        }
+        endforeach;
     }
 	//sessiondata
 	$sessiondata = $this->session->all_userdata();
@@ -44,7 +44,7 @@
                     	<li><a href="/user/login" title="Login">Login</a></li>
                     	<li><a href="/user/register" title="Register">Register</a></li>
                     <?php } ?>
-                    <li><a href="<?php echo base_url(); ?>" title="Logout">Home</a></li>
+                    <li><a href="/" title="Logout">Home</a></li>
                     
                     <?php if(is_basket()) { ?>
                     	<li><a href="<?php echo base_url(); ?>basket"><?php echo $this->cart->total_items(); ?> item(s) in the basket</a></li>	
@@ -67,4 +67,3 @@
         <!-- End Shell -->
     </div>
     <!-- End Top -->
-		

@@ -76,7 +76,11 @@ textarea { overflow: auto; resize:none; }
 
 #search input.field { line-height: 15px; background: transparent; border: 0; color: #ffffff; font-family: Georgia, serif; font-style: italic; width: 120px; }
 
-#main { padding: 0 0 60px 0; background: url(../media/images/main-bg.png) repeat-x 0 bottom; }
+#main { 
+	margin-top:70px; 
+	padding: 0 0 60px 0; 
+	background: url(../media/images/main-bg.png) repeat-x 0 bottom; 
+}
 
 #header { padding: 22px 0 17px 0; }
 h1#logo { width: 298px; float: left; display: inline; }
@@ -264,6 +268,15 @@ input[type=submit]:hover, input[type=button]:hover { background-color:$link-hove
 }
 
 .main_prod_img { width:300px; margin-bottom:10px; }
+.page_container{ 
+	min-height:600px;
+	width:960px;
+    border:0;
+    margin:80px auto 20px auto;
+    padding-left:10px;
+    padding-right:10px;
+    color:#000;
+}
 
 .page_links { padding-top:15px; }
 .page_links a {

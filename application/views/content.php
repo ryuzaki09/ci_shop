@@ -1,5 +1,8 @@
-<?php
+<div class="page_container">
+	<div class="basket_title">Terms & Conditions</div>
+	<?php
 
-echo $content;
+	echo $content->page_content;
 
-?>
+	?>
+</div>

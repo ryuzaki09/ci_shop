@@ -21,11 +21,11 @@ class Commonmodel extends CI_Model {
 		//if there is no parent id
 		if(!$parentID){
 			//then get the max parent id and add 1 to create a new parent id and insert into DB
-			$this->db->select_max('parent_id');			
+			$this->db->select_max('parent_id');	
 			$id_result = $this->db->get($this->table['menus']);
 
 			$max_parent_id = $id_result->row();
-			$new_parent_id = ($max_parent_id->parent_id +1); //add 1 to the max parent id					
+			$new_parent_id = ($max_parent_id->parent_id +1); //add 1 to the max parent id
 			$insertdata = array('parent_id' => $new_parent_id, 'link_name' => $linkname);
 
 		} else {
@@ -147,7 +147,13 @@ class Commonmodel extends CI_Model {
     }
 
 	public function getPageContent($page){
+		$this->db->where("page_name", $page);
 
+		$result = $this->db->get("page_content");
+
+		return ($this->db->affected_rows()>0)
+				? $result->row()
+				: false;
 
 	}
 

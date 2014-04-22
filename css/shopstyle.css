@@ -139,6 +139,7 @@ textarea {
   width: 120px; }
 
 #main {
+  margin-top: 70px;
   padding: 0 0 60px 0;
   background: url(../media/images/main-bg.png) repeat-x 0 bottom; }
 
@@ -608,6 +609,15 @@ input[type=submit]:hover, input[type=button]:hover {
 .main_prod_img {
   width: 300px;
   margin-bottom: 10px; }
+
+.page_container {
+  min-height: 600px;
+  width: 960px;
+  border: 0;
+  margin: 80px auto 20px auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #000; }
 
 .page_links {
   padding-top: 15px; }
