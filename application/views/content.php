@@ -2,7 +2,8 @@
 	<div class="basket_title">Terms & Conditions</div>
 	<?php
 
-	echo $content->page_content;
+	if(isset($content->page_content))
+		echo $content->page_content;
 
 	?>
 </div>

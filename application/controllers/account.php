@@ -55,7 +55,8 @@ class Account extends CI_Controller {
 				//update the session details with the new data
 				$userdetails = $this->session->userdata("user_details");
 				$newdata = array("email" => $userdetails['email'],
-								"address" => $db_data['address1'].", ".$db_data['address2'],
+								"address1" => $db_data['address1'],
+								"address2" => $db_data['address2'],
 								"postcode" => $db_data['postcode']);
 
 				$this->session->set_userdata("customer", $db_data['firstname']." ".$db_data['lastname']);

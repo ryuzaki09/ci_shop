@@ -52,6 +52,12 @@ class Basket extends CI_Controller {
     
     public function process_checkout(){
         $order_data = array();
+		$customer_details = $this->session->userdata("user_details");
+		if(!$customer_details['address1'] || !$customer_details['address2'] || !$customer_details['postcode']){
+			$this->session->set_flashdata("message", "Please complete your address details before proceeding");
+			redirect("/account/edit");
+		}
+		
         $customer_id = $this->session->userdata('uid');
         
         //grab all product info from post and pass to process payment

@@ -5,6 +5,11 @@
 	<div class="contentpane">
 		<form method="post" action="<?php echo $form_action; ?>">
 		<div class="darkgreytitle">My Account</div>
+		<?php
+		$message = $this->session->flashdata("message");
+		if($message) 
+			echo "<div class='alert alert-error'>".$message."</div>";
+		?>
 		<div class="bottom_space">
 			<label class="wid150">First Name</label>
 			<input type="text" name="firstname" value="<?php echo $userdata->firstname; ?>"  />

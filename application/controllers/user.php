@@ -23,14 +23,15 @@ class User extends CI_Controller {
                 
                 $result = $this->usermodel->db_get_user($email, md5($pwd));
                 if($result){
-                    $address = implode(",", array($result->address1, $result->address2));
+                    // $address = implode(",", array($result->address1, $result->address2));
                     $session_data = array
 										('customer' => $result->firstname." ".$result->lastname,
 										'uid' => $result->uid,
 										'is_logged_in' => true,
 										'user_details' => array
 													('email' => $email,
-													 'address' => $address,
+													 'address1' => $result->address1,
+													 'address2' => $result->address2,
 													 'postcode' => $result->postcode
 													)
 										);
