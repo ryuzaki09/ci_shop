@@ -877,11 +877,11 @@ button {
   -webkit-border-radius: 3px; }
 
 button:hover {
-  background-color: #a66500; }
+  background-color: #bf8830; }
 
 button a {
-  color: #fff; }
+  color: #fff !important; }
 
 button a:hover {
-  text-decoration: none;
-  color: #fff; }
+  text-decoration: none !important;
+  color: #fff !important; }

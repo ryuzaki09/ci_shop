@@ -118,11 +118,59 @@
     </div>
 </div>
 
-<!--
-<input type="hidden" name="item_name_1" value="<?php //echo $product->name; ?>">
-<input type="hidden" name="amount_1" value="<?php //echo $product->price; ?>">
-<input type="hidden" name="item_name_2" value="Naruto tshirt">
-<input type="hidden" name="amount_2" value="9.99">
-					
-<!--<input type="hidden" name="button_subtype" value="services">-->
-<!--<input type="hidden" name="shipping" value="2.99">-->
+<div class="dialog" title="Alternate delivery address">
+	<form>
+		<div class="bottom_space">
+			<label class="wid150">Address 1: </label><input type="text" name="alt_address1" id="alt_address1" />
+			<label class="wid150">Address 2: </label><input type="text" name="alt_address2" id="alt_address2" />
+			<label class="wid150">Post code: </label><input type="text" name="alt_postcode" id="alt_postcode" size="5" />
+		</div>
+		<button><a id="use_alt_address">Use this address</a></button>
+		<input type="submit" style="display:none" />
+	</form>
+</div>
+<?php
+
+
+?>
+<script>
+$('button').click(function(){
+	$('.dialog').dialog('open');
+});
+
+$(function(){
+	$('.dialog').dialog({
+	    autoOpen: false,
+		width: 450,
+		show: {
+			effect: "blind",
+			duration: 1000
+	    },
+	    hide: {
+			effect: "explode",
+			duration: 1000
+	    }
+
+	});
+
+	$('#use_alt_address').click(function(){
+		$('form').validate({
+			rules: {
+				alt_address1: {
+					required: true,
+				},
+				alt_address2: {
+					required: true 
+				}
+			},
+			messages: {
+				alt_address1: {
+					required: "This cannot be empty"
+				}
+			}
+
+		});
+	});
+
+});
+</script>

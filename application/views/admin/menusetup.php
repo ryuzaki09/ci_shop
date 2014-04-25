@@ -117,10 +117,11 @@ if($pagetitle == "Admin Menu List"){ //ADMIN MENU LIST PAGE
 <div id="sub_dialog" title="Edit Sub Menu"><!-- SUB MENU DIALOG -->
     <form method="POST" action="update_menu">
 	<div class="clearfix">
-		<div class="block150 go_left">Link Name: </div><input type="text" id="subname" name="subname" class="block200 go_left" />		
+		<div class="block150 go_left">Link Name: </div><input type="text" id="subname" name="subname" class="block200 go_left" />
 	</div>
 	<div class="clearfix">
-	    <div class="block150 go_left">Url: <br /><span class="note"><?php echo base_url(); ?></span></div><input type="text" id="suburl" name="suburl" class="go_left block200" />
+	    <div class="block150 go_left">Url: <br /><span class="note"><?php echo base_url(); ?></span></div>
+		<input type="text" id="suburl" name="suburl" class="go_left block200" />
 	</div>
 	<input type="hidden" id="menuid" name="menuid" />
 	<input type="submit" name="update_menu" value="Update" class="btn btn-primary btn-small" />
@@ -132,9 +133,9 @@ if($pagetitle == "Admin Menu List"){ //ADMIN MENU LIST PAGE
 function submenu(){
     var parent =$('#parentmenu').val();
     if(parent == "No")
-	$('#submenu_div').slideDown();
+		$('#submenu_div').slideDown();
     else 
-	$('#submenu_div').slideUp();
+		$('#submenu_div').slideUp();
     
 }
 
@@ -204,7 +205,6 @@ $('.sub_menu #delete_sub').click(function(){
 });
 
 $(function(){
-    $(function() {
 	$( "#sub_dialog, #parent_dialog" ).dialog({
 	    autoOpen: false,
 	    width: 450,
@@ -235,7 +235,6 @@ $(function(){
 
 	});
 
-    });
 
 });
 

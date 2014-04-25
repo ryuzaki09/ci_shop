@@ -41,6 +41,9 @@ class Basket extends CI_Controller {
 
 			$uid = $this->session->userdata('uid');
 			$data['userdata'] = $this->usermodel->db_get_userdetails($uid);
+
+			$data['css'][] = $this->loadpage->set("css", "/css/jquery-ui-1.10.0.custom.min.css");
+			$data['js'][] = $this->loadpage->set("js", "/js/jquery.validate.min.js");
 				
 			$data['pagetitle'] = "Confirmation Page";
 			$this->loadpage->loadpage('basket/confirm', $data);
