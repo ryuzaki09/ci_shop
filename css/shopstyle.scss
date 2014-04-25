@@ -439,3 +439,15 @@ a:hover.empty_basket { color:#fff; }
 /*FORM */
 label.wid150 { width:150px; display:inline-block; }
 label.wid250 { width:250px; display:inline-block; }
+
+button { 
+	padding:5px 10px; 
+	background-color:$header-color; 
+	border:none; 
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+button:hover { background-color:$footer-color; }
+button a { color:#fff; }
+button a:hover { text-decoration:none; color:#fff; }

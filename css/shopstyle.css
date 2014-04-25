@@ -867,3 +867,21 @@ label.wid150 {
 label.wid250 {
   width: 250px;
   display: inline-block; }
+
+button {
+  padding: 5px 10px;
+  background-color: #ffb540;
+  border: none;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px; }
+
+button:hover {
+  background-color: #a66500; }
+
+button a {
+  color: #fff; }
+
+button a:hover {
+  text-decoration: none;
+  color: #fff; }
