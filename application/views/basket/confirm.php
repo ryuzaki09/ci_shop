@@ -1,19 +1,23 @@
 <div class="container">
     <div class="basket_container">
 	<div class="basket_title">Delivery Address</div>
-	<div class="block400 bot30">
-		<div class="bottom_space">Name: <?php echo $userdata->firstname." ".$userdata->lastname; ?></div>
-		<div class="bottom_space">Address: <?php echo $userdata->address1."<br />".$userdata->address2; ?></div>
-		<div class="bottom_space">Postcode: <?php echo $userdata->postcode; ?></div>
-		<div class="bottom_space">Email: <?php echo $userdata->email; ?></div>
-		<button><a id="alt_address">Alternative delivery address</a></button>
-	</div>
-	<!-- Alternative Address -->
-	<div class="block400" id="show_alt_address" style="display:none;">
-		<label class="wid150">Address</label><span class="show_address"></span><input type="hidden" id="show_address" />
-		<label class="wid150">Post code</label><span class="show_postcode"></span><input type="hidden" id="show_postcode" />
-		<div>
-			<button>Don't Use this address</button>
+	<div class="clearfix bot30">
+		<div class="block400 go_left">
+			<div class="bottom_space">Name: <?php echo $userdata->firstname." ".$userdata->lastname; ?></div>
+			<div class="bottom_space">Address: <?php echo $userdata->address1."<br />".$userdata->address2; ?></div>
+			<div class="bottom_space">Postcode: <?php echo $userdata->postcode; ?></div>
+			<div class="bottom_space">Email: <?php echo $userdata->email; ?></div>
+			<button id="show_alt_address_btn">Use alternative delivery address</button>
+		</div>
+		<!-- Alternative Address -->
+		<div class="block350 go_left" id="div_alt_address" style="display:none;">
+			<label class="wid150">Address</label>
+			<span class="show_address"></span>
+			<label class="wid150 bot30">Post code</label>
+			<span class="show_postcode"></span>
+			<div>
+				<button class="remove_alt_address">Don't Use this address</button>
+			</div>
 		</div>
 	</div>
 		
@@ -79,8 +83,10 @@
 		    <td align="right">&pound;<?php echo $this->cart->format_number($this->cart->total()); ?></td>
 		</tr>
 	    </table>
+		<input type="hidden" id="show_address" name="show_address" />
+		<input type="hidden" id="show_postcode" name="show_postcode" />
 	    <div class="clearfix">
-		<div class="block150 right"><input type="submit" id="payment" value="Proceed to Payment" /></div>
+			<div class="block150 right"><input type="submit" id="payment" value="Proceed to Payment" /></div>
 	    </div>
 
 	    <?php
@@ -128,7 +134,7 @@
 </div>
 
 <!-- Dialog window for alternative deliver address -->
-<div class="dialog" title="Alternate delivery address">
+<div id="alt_address_dialog" title="Alternate delivery address">
 	<form id="alt_address_form">
 		<div class="bottom_space">
 			<label class="wid150">Address 1: </label><input type="text" name="alt_address1" id="alt_address1" />
@@ -143,12 +149,12 @@
 
 ?>
 <script>
-$('#alt_address').click(function(){
-	$('.dialog').dialog('open');
+$('#show_alt_address_btn').click(function(){
+	$('#alt_address_dialog').dialog('open');
 });
 
 $(function(){
-	$('.dialog').dialog({
+	$('#alt_address_dialog').dialog({
 	    autoOpen: false,
 		width: 450,
 		show: {
@@ -186,30 +192,31 @@ alt_form.validate({
 			required: true,
 			minlength: 5
 		}
-	},
-	messages: {
-		alt_address1: {
-			// required: "This cannot be empty"
-		}
 	}
 
 });
 
 $('#use_alt_address').click(function(){
 	if(alt_form.valid()){
-		$('.show_address').html($('#alt_address1').val() + ", " +$('#alt_address2').val());
-		$('.show_postcode').html($('#alt_postcode').val());
-		$('#show_alt_address').show();
-		$('.dialog').dialog('close');
+		var alt_address1 = $('#alt_address1').val(),
+			alt_address2 = $('#alt_address2').val(),
+			alt_postcode = $('#alt_postcode').val();
+		$('.show_address').html(alt_address1 + ", " +alt_address2);
+		$('.show_postcode').html(alt_postcode);
+		$('#show_address').val(alt_address1+", "+alt_address2);
+		$('#show_postcode').val(alt_postcode);
+		$('#div_alt_address').show();
+		$('#alt_address_dialog').dialog('close');
+		$('#show_alt_address_btn').hide();
 	}
-	// alert("valid: "+ alt_form.valid());
-	// console.log(alt_form);
-	// var display_values = alt_form[0];
-	// console.log(display_values);
-	// $('#show_alt_address').html(display_values);
-	// alt_form.each(function(e){
-		// console.log($(this));
-	//});
+});
+
+$('.remove_alt_address').click(function(){
+	$('#show_address').val("");
+	$('#show_postcode').val("");
+	$('#div_alt_address').hide();
+	$('#show_alt_address_btn').show();
+
 });
 
 </script>

@@ -54,6 +54,17 @@ class Basket extends CI_Controller {
     }
     
     public function process_checkout(){
+		echo "<pre>";
+		print_r($this->input->post());
+		echo "</pre>";
+
+		$alt_address = $this->input->post("show_address", true);
+		$alt_postcode = $this->input->post("show_postcode", true);
+
+		if($alt_address && $alt_postcode){
+			$this->logger->info("alternative address: ".$alt_address." ".$alt_postcode);
+		}
+
         $order_data = array();
 		$customer_details = $this->session->userdata("user_details");
 		if(!$customer_details['address1'] || !$customer_details['address2'] || !$customer_details['postcode']){
@@ -84,7 +95,12 @@ class Basket extends CI_Controller {
             
             $i++;
         endforeach;
-        
+		
+		echo "<pre>";
+		print_r($order_data);
+		echo "</pre>";
+
+		exit;
         $this->logger->info("order info: ".var_export($order_data, true));
         $additional_prices = array('subtotal' => $subtotal, 
                                     'currency' => 'GBP',
