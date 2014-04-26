@@ -1,12 +1,20 @@
 <div class="container">
     <div class="basket_container">
 	<div class="basket_title">Delivery Address</div>
-	<div class="bot30">
+	<div class="block400 bot30">
 		<div class="bottom_space">Name: <?php echo $userdata->firstname." ".$userdata->lastname; ?></div>
 		<div class="bottom_space">Address: <?php echo $userdata->address1."<br />".$userdata->address2; ?></div>
 		<div class="bottom_space">Postcode: <?php echo $userdata->postcode; ?></div>
 		<div class="bottom_space">Email: <?php echo $userdata->email; ?></div>
-		<button> <a>Alternative delivery address</a> </button>
+		<button><a id="alt_address">Alternative delivery address</a></button>
+	</div>
+	<!-- Alternative Address -->
+	<div class="block400" id="show_alt_address" style="display:none;">
+		<label class="wid150">Address</label><span class="show_address"></span><input type="hidden" id="show_address" />
+		<label class="wid150">Post code</label><span class="show_postcode"></span><input type="hidden" id="show_postcode" />
+		<div>
+			<button>Don't Use this address</button>
+		</div>
 	</div>
 		
 	<?php
@@ -16,6 +24,7 @@
 	    <?php
 	}
 	?>
+	<!-- List Products -->
 	<table width="100%" border="0" class="collapse bottom_space">
 	    <tr>
 		<td width="10%" class="basket_headtd">Qty</td>
@@ -118,15 +127,15 @@
     </div>
 </div>
 
+<!-- Dialog window for alternative deliver address -->
 <div class="dialog" title="Alternate delivery address">
-	<form>
+	<form id="alt_address_form">
 		<div class="bottom_space">
 			<label class="wid150">Address 1: </label><input type="text" name="alt_address1" id="alt_address1" />
 			<label class="wid150">Address 2: </label><input type="text" name="alt_address2" id="alt_address2" />
 			<label class="wid150">Post code: </label><input type="text" name="alt_postcode" id="alt_postcode" size="5" />
 		</div>
 		<button><a id="use_alt_address">Use this address</a></button>
-		<input type="submit" style="display:none" />
 	</form>
 </div>
 <?php
@@ -134,7 +143,7 @@
 
 ?>
 <script>
-$('button').click(function(){
+$('#alt_address').click(function(){
 	$('.dialog').dialog('open');
 });
 
@@ -153,24 +162,54 @@ $(function(){
 
 	});
 
-	$('#use_alt_address').click(function(){
-		$('form').validate({
-			rules: {
-				alt_address1: {
-					required: true,
-				},
-				alt_address2: {
-					required: true 
-				}
-			},
-			messages: {
-				alt_address1: {
-					required: "This cannot be empty"
-				}
-			}
+});
 
-		});
-	});
+//form validate
+jQuery.validator.setDefaults({
+	debug: true,
+	success: "valid"
+});
+
+var alt_form = $('#alt_address_form');
+
+alt_form.validate({
+	rules: {
+		alt_address1: {
+			required: true,
+			minlength: 6
+		},
+		alt_address2: {
+			required: true,
+			minlength: 2
+		},
+		alt_postcode: {
+			required: true,
+			minlength: 5
+		}
+	},
+	messages: {
+		alt_address1: {
+			// required: "This cannot be empty"
+		}
+	}
 
 });
+
+$('#use_alt_address').click(function(){
+	if(alt_form.valid()){
+		$('.show_address').html($('#alt_address1').val() + ", " +$('#alt_address2').val());
+		$('.show_postcode').html($('#alt_postcode').val());
+		$('#show_alt_address').show();
+		$('.dialog').dialog('close');
+	}
+	// alert("valid: "+ alt_form.valid());
+	// console.log(alt_form);
+	// var display_values = alt_form[0];
+	// console.log(display_values);
+	// $('#show_alt_address').html(display_values);
+	// alt_form.each(function(e){
+		// console.log($(this));
+	//});
+});
+
 </script>
