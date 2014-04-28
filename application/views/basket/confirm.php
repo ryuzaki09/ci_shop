@@ -196,6 +196,7 @@ alt_form.validate({
 
 });
 
+//Use alternative address
 $('#use_alt_address').click(function(){
 	if(alt_form.valid()){
 		var alt_address1 = $('#alt_address1').val(),
@@ -205,15 +206,34 @@ $('#use_alt_address').click(function(){
 		$('.show_postcode').html(alt_postcode);
 		$('#show_address').val(alt_address1+", "+alt_address2);
 		$('#show_postcode').val(alt_postcode);
+		
+		$.post("/account/setAlternativeAddress", 
+				{"address1": alt_address1, "address2": alt_address2, "postcode": alt_postcode },
+				function(data){
+				
+				}
+				);
+
+		//display the alternative address
 		$('#div_alt_address').show();
 		$('#alt_address_dialog').dialog('close');
 		$('#show_alt_address_btn').hide();
 	}
 });
 
+//remove alternative address 
 $('.remove_alt_address').click(function(){
 	$('#show_address').val("");
 	$('#show_postcode').val("");
+	
+	$.post("/account/setAlternativeAddress", 
+			{"address1": alt_address1, "address2": alt_address2, "postcode": alt_postcode },
+			function(data){
+			
+			}
+			);
+
+	//hide the alernative address when clicking on remove
 	$('#div_alt_address').hide();
 	$('#show_alt_address_btn').show();
 

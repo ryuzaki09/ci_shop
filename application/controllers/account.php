@@ -99,4 +99,14 @@ class Account extends CI_Controller {
 		}
     }
 
+	public function setAlternativeAddress(){
+		$new_address = array("address" => $this->input->post("address1").", ".$this->input->post("address2"),
+							"postcode" => $this->input->post("postcode")
+							);
+
+		$this->session->set_userdata("alternative_address", $new_address);
+
+
+	}
+
 } 
