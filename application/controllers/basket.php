@@ -34,7 +34,10 @@ class Basket extends CI_Controller {
 
         $data['environment'] = (ENVIRONMENT == "development")
                             ? true
-                            :false;
+                            : false;
+		
+		$data['alt_address'] = $this->session->userdata("alternative_address");
+		// var_dump($alt_address);
         
         if($this->auth->is_logged_in()){
             $this->load->model('usermodel');
@@ -54,9 +57,6 @@ class Basket extends CI_Controller {
     }
     
     public function process_checkout(){
-		echo "<pre>";
-		print_r($this->input->post());
-		echo "</pre>";
 
 		$alt_address = $this->input->post("show_address", true);
 		$alt_postcode = $this->input->post("show_postcode", true);

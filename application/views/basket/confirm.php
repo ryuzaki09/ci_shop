@@ -7,18 +7,31 @@
 			<div class="bottom_space">Address: <?php echo $userdata->address1."<br />".$userdata->address2; ?></div>
 			<div class="bottom_space">Postcode: <?php echo $userdata->postcode; ?></div>
 			<div class="bottom_space">Email: <?php echo $userdata->email; ?></div>
-			<button id="show_alt_address_btn">Use alternative delivery address</button>
+			<?php
+			if($alt_address && empty($alt_address['address']) && empty($alt_address)){
+				?>
+				<button id="show_alt_address_btn">Use alternative delivery address</button>
+				<?php
+			}
+			?>
 		</div>
 		<!-- Alternative Address -->
-		<div class="block350 go_left" id="div_alt_address" style="display:none;">
-			<label class="wid150">Address</label>
-			<span class="show_address"></span>
-			<label class="wid150 bot30">Post code</label>
-			<span class="show_postcode"></span>
-			<div>
-				<button class="remove_alt_address">Don't Use this address</button>
+		<?php
+		if($alt_address){
+			var_dump($alt_address);
+			?>
+			<div class="block350 go_left" id="div_alt_address" <?php echo ($alt_address) ? "" : "style='display:none;'"; ?>>
+				<label class="wid150">Address</label>
+				<span class="show_address"><?php echo $alt_address['address']; ?></span>
+				<label class="wid150 bot30">Post code</label>
+				<span class="show_postcode"><?php echo $alt_address['postcode']; ?></span>
+				<div>
+					<button class="remove_alt_address">Don't Use this address</button>
+				</div>
 			</div>
-		</div>
+			<?php
+		}
+		?>
 	</div>
 		
 	<?php
@@ -227,7 +240,7 @@ $('.remove_alt_address').click(function(){
 	$('#show_postcode').val("");
 	
 	$.post("/account/setAlternativeAddress", 
-			{"address1": alt_address1, "address2": alt_address2, "postcode": alt_postcode },
+			{"address1": null, "address2": null, "postcode": null },
 			function(data){
 			
 			}
