@@ -97,7 +97,7 @@ class Basket extends CI_Controller {
         endforeach;
 		
 		echo "<pre>";
-		print_r($order_data);
+		print_r($insert_data);
 		echo "</pre>";
 
 		exit;

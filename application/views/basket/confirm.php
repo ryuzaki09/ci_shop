@@ -10,9 +10,10 @@
 			<div class="bottom_space">Email: <?php echo $userdata->email; ?></div>
 			<?php
 			// var_dump($alt_address);
-			$display_btn = (is_array($alt_address) && !$alt_address['address'] && !$alt_address['postcode'])
+			$display_btn = (!$alt_address || (is_array($alt_address) && !$alt_address['address'] && !$alt_address['postcode']))
 							? ""
 							: "none";
+			
 			?>
 			<button id="show_alt_address_btn" style="display: <?php echo $display_btn; ?>">Deliver to alternative address</button>
 		</div>
@@ -24,8 +25,10 @@
 		?>
 		<div class="block350 go_left" id="div_alt_address" style="display: <?php echo $display_alt_address; ?>;">
 			<div class="bold-heading">Alternative Address:</div>
-			<label class="wid150">Name:</label>
-			<span class="show_name"><?php echo $alt_address['name']; ?></span>
+			<div>
+				<label class="wid150">Name:</label>
+				<span class="show_name"><?php echo $alt_address['name']; ?></span>
+			</div>
 			<label class="wid150">Address:</label>
 			<span class="show_address"><?php echo $alt_address['address']; ?></span>
 			<label class="wid150 bot30">Post code:</label>
@@ -98,8 +101,8 @@
 		    <td align="right">&pound;<?php echo $this->cart->format_number($this->cart->total()); ?></td>
 		</tr>
 	    </table>
-		<input type="hidden" id="show_address" name="show_address" />
-		<input type="hidden" id="show_postcode" name="show_postcode" />
+		<!-- <input type="hidden" id="show_address" name="show_address" /> -->
+		<!-- <input type="hidden" id="show_postcode" name="show_postcode" /> -->
 	    <div class="clearfix">
 			<div class="block150 right"><input type="submit" id="payment" value="Proceed to Payment" /></div>
 	    </div>
@@ -228,10 +231,11 @@ $('#use_alt_address').click(function(){
 		$('.show_address').html(alt_address1 + ", " +alt_address2);
 		$('.show_postcode').html(alt_postcode);
 
+		/*
 		$('#show_name').val(alt_name);
 		$('#show_address').val(alt_address1+", "+alt_address2);
 		$('#show_postcode').val(alt_postcode);
-		
+		*/
 		$.post("/account/setAlternativeAddress", 
 				{"name": alt_name, "address1": alt_address1, "address2": alt_address2, "postcode": alt_postcode },
 				function(data){
@@ -248,8 +252,8 @@ $('#use_alt_address').click(function(){
 
 //remove alternative address 
 $('.remove_alt_address').click(function(){
-	$('#show_address').val("");
-	$('#show_postcode').val("");
+	// $('#show_address').val("");
+	// $('#show_postcode').val("");
 	
 	$.post("/account/setAlternativeAddress", 
 			{"name": null, "address1": null, "address2": null, "postcode": null },
