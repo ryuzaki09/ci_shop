@@ -367,6 +367,13 @@ a:hover.empty_basket { color:#fff; }
     padding:10px 0px 20px 0; 
     margin-bottom:20px;
 }
+.bold-heading { 
+	font-weight:bold; 
+	font-size:16px; 
+	color:$header-color; 
+	margin-bottom:10px;	
+}
+
 .collapse { border-collapse: collapse; }
 .go_left { float:left; }
 .go_right { float:right; }

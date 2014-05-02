@@ -732,6 +732,12 @@ a:hover.empty_basket {
   padding: 10px 0px 20px 0;
   margin-bottom: 20px; }
 
+.bold-heading {
+  font-weight: bold;
+  font-size: 16px;
+  color: #ffb540;
+  margin-bottom: 10px; }
+
 .collapse {
   border-collapse: collapse; }
 
