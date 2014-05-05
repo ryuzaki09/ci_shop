@@ -104,7 +104,7 @@ class Ordersmodel extends Commonmodel {
      */
     public function get_orders($status){
         $this->logger->info("Getting $status orders");
-		$this->db->select('orders.oid, status, order_no, order_created, date_created, total_price, currency, external_ref');
+		$this->db->select('orders.oid, status, order_no, order_created, orders.delivery_address, date_created, total_price, currency, external_ref');
 		$this->db->from('orders');
 		$this->db->join('order_details', 'orders.oid=order_details.oid');
 		$this->db->join('transactions', 'orders.oid=transactions.oid');
@@ -112,8 +112,8 @@ class Ordersmodel extends Commonmodel {
 
 		if($status == self::STATUS_REFUND){
 			$this->db->like("external_ref", "refund");
-			$this->db->order_by("date_created", "desc");
 		}
+		$this->db->order_by("date_created", "desc");
 
 		$this->db->group_by('order_no');
 
@@ -201,7 +201,7 @@ class Ordersmodel extends Commonmodel {
 		if($total == "total")
 			$this->db->select("count(*) AS count");
 		else
-			$this->db->select("orders.order_created, status, order_details.order_no, 
+			$this->db->select("orders.order_created, status, order_details.order_no, delivery_address,
 							order_details.price, qty, currency, products.name");
 
 		$this->db->join("order_details", "orders.oid=order_details.oid");

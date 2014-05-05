@@ -8,9 +8,24 @@ if(is_array($result) && !empty($result)){
         $external_ref = json_decode($data['external_ref']);
 		?>
 		<div class="list_div top_border" id="list_<?php echo $data['oid']; ?>">
-			Order No. <a href="#"><?php echo $data['order_no']; ?></a><br />
-			Total Price: &pound;<?php echo $data['total_price']; ?><br />
-			Order Created: <?php echo $data['order_created']; ?><br /><br />
+			<div class="clearfix">
+				<div class="block350 go_left">
+				Order No. <a href="#"><?php echo $data['order_no']; ?></a><br />
+				Total Price: &pound;<?php echo $data['total_price']; ?><br />
+				Order Created: <?php echo $data['order_created']; ?><br /><br />
+				</div>
+				<div class="block300 go_left">
+					Delivery Address:
+					<div>
+						<?php
+						if($data['delivery_address']){
+							$delivery_info = json_decode($data['delivery_address']);
+							echo $delivery_info->name."<br />".$delivery_info->address."<br />".$delivery_info->postcode;
+						}
+						?>
+					</div>
+				</div>
+			</div>
 			<input type="button" class="btn btn-primary btn-small disapprove" value="Disapprove"
 					data-oid="<?php echo $data['oid']; ?>" />
 			<input type="button" class="btn btn-primary btn-small refund" value="Refund" data-oid="<?php echo $data['oid']; ?>" 
