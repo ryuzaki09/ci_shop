@@ -13,52 +13,55 @@ class Ordersmodel extends Commonmodel {
     /**
      * create_order 
      * 
-     * @param mixed $data 
-     * @param mixed $additional_prices 
+     * @param mixed $data array
+     * @param mixed $additional_prices array
+     * @param mixed $delivery_info  array
      * @access public
-     * @return void
+     * @return boolean
      */
-    public function create_order($data, $additional_prices){
-		if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices)){
+    public function create_order($data, $additional_prices, $delivery_info){
+		if(is_array($data) && !empty($data) && is_array($additional_prices) && !empty($additional_prices) && is_array($delivery_info)){
 			$orderData = array("customer_id" => $data[0]['cid'],
 								"order_created"	=> date('Y-m-d H:i:s'),
+								"delivery_address" => json_encode($delivery_info),
 								"total_price"	=> $additional_prices['total']
-					);
+								);
 
 			//insert into order table to create order no.
 			$order_id = $this->create_orderNumber($orderData);
 			if($order_id){
-			$order_no = $this->order_no_prefix.$order_id; 
-					$this->logger->info("Order No: ".$order_no);
+				$order_no = $this->order_no_prefix.$order_id; 
+				$this->logger->info("Order No: ".$order_no);
 
 					//set order info into session
-			$this->load->library("payment");
-			$this->payment->setValue("order_id", $order_id);
-			$this->payment->setValue("order_no", $order_no);		
+				$this->load->library("payment");
+				$this->payment->setValue("order_id", $order_id);
+				$this->payment->setValue("order_no", $order_no);		
 
-			$i = 0;
-					
-			$details = array();
-			//loop through each product to give order number
-			foreach($data AS $newdata):
-				$details[$i] = $newdata;
-				$details[$i]['oid']         = $order_id;
-				$details[$i]['order_no']    = $order_no;
-			
-				$i++;
-			endforeach;
-			
-			//and then insert into DB for records	
-			$this->db->insert_batch($this->table['o_details'], $details);
-			if($this->db->affected_rows()>0)
-				return true;
-			else
-				throw new Exception("Cannot insert order details");
+				$i = 0;
+						
+				$details = array();
+				//loop through each product to give order number
+				foreach($data AS $newdata):
+					$details[$i] = $newdata;
+					$details[$i]['oid']         = $order_id;
+					$details[$i]['order_no']    = $order_no;
+				
+					$i++;
+				endforeach;
+				
+				//and then insert into DB for records	
+				$this->db->insert_batch($this->table['o_details'], $details);
+				if($this->db->affected_rows()>0)
+					return true;
+				else
+					throw new Exception("Cannot insert order details");
 			
 			} else {
 				throw new Exception("Cannot create order number");
 			}
 		}
+		throw new Exception("Please check parse values");
     }
 
     /**

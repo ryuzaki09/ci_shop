@@ -56,22 +56,35 @@ class Basket extends CI_Controller {
 		
     }
     
+    /**
+     * process_checkout 
+     * This is when the customer clicks on the Proceed to Payment on the checkout page
+     * @access public
+     * @return void
+     */
     public function process_checkout(){
 
-		$alt_address = $this->input->post("show_address", true);
-		$alt_postcode = $this->input->post("show_postcode", true);
+		$alt_address = $this->session->userdata("alternative_address");
+		$customer_details = $this->session->userdata("user_details");
+		
+		//if there is no alternative address then get current address
+		if(!$alt_address['address'] && !$alt_address['postcode']){
+			//check for current address - if there is none then redirect customer to edit account details page
+			if(!$customer_details['address1'] || !$customer_details['address2'] || !$customer_details['postcode']){
+				$this->session->set_flashdata("message", "Please complete your address details before proceeding");
+				redirect("/account/edit");
+			}
 
-		if($alt_address && $alt_postcode){
-			$this->logger->info("alternative address: ".$alt_address." ".$alt_postcode);
-		}
+			$delivery_add = array("name" => $this->session->userdata("customer"),
+									"address" => $customer_details['address1'].", ".$customer_details['address2'],
+									"postcode" => $customer_details['postcode']
+									);	
+		} else
+			$delivery_add = $alt_address;
+
+		$this->logger->info("delivery address: ".var_export($delivery_add, true));
 
         $order_data = array();
-		$customer_details = $this->session->userdata("user_details");
-		if(!$customer_details['address1'] || !$customer_details['address2'] || !$customer_details['postcode']){
-			$this->session->set_flashdata("message", "Please complete your address details before proceeding");
-			redirect("/account/edit");
-		}
-		
         $customer_id = $this->session->userdata('uid');
         
         //grab all product info from post and pass to process payment
@@ -96,11 +109,6 @@ class Basket extends CI_Controller {
             $i++;
         endforeach;
 		
-		echo "<pre>";
-		print_r($insert_data);
-		echo "</pre>";
-
-		exit;
         $this->logger->info("order info: ".var_export($order_data, true));
         $additional_prices = array('subtotal' => $subtotal, 
                                     'currency' => 'GBP',
@@ -113,7 +121,7 @@ class Basket extends CI_Controller {
         $this->load->model('ordersmodel');
 
         try {
-            $result = $this->ordersmodel->create_order($insert_data, $additional_prices);
+            $result = $this->ordersmodel->create_order($insert_data, $additional_prices, $delivery_add);
         } catch(Exception $e){
             $this->logger->error($e->getMessage());
         }
