@@ -11,7 +11,8 @@ class Commonmodel extends CI_Model {
                         'style' => 'shoplongdestiny.global_settings',
                         'orders'    => 'shoplongdestiny.orders',
                         'o_details' => 'shoplongdestiny.order_details',
-                        'trx'       => 'shoplongdestiny.transactions'
+                        'trx'       => 'shoplongdestiny.transactions',
+						'p_options' => 'product_options',
                        );
 
  

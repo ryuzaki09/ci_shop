@@ -37,31 +37,6 @@ class Productsmodel extends Commonmodel {
                 
     }
     
-    function db_delete_albumphotos($id, $singlephoto=false){        
-        if ($singlephoto){
-            $this->db->where('pid', $id);
-        } else {
-            $this->db->where('albumID', $id);
-        }
-        
-        $this->db->delete($this->table['albumPhotos']);
-        
-        return (mysql_affected_rows()>0)
-            ? true
-            : false;
-    }
-    
-    function db_update_album($albumid, $album_name){
-        $this->db->set('folder_name', $album_name);
-        $this->db->where('albumID', $albumid);
-        $result = $this->db->update($this->table['photoalbum']);
-        
-        return (mysql_affected_rows()>0)
-                ? true
-                : false;
-        
-    }
-    
     public function db_insert_update_products($id=false, $name, $desc, $img1=false, $img2=false, $img3=false, $img4=false, $price, $category, $subcat){
         
         $data = array('name' =>$name,
@@ -95,14 +70,16 @@ class Productsmodel extends Commonmodel {
                 : false;
     }
     
-    public function db_get_albumPhotos($where){
-        $this->db->where($where);
-        $result = $this->db->get($this->table['albumPhotos']);
-        
-        return ($result->num_rows()>0)
-                ? $result->result_array()
-                : false;
-    }
-    
+	public function addProductOption($data){
+		if(is_array($data) && !empty($data)){
+			$this->db->insert($this->table['p_options'], $data);
+
+			return ($this->db->affected_rows()>0)
+				? true
+				: false;
+		}
+
+		return;
+	}
 }
 

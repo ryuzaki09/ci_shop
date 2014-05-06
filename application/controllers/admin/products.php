@@ -4,7 +4,6 @@ class Products extends CI_Controller {
     
     public function __construct(){
         parent::__construct();
-        $this->load->model('commonmodel');
         $this->load->library('adminpage');
         $this->load->model('adminmodel');     
         $this->load->model('productsmodel');
@@ -140,36 +139,17 @@ class Products extends CI_Controller {
 			//update record in the database after the upload
 			$result = $this->productsmodel->db_insert_update_products($id, $name, $desc, $imgs[0], $imgs[1], 
 																		$imgs[2], $imgs[3], $price, $category, $sub_cat);
-       }// end of update
+		}// end of update
               
-       $data['item'] = $this->productsmodel->db_get_product($where);
-       //$data['imgs'] = $this->adminmodel->retrieve_fpphotos($id);       
-       $data['edit'] = true;
-        $data['js'][] = $this->adminpage->set('js', '/js/ckeditor/ckeditor.js'); 
-       $data['pagetitle'] = "Edit | ".$data['item']->name;
-       $this->adminpage->loadpage('admin/products/upload', $data);   
-   }
+		$data['item'] = $this->productsmodel->db_get_product($where);
+		//$data['imgs'] = $this->adminmodel->retrieve_fpphotos($id);       
+		$data['edit'] = true;
+		$data['js'][] = $this->adminpage->set('js', '/js/ckeditor/ckeditor.js'); 
+		$data['pagetitle'] = "Edit | ".$data['item']->name;
+		$this->adminpage->loadpage('admin/products/upload', $data);   
+	}
    
-   
-    
-	public function album($id){
-                  
-        $id = $id*1;            
-        
-        $where = array('albumID' => $id);
-        //get album name
-        $data['album_name'] = $this->photomodel->get_photoalbum($where);
-        $images = $this->photomodel->db_get_albumPhotos($where);
-        
-        $data['album_photos'] = $this->photomodel->db_get_albumPhotos($where);
-        
-        $data['pagetitle'] = "Edit | ".$data['album_name']->folder_name;
-        
-        $this->adminpage->loadpage('admin/products/photos', $data);
-            
-    }
-    
-               
+	               
 	public function delete_product(){        
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
             $id         = ($this->input->post('id', true)*1);
@@ -244,12 +224,33 @@ class Products extends CI_Controller {
         }
     }
 
-	public function addOption($pid){
+	public function addoption($pid){
 		
-		if($this->input->post("add") == "Add"){
+		if($this->input->post("addoption") == "Add product option"){
+			$insertdata = array("pid" => $pid,
+								"color" => $this->input->post("color", true),
+								"size" => $this->input->post("size", true),
+								"price" => $this->input->post("price", true)
+								);
+			$this->logger->info("adding option: ".var_export($insertdata, true));
 
+			$result = $this->productsmodel->addProductOption($insertdata);
+
+			if($result){
+				$this->session->set_flashdata("message", "<div class='alert alert-success'>Option has been added</div>");
+				redirect("/admin/products/listing");
+			} else {
+				$data['message'] = "<div class='alert alert-danger'>Something went wrong and cannot add this option</div>";
+			}
 		}
 
+		$data['sizes'] = commonclass::getSizes();
+
+		$data['item'] = $this->productsmodel->db_get_product(array("pid" => $pid));
+		$data['pagetitle'] = "Add Option";
+		$data['js'][] = $this->adminpage->set("js", "/js/jquery.validate.min.js");
+
+		$this->adminpage->loadpage("admin/products/options", $data);
 	}
     
 }
