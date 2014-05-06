@@ -9,7 +9,7 @@ class Productsmodel extends Commonmodel {
     public function db_get_product($where){
         $this->db->where($where);
         
-	$get_table = $this->table['products'];
+		$get_table = $this->table['products'];
         
         $result = $this->db->get($get_table);
         
@@ -81,5 +81,19 @@ class Productsmodel extends Commonmodel {
 
 		return;
 	}
+
+	public function getProductOptions($pid){
+		if(is_numeric($pid)){
+			$this->db->where("products.pid", $pid);
+			$this->db->join("product_options", "products.pid=product_options.pid", "left");
+			
+			$result = $this->db->get($this->table['products']);
+
+			return ($result->num_rows()>0)
+					? $result->result_array()
+					: false;
+		}
+	}
+
 }
 

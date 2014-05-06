@@ -229,8 +229,8 @@ class Products extends CI_Controller {
 		if($this->input->post("addoption") == "Add product option"){
 			$insertdata = array("pid" => $pid,
 								"color" => $this->input->post("color", true),
-								"size" => $this->input->post("size", true),
-								"price" => $this->input->post("price", true)
+								"p_size" => $this->input->post("size", true),
+								"po_price" => $this->input->post("price", true)
 								);
 			$this->logger->info("adding option: ".var_export($insertdata, true));
 
@@ -249,6 +249,15 @@ class Products extends CI_Controller {
 		$data['item'] = $this->productsmodel->db_get_product(array("pid" => $pid));
 		$data['pagetitle'] = "Add Option";
 		$data['js'][] = $this->adminpage->set("js", "/js/jquery.validate.min.js");
+
+		$this->adminpage->loadpage("admin/products/options", $data);
+	}
+
+
+	public function viewOptions($pid){
+		
+		$data['item'] = $this->productsmodel->getProductOptions($pid);
+		$data['pagetitle'] = "Product Options";
 
 		$this->adminpage->loadpage("admin/products/options", $data);
 	}

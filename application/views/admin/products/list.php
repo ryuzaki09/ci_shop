@@ -7,7 +7,9 @@ if (is_array($products)){
     foreach($products AS $list): ?>
         
 		 <div id="item_<?php echo $list['pid']; ?>" class="list_div clearfix" style="border-top:1px solid #cacaca;">
-			<div class="go_left marg_right list_product" style="width:200px;"><img src="<?php echo base_url().'media/images/products/'.$list['img1'] ?>" /></div>
+			<div class="go_left marg_right list_product" style="width:200px;">
+				<img src="<?php echo base_url().'media/images/products/'.$list['img1'] ?>" />
+			</div>
 			<div class="go_left marg_right list_product" style="width:400px;">
 				Name: <?php echo $list['name'] ?><br />
 				Description: <?php echo substr($list['desc'], 0, 200); ?>...<br /><br />
@@ -15,8 +17,9 @@ if (is_array($products)){
 			</div>        
 			<div class="go_left marg_right list_product" style="width:120px;">
 				<a href="/admin/products/edit/<?php echo $list['pid']; ?>">Edit</a><br />
-				<a href="#" data-pid="<?php echo $list['pid']; ?>" data-img1="<?php echo $list['img1']; ?>" id="delete">Delete</a><br />
-				<a href="/admin/products/addoption/<?php echo $list['pid']; ?>">Add Option</a>
+				<a href="#" data-pid="<?php echo $list['pid']; ?>" data-img1="<?php echo $list['img1']; ?>" class="delete">Delete</a><br />
+				<a href="/admin/products/addoption/<?php echo $list['pid']; ?>">Add Option</a><br />
+				<a href="/admin/products/viewOptions/<?php echo $list['pid']; ?>">View Options</a>
 			</div>
 			<br/>
 		 </div>
@@ -26,7 +29,7 @@ if (is_array($products)){
     
 } ?>
 <script>
-$('#delete').click(function(){
+$('.delete').click(function(){
     var response = confirm('Delete product?');
     
     if(response){
