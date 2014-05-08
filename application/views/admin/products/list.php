@@ -14,6 +14,7 @@ if (is_array($products)){
 				Name: <?php echo $list['name'] ?><br />
 				Description: <?php echo substr($list['desc'], 0, 200); ?>...<br /><br />
 				Price: &pound;<?php echo $list['price']; ?><br />
+				Stock: <?php echo $list['stock']; ?><br />
 			</div>        
 			<div class="go_left marg_right list_product" style="width:120px;">
 				<a href="/admin/products/edit/<?php echo $list['pid']; ?>">Edit</a><br />

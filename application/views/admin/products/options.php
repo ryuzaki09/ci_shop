@@ -36,11 +36,16 @@ if($pagetitle == "Add Option"){
 
 if($pagetitle == "Product Options"){
 	if(is_array($item) && !empty($item)){
-		echo "<div class='clearfix list_div'>";
+		echo "<div class='bot50'>";
 		foreach($item AS $options):
-			echo "Color: ".$options['color']."<br />";
-			echo "Size: ".$options['p_size']."<br />";
-			echo "Price: ".$options['po_price']."<br />";			
+			if(!is_null($options['po_id'])){
+				echo "<div class='clearfix list_div top_border' id='option_".$options['po_id']."'>";
+				echo "Color: ".$options['color']."<br />";
+				echo "Size: ".$options['p_size']."<br />";
+				echo "Price: ".$options['po_price']."<br /><br />";
+				echo "<div><a href='#' class='delete btn btn-primary btn-small' data-option='".$options['po_id']."'>Delete</a></div>";
+				echo "</div>";
+			}
 
 		endforeach;
 		echo "</div>";
@@ -64,5 +69,19 @@ $('form').validate({
 		}
 	}
 
+});
+
+$('.delete').click(function(){
+	var response = confirm("Delete this option?");
+	if(response){
+		var url = "/admin/product/deleteOption";
+		var p_option = $(this).data('option');
+
+		$.post(url, {"po_id": p_option }, function(data){
+			if(data == "true")
+				$('#option_'+p_option).slideUp();
+		});
+
+	}
 });
 </script>

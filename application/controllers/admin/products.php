@@ -82,27 +82,29 @@ class Products extends CI_Controller {
     }
     
 	public function edit($id){ 
-       $id = $id*1; 
-       $where = array('pid' => $id);      
-       if ($this->input->post('update') == "Update"){
-           $name       = $this->input->post('name', true);
-           $desc       = $this->input->post('desc', true);
-           $price      = $this->input->post('price', true)*1;
-           $category   = $this->input->post('category', true);
-           $sub_cat    = $this->input->post('subcategory', true);
+		$id = $id*1; 
+		$where = array('pid' => $id);      
+		if ($this->input->post('update') == "Update"){
+			$name       = $this->input->post('name', true);
+			$desc       = $this->input->post('desc', true);
+			$price      = $this->input->post('price', true)*1;
+			$category   = $this->input->post('category', true);
+			$sub_cat    = $this->input->post('subcategory', true);
            
-           $current_img = array('0' => $this->input->post('current_img1', true),
-		   						'1' => $this->input->post('current_img2', true),
-		   						'2' => $this->input->post('current_img3', true),
-		   						'3' => $this->input->post('current_img4', true));
+			$current_img = array('0' => $this->input->post('current_img1', true),
+								'1' => $this->input->post('current_img2', true),
+								'2' => $this->input->post('current_img3', true),
+								'3' => $this->input->post('current_img4', true));
                          
-           $img = array('0' => $_FILES['img1']['name'],
-		   				'1' => $_FILES['img2']['name'],
-		   				'2' => $_FILES['img3']['name'],
-		   				'3' => $_FILES['img4']['name']);
+			$img = array('0' => $_FILES['img1']['name'],
+						'1' => $_FILES['img2']['name'],
+						'2' => $_FILES['img3']['name'],
+						'3' => $_FILES['img4']['name']);
 
-           	$files = $_FILES;
-           	$count=0;
+			$stock_quantity = $this->input->post("stock", true);
+
+			$files = $_FILES;
+			$count=0;
 			Foreach($files AS $images => $imgname){               
                
 	           if ($img[$count] != ""){ //if there is a file to upload
@@ -138,7 +140,11 @@ class Products extends CI_Controller {
 			}
 			//update record in the database after the upload
 			$result = $this->productsmodel->db_insert_update_products($id, $name, $desc, $imgs[0], $imgs[1], 
-																		$imgs[2], $imgs[3], $price, $category, $sub_cat);
+																		$imgs[2], $imgs[3], $price, $category, $sub_cat, $stock_quantity);
+			if($result){
+				$this->session->set_flashdata("message", "<div class='alert alert-success'>Product updated successfully</div>");
+				redirect("/admin/products/listing");
+			}
 		}// end of update
               
 		$data['item'] = $this->productsmodel->db_get_product($where);
