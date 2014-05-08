@@ -39,17 +39,25 @@
 				<div class="nobreak" style="width:90px;">Price:</div>
 				<div class="nobreak" style="width:100px;">&pound;<?php echo $product->price; ?></div>
 			</div>
-			<div class="clearfix">
-                <form method="POST" action="<?php echo base_url(); ?>products/item/<?php echo $product->pid; ?>">			
-                <div class="top_space">
-                    <input type="submit" name="add_basket" value="Add to Basket" />
-                </div>
-                <input type="hidden" name="rowID" value="<?php if(@$rowID){ echo $rowID; } ?>" />
-                <input type="hidden" name="pid" value="<?php echo $product->pid; ?>" />
-                <input type="hidden" name="pname" value="<?php echo $product->name; ?>" />
-                <input type="hidden" name="price" value="<?php echo $product->price; ?>" />
-                </form>
-            </div>
+			<?php
+			if($product->stock > 0){
+				?>
+				<div class="clearfix">
+					<form method="POST" action="/products/item/<?php echo $product->pid; ?>">			
+					<div class="top_space">
+						<input type="submit" name="add_basket" value="Add to Basket" />
+					</div>
+					<input type="hidden" name="rowID" value="<?php if(@$rowID){ echo $rowID; } ?>" />
+					<input type="hidden" name="pid" value="<?php echo $product->pid; ?>" />
+					<input type="hidden" name="pname" value="<?php echo $product->name; ?>" />
+					<input type="hidden" name="price" value="<?php echo $product->price; ?>" />
+					</form>
+				</div>
+				<?php
+			} else {
+				echo "Out of Stock";
+			}
+			?>
 
             <!--
 			<div class="clearfix">
