@@ -189,15 +189,15 @@ class Basket extends CI_Controller {
                 $this->logger->info("inserting transaction data: ".var_export($insertdata, true));
                 $trx_result = $this->ordersmodel->createTransaction($insertdata);
 
-		//if transaction completed then redirect
+				//if transaction completed then redirect
                 if($trx_result){
-		    $this->logger->info("Transaction Completed: ".$order_id);
-		    $this->cart->destroy(); //destroy the shopping cart session now that transaction is completed.
-		    redirect("/basket/orderComplete");
-		} else {
-		    $this->session->set_flashdata("error_msg", "Transaction cannot be completed. Please try again later.");
-		    redirect("/basket/checkout");
-		}
+					$this->logger->info("Transaction Completed: ".$order_id);
+					$this->cart->destroy(); //destroy the shopping cart session now that transaction is completed.
+					redirect("/basket/orderComplete");
+				} else {
+					$this->session->set_flashdata("error_msg", "Transaction cannot be completed. Please try again later.");
+					redirect("/basket/checkout");
+				}
             }
         } //end of if theres a payer_id and token
     }

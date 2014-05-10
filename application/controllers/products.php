@@ -4,7 +4,6 @@ class Products extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
-		$this->load->model('commonmodel');
 		$this->load->model('productsmodel');
 		$this->load->library('loadpage');
 		$this->load->library('auth');
@@ -23,7 +22,8 @@ class Products extends CI_Controller {
 			$pname = $this->input->post('pname', true);
 			$price = $this->input->post('price', true);
 
-			//DO: get stock of product
+			//  remove one stock of product
+			$this->productsmodel->removeOneStock($pid);
 
 			//check for basket session
 			$basket = is_basket();
@@ -61,13 +61,7 @@ class Products extends CI_Controller {
 
 		$basket = is_basket();
 
-		if($id)
-			//if there is an album selected then select where clause
-			$where = array('pid' => $id);
-		else
-			//if not then select most recent album
-			$where = array('pid' => 1);
-		
+		$where = array('pid' => $id);
 
 		//get product item
 		$data['product'] = $this->productsmodel->db_get_product($where);
@@ -78,7 +72,7 @@ class Products extends CI_Controller {
 			if(!empty($basket)){  //if theres a basket session
 				foreach ($this->cart->contents() as $items):
 					if($items['id'] == $data['product']->pid && $items['price'] == $data['product']->price && $items['name'] == $data['product']->name){
-					$data['rowID'] = $items['rowid'];
+						$data['rowID'] = $items['rowid'];
 
 					}
 
@@ -90,23 +84,20 @@ class Products extends CI_Controller {
 		$this->loadpage->loadpage('products/item', $data);
     }
 
-    public function add_basket(){
-		error_reporting(E_ALL);
-
-        require_once($_SERVER['DOCUMENT_ROOT']."/dompdf/dompdf_config.inc.php");
-
-        $html = $this->load->view('products/test','', true);
-		//echo $html;
-
-        $dompdf = new DOMPDF();
-		$dompdf->load_html($html);
-		$dompdf->render();
-		$dompdf->stream("sample.pdf");
-    }
-
     public function empty_basket(){
+		$basket = is_basket();
+		// echo "<pre>";
+		// print_r($basket);
+		// echo "</pre>";
 
-        if(is_basket()){
+		// $this->productsmodel->emptyBasket($data);
+		
+		//loop through basket of products to return the stock quantity
+        if($basket){
+			foreach($basket AS $rowId):
+				$this->productsmodel->emptyBasket($rowId['qty'], $rowId['id']);
+			endforeach;
+
             $this->cart->destroy();
 			redirect(base_url());
 		}

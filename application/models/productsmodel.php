@@ -27,11 +27,11 @@ class Productsmodel extends Commonmodel {
                 : false;
     }
     
-    public function db_delete_product($id){
-        $this->db->where('pid', $id);
+    public function db_delete_product($pid){
+        $this->db->where('pid', $pid);
         $this->db->delete($this->table['products']);
         
-        return(mysql_affected_rows()>0)
+        return($this->db->affected_rows()>0)
                 ? true
                 : false;      
                 
@@ -94,6 +94,39 @@ class Productsmodel extends Commonmodel {
 					? $result->result_array()
 					: false;
 		}
+	}
+
+	public function getProductStock($pid){
+		if(is_numeric($pid)){
+			$this->db->select("stock");
+			$this->db->where("pid", $pid);
+
+			return $this->db->get($this->table['products']);
+
+		}
+
+	}
+
+	public function removeOneStock($pid){
+		if(is_numeric($pid)){
+			$this->db->query("UPDATE products SET stock = (stock-1) WHERE pid=$pid");
+
+			return ($this->db->affected_rows()>0)
+					? true
+					: false;
+		}
+
+	}
+
+	public function emptyBasket($qty, $pid){
+		$this->db->set("stock", "stock+$qty", false);
+		$this->db->where("pid", $pid);
+		$this->db->update($this->table['products']);
+
+		// $this->db->query("UPDATE products SET stock = (stock-$qty) WHERE pid=$pid");
+		// $this->db->update_batch($this->table['products'], $data, "pid");
+
+		// echo $this->db->last_query();
 	}
 
 }
