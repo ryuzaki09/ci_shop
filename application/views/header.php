@@ -47,15 +47,16 @@
                     <li><a href="/" title="Logout">Home</a></li>
                     
                     <?php if(is_basket()) { ?>
-                    	<li><a href="<?php echo base_url(); ?>basket"><?php echo $this->cart->total_items(); ?> item(s) in the basket</a></li>	
-                    <?php //print_r(is_basket()); 
+                    	<li>
+							<a href="<?php echo base_url(); ?>basket">
+								<span id="total_qty"><?php echo $this->cart->total_items(); ?></span> item(s) in the basket</a>
+						</li>	
+                    <?php 
                     } ?>
                 </ul>
             </div>
             <?php if(is_basket()) { ?>
-                <!-- <div style="width:100px; float:right;"> -->
                     <a href="<?php echo base_url(); ?>products/empty_basket" class="empty_basket">Empty Basket</a>
-                <!-- </div> -->
             <?php } ?>
             <!-- <div id="search"> -->
             <!--         <form action="" method="post"> -->

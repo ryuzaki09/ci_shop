@@ -43,15 +43,15 @@
 			if($product->stock > 0){
 				?>
 				<div class="clearfix">
-					<form method="POST" action="/products/item/<?php echo $product->pid; ?>">			
+					<!-- <form method="POST" action="/products/item/<?php echo $product->pid; ?>">			 -->
 					<div class="top_space">
-						<input type="submit" name="add_basket" value="Add to Basket" />
+						<input type="button" name="add_basket" id="add_to_basket" value="Add to Basket" />
 					</div>
-					<input type="hidden" name="rowID" value="<?php if(@$rowID){ echo $rowID; } ?>" />
-					<input type="hidden" name="pid" value="<?php echo $product->pid; ?>" />
-					<input type="hidden" name="pname" value="<?php echo $product->name; ?>" />
-					<input type="hidden" name="price" value="<?php echo $product->price; ?>" />
-					</form>
+					<input type="hidden" name="rowID" id="rowId" value="<?php if(@$rowID){ echo $rowID; } ?>" />
+					<input type="hidden" name="pid" id="pid" value="<?php echo $product->pid; ?>" />
+					<input type="hidden" name="pname" id="pname" value="<?php echo $product->name; ?>" />
+					<input type="hidden" name="price" id="price" value="<?php echo $product->price; ?>" />
+					<!-- </form> -->
 				</div>
 				<?php
 			} else {
@@ -78,7 +78,6 @@
 					<input type="hidden" name="item_name_2" value="Naruto tshirt">
 					<input type="hidden" name="amount_2" value="9.99">
 					
-					
 					<!--<input type="hidden" name="shipping" value="2.99">-->
 					<!--
 					<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
@@ -91,27 +90,5 @@
 		</div><!-- prod_right_col -->
 		
 	</div>
-
-
 </div>
 
-<script>
-$(function(){
-    var top = $('.right_col_content').offset().top - parseFloat($('.right_col_content').css('marginTop').replace(/auto/, 0));
-      $(window).scroll(function (event) {
-          // what the y position of the scroll is
-          var y = $(this).scrollTop();
-                 
-          // whether that's below the form
-          if (y >= top) {
-            // if so, ad the fixed class
-            $('.right_col_content').addClass('fixed');
-          } else {
-            // otherwise remove it
-            $('.right_col_content').removeClass('fixed');
-          }
-        });
-
-});
-
-</script>
