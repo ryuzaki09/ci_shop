@@ -122,6 +122,9 @@ class Products extends CI_Controller {
 			//  remove one stock of product
 			$this->productsmodel->removeOneStock($pid);
 
+			//get product stock after
+			$data ['stock'] = $this->productsmodel->getProductStock($pid);
+
 			//check for basket session
 			$basket = is_basket();
 

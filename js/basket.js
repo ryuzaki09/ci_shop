@@ -34,9 +34,13 @@ $(function(){
 				$('.top-nav').after('<a href="/products/empty_basket" class="empty_basket">Empty Basket</a>');
 			} else {
 				var new_total = parseInt(total_qty) + 1;
-				
 			}
 
+			if(data.stock == 0){
+
+			}
+
+			//show total
 			$('#total_qty').html(new_total);
 		}, "json");
 	});

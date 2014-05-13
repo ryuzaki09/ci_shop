@@ -42,7 +42,7 @@
 			<?php
 			if($product->stock > 0){
 				?>
-				<div class="clearfix">
+				<div class="clearfix" id="basket_div">
 					<!-- <form method="POST" action="/products/item/<?php echo $product->pid; ?>">			 -->
 					<div class="top_space">
 						<input type="button" name="add_basket" id="add_to_basket" value="Add to Basket" />
