@@ -101,7 +101,10 @@ class Productsmodel extends Commonmodel {
 			$this->db->select("stock");
 			$this->db->where("pid", $pid);
 
-			return $this->db->get($this->table['products']);
+			$result = $this->db->get($this->table['products']);
+			return ($result->num_rows())
+					? $result->row()
+					: false;
 
 		}
 

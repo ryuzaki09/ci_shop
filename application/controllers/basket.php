@@ -17,17 +17,36 @@ class Basket extends CI_Controller {
     //Update the shopping basket at the basket page
     public function shoppingbasket(){
 		$useremail = $this->session->userdata('user_details');
-
+		
+		/*
         if($this->input->post('update') == "Update Cart"){
+			$i = 0;
             foreach($this->input->post() AS $postdata => $value):
-                $data[] = $value;
+				if(is_numeric($value['pid'])){
+					$stock = $this->productsmodel->getProductStock($value['pid']);
+					$this->logger->info("value: ".$value['pid']);
+                	$data[] = $value;
+				}
+
+				$i++;
             endforeach;
 
+			$this->logger->info("Post data: ".var_export($data, true));
             $this->cart->update($data);
         }
+		*/
+		$data['js'][] = $this->loadpage->set("js", "/js/basket.js");	
         $data['pagetitle']  = "Shopping Basket";
         $this->loadpage->loadpage('basket/list', @$data);
     }
+
+	public function removeProductFromBasket(){
+		$pid = $this->input->post("pid", true);
+		$rowId = $this->input->post("rowId", true);
+
+		$this->logger->info("row id: ".$rowId);
+
+	}
 
     //confirmation page to checkout and require customer to be logged in.
     public function checkout(){

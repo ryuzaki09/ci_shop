@@ -16,57 +16,6 @@ class Products extends CI_Controller {
 
     public function item($id){
 
-		// if($this->input->post('add_basket') == "Add to Basket"){
-		// 	$rowID = $this->input->post('rowID', true);
-		// 	$pid = $this->input->post('pid', true)*1;
-		// 	$pname = $this->input->post('pname', true);
-		// 	$price = $this->input->post('price', true);
-
-		// 	$this->logger->info("adding product to basket: $pid");
-
-		// 	//check for basket session
-		// 	$basket = is_basket();
-
-		// 	$this->logger->info("basket: ".var_export($basket, true));
-
-		// 	if(empty($basket)){ //if no basket session
-		// 		$basket_data = array('id' => $pid,
-		// 							'qty' => 1,
-		// 							'price' => $price,
-		// 							'name' => $pname
-		// 							);
-		// 		//insert data into basket
-		// 		$data['rowID'] = $this->cart->insert($basket_data);
-		// 		//  remove one stock of product
-		// 		$this->productsmodel->removeOneStock($pid);
-
-		// 	} else { //if theres basket session
-		// 		$this->logger->info("row Id: ".$rowID);
-		// 		//if the same product is there then add 1 to qty
-		// 		if(@$basket[$rowID]){
-		// 			$this->logger->info("same product row id: ".$basket[$rowID]." qty: ".$basket[$rowID]['qty']);
-		// 			$basket_data = array('rowid' => $rowID, 'qty' => ($basket[$rowID]['qty']+1));
-
-		// 			$this->cart->update($basket_data);
-		// 			$data['rowID'] = $rowID;
-		// 			//  remove one stock of product
-		// 			$this->productsmodel->removeOneStock($pid);
-
-		// 		} else {
-		// 			//if product is not in the basket session then create one.
-		// 			$basket_data = array('id' => $pid,
-		// 								'qty' => 1,
-		// 								'price' => $price,
-		// 								'name' => $pname
-		// 								);
-		// 			//insert data into basket
-		// 			$data['rowID'] = $this->cart->insert($basket_data);
-		// 			//  remove one stock of product
-		// 			$this->productsmodel->removeOneStock($pid);
-		// 		}
-		// 	}
-		// }
-
 		$basket = is_basket();
 
 		$where = array('pid' => $id);
@@ -88,7 +37,7 @@ class Products extends CI_Controller {
 			}
 		}
 
-		$data['js'][] = $this->loadpage->set("js", "/js/basket.js");
+		$data['js'][] = $this->loadpage->set("js", "/js/product.js");
 		$data['pagetitle'] = "Product: ".$data['product']->name;
 
 		$this->loadpage->loadpage('products/item', $data);
@@ -123,7 +72,9 @@ class Products extends CI_Controller {
 			$this->productsmodel->removeOneStock($pid);
 
 			//get product stock after
-			$data ['stock'] = $this->productsmodel->getProductStock($pid);
+			$stock = $this->productsmodel->getProductStock($pid);
+			$data['stock'] = $stock->stock;
+			$this->logger->info("product stock: ".$data['stock']);
 
 			//check for basket session
 			$basket = is_basket();

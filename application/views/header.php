@@ -19,11 +19,6 @@
 	<script src="/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>	
 	<?php
-    if (isset($js) && $js){                    
-        foreach($js AS $script => $key):
-            echo $key;
-        endforeach;
-    }
 	//sessiondata
 	$sessiondata = $this->session->all_userdata();
     ?>

@@ -15,5 +15,12 @@
 	</div>
     </div>
     <!-- End Wrapper -->
+	<?php
+	if (isset($js) && $js){                    
+		foreach($js AS $script => $key):
+			echo $key;
+		endforeach;
+	}
+	?>
 </body>
 </html>
