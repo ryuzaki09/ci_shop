@@ -121,7 +121,7 @@ class Productsmodel extends Commonmodel {
 
 	}
 
-	public function emptyBasket($qty, $pid){
+	public function deleteFromBasket($qty, $pid){
 		$this->db->set("stock", "stock+$qty", false);
 		$this->db->where("pid", $pid);
 		$this->db->update($this->table['products']);

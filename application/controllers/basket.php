@@ -41,11 +41,35 @@ class Basket extends CI_Controller {
     }
 
 	public function removeProductFromBasket(){
-		$pid = $this->input->post("pid", true);
-		$rowId = $this->input->post("rowId", true);
+		$rowId = $this->input->post("rowid", true);
 
-		$this->logger->info("row id: ".$rowId);
+		$this->logger->info("removing row id: ".$rowId);
 
+		$cart_data = array();
+		//loop through cart to build new cart excluding the the POST rowId product
+		foreach($this->cart->contents() AS $products => $item):
+			if($products != $rowId){
+				// $this->logger->info("cart: ".$products);
+				$cart_data[] = $item;
+				$this->logger->info("match");
+			} else {
+				//when product is matched then restore qty back into DB
+				$this->productsmodel->deleteFromBasket($item['qty'], $item['id']);
+			}
+		endforeach;
+		
+		$this->logger->info("data: ".var_Export($cart_data, true));
+		if(!empty($cart_data))
+			$this->cart->update($cart_data);
+		else
+			$this->cart->destroy();
+
+		$total_items = $this->cart->total_items();
+		$data['total_items'] = $total_items;
+
+		$this->logger->info("cart: ".var_Export($this->cart->contents(), true));
+
+		echo json_encode($data);
 	}
 
     //confirmation page to checkout and require customer to be logged in.

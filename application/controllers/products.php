@@ -52,7 +52,7 @@ class Products extends CI_Controller {
 		//loop through basket of products to return the stock quantity
         if($basket){
 			foreach($basket AS $rowId):
-				$this->productsmodel->emptyBasket($rowId['qty'], $rowId['id']);
+				$this->productsmodel->deleteFromBasket($rowId['qty'], $rowId['id']);
 			endforeach;
 
             $this->cart->destroy();
