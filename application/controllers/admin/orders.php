@@ -172,7 +172,7 @@ class Orders extends CI_Controller {
 
 	public function refunded(){
 		
-        $data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_REFUND);
+		$data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_REFUND);
 		$data['pagetitle'] = "Refunded Orders";
 
 		$this->adminpage->loadpage("admin/orders/refunded", $data);
