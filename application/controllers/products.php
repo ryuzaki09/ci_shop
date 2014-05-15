@@ -1,67 +1,61 @@
 <?php
 
 class Products extends CI_Controller {
-
-    public function __construct(){
-        parent::__construct();
+	public function __construct(){
+		parent::__construct();
 		$this->load->model('productsmodel');
 		$this->load->library('loadpage');
 		$this->load->library('auth');
-    }
+	}
 
     public function index($id=false){
-
 		$this->item($id);
-    }
-
-    public function item($id){
-
+	}
+	
+	public function item($id){
+		
 		$basket = is_basket();
-
 		$where = array('pid' => $id);
-
+		
 		//get product item
 		$data['product'] = $this->productsmodel->db_get_product($where);
-
-        //if no rowID
-        if(@$data['rowID']==""){
-
+		
+		//if no rowID
+		if(@$data['rowID']==""){
+			
 			if(!empty($basket)){  //if theres a basket session
 				foreach ($this->cart->contents() as $items):
 					if($items['id'] == $data['product']->pid && $items['price'] == $data['product']->price && $items['name'] == $data['product']->name){
 						$data['rowID'] = $items['rowid'];
-
+						
 					}
-
+					
 				endforeach;
 			}
 		}
-
+		
 		$data['js'][] = $this->loadpage->set("js", "/js/product.js");
 		$data['pagetitle'] = "Product: ".$data['product']->name;
-
+		
 		$this->loadpage->loadpage('products/item', $data);
-    }
-
-    public function empty_basket(){
+	}
+	
+	public function empty_basket(){
 		$basket = is_basket();
-		// echo "<pre>";
-		// print_r($basket);
-		// echo "</pre>";
-
+		
 		//loop through basket of products to return the stock quantity
-        if($basket){
+		if($basket){
 			foreach($basket AS $rowId):
 				$this->productsmodel->deleteFromBasket($rowId['qty'], $rowId['id']);
 			endforeach;
-
-            $this->cart->destroy();
+			
+			$this->cart->destroy();
 			redirect(base_url());
 		}
-    }
-
+	}
+	
 	public function addToBasket(){
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
+		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
 			$pid = $this->input->post("pid", true);
 			$pname = $this->input->post("pname", true);
 			$price = $this->input->post("price", true);
