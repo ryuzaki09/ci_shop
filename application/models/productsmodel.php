@@ -40,6 +40,38 @@ class Productsmodel extends Commonmodel {
 		return;
 
     }
+
+	public function db_insert_update_products($id=false, $name, $desc, $img1=false, $img2=false, $img3=false, $img4=false, $price, $category, $subcat, $stock){
+		$data = array('name' =>$name,
+					'desc' => $desc,
+					'price' => $price,
+					'category' => $category,
+					'sub_cat' => $subcat,
+					'stock' => $stock);
+		if($img1){
+			$data['img1'] = $img1;
+		}
+		if($img1){
+			$data['img2'] = $img2;
+		}
+		if($img1){
+			$data['img3'] = $img3;
+		}
+		if($img1){
+			$data['img4'] = $img4;
+		}
+		
+		if($id){
+			$this->db->where('pid', $id);
+			$this->db->update($this->table['products'], $data);
+		} else {
+			$this->db->insert($this->table['products'], $data);
+		}
+		
+		return ($this->db->affected_rows()>0)
+				? true
+				: false;
+	}
 	
 	public function addProductOption($data){
 		if(is_array($data) && !empty($data)){

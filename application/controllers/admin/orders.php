@@ -1,73 +1,70 @@
 <?php
 
 class Orders extends CI_Controller {
-
-    public function __construct(){
-        parent::__construct();
-		$this->load->model('ordersmodel');
-        $this->load->library('adminpage');
-        $this->auth->is_logged_in();        
-    }
-
 	
-    public function pending(){
-        $data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_PENDING);
-
-        $data['pagetitle'] = "Orders | Pending";
-
-        $this->adminpage->loadpage("admin/orders/pending", $data);
-    }
-
-    public function details($order_no){
-	//get paypal references from the order no.
-        $result = $this->ordersmodel->get_order_details($order_no);	
+	public function __construct(){
+		parent::__construct();
+		$this->load->model('ordersmodel');
+		$this->load->library('adminpage');
+		$this->auth->is_logged_in();
+	}
+	
+	public function pending(){
+		$data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_PENDING);
+		$data['pagetitle'] = "Orders | Pending";
+		
+		$this->adminpage->loadpage("admin/orders/pending", $data);
+	}
+	
+	public function details($order_no){
+		//get paypal references from the order no.
+		$result = $this->ordersmodel->get_order_details($order_no);
 		$paypal_result = array();
-
+		
 		if($result){
 			$this->logger->info("order details retreived for order: ".$order_no);
 			$this->load->library('paypal');
 			$this->logger->info("Retrieving access token");
 			$access_details = $this->paypal->getAccessToken();
-
+			
 			if($access_details){
 				$this->logger->info("access details retreived");
 				$external_ref	= json_decode($result[0]['external_ref']);
-
+				
 				if($external_ref){
 					$this->logger->info("external ref retreived");
 					$paypal_result = $this->paypal->get_payment_resource($access_details->access_token, $external_ref->paypal_id);
 				} else {
 					$this->logger->info("There is no external ref info");
 				}
-
 			}
 		}
 		
-        $data['order_info']	= $result;
-        $data['paypal_result'] = $paypal_result;
-        $data['pagetitle'] 	= "Order Details";
-
-        $this->adminpage->loadpage('admin/orders/details', $data);
-
-    }
-
-    public function approved(){
+		$data['order_info']	= $result;
+		$data['paypal_result'] = $paypal_result;
+		$data['pagetitle'] 	= "Order Details";
+		
+		$this->adminpage->loadpage('admin/orders/details', $data);
+		
+	}
 	
-        $data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_APPROVED);
+	public function approved(){
+		
+		$data['result'] = $this->ordersmodel->get_orders(Ordersmodel::STATUS_APPROVED);
 		$data['pagetitle'] = "Approved Orders";
-
+		
 		$this->adminpage->loadpage("admin/orders/approved", $data);
-    }
-
-    public function disapproved(){
+	}
+	
+	public function disapproved(){
 		$data['result'] = $this->ordersmodel->get_orders('disapproved');
 		$data['pagetitle'] = "Disapproved Orders";
-
+		
 		$this->adminpage->loadpage("admin/orders/disapproved", $data);
-    }
-
-    public function approve_order($oid){
+	}
 	
+	public function approve_order($oid){
+		
 		if($this->input->post('approve_order', true) == "Approve"){
 			$this->logger->info("Admin approving order: ".$oid);
 
@@ -75,34 +72,33 @@ class Orders extends CI_Controller {
 				$this->session->set_flashdata("error_msg", "Order Number invalid");
 				redirect("/admin/orders/pending");
 			}
-
+			
 			$result = $this->ordersmodel->admin_approve_disapprove_order($oid, 'approved');
 			if($result)
 				$this->session->set_flashdata("message", "<div class='alert alert-success'>Order $oid has been approved</div>");
 			else
 				$this->session->set_flashdata("message", "<div class='alert alert-danger'>Order $oid cannot be approved</div>");
-
+				
 			redirect("/admin/orders/pending");
 			
 		}
-    }
-
-    public function disapprove_order(){
+	}
+	
+	public function disapprove_order(){
 		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')) {
 			$oid = $this->input->post('oid', true);
 			$this->logger->info("Disapprove order: ".$oid);
-
+			
 			$result = $this->ordersmodel->admin_approve_disapprove_order($oid, 'disapproved');
 			echo ($result)
 				? "true"
 				: "false";
-			
+				
 		}
-
-    }
-
-    public function payments_lookup(){
-
+	}
+	
+	public function payments_lookup(){
+		
 		if($this->input->post("search") == "List Payments!"){
 			//loop through POST to concatenate the filter string
 			$filter = null;
@@ -120,18 +116,17 @@ class Orders extends CI_Controller {
 			$this->logger->info("Paypal filter string: ".$filter);
 			$this->load->library('paypal');
 			$data['result'] = $this->paypal->list_payments($filter);
-
+			
 		}
 
 		$data['pagetitle'] = "List paypal payments";
 		$this->adminpage->loadpage("admin/orders/list_payments", $data);
-
-
-    }
-
-    
-    public function paypalrefund($oid, $sale_id, $total, $currency){
-        
+		
+	}
+	
+	
+	public function paypalrefund($oid, $sale_id, $total, $currency){
+ 
 		$this->logger->info("processing refund - sale id: ".$sale_id." ".$total." ".$currency);
 
 		$this->load->library('paypal');
@@ -144,12 +139,12 @@ class Orders extends CI_Controller {
 			if($response && @$response->state == "completed"){
 				$this->logger->info("Refund response received");
 				$transaction_data = array("oid" => $oid,
-											"customer_id" => $uid,
-											"subtotal" => $total,
-											"total" => $total,
-											"external_ref" => "paypal refund",
-											"date_created" => date("Y-m-d H:i:s")
-											);
+										"customer_id" => $uid,
+										"subtotal" => $total,
+										"total" => $total,
+										"external_ref" => "paypal refund",
+										"date_created" => date("Y-m-d H:i:s")
+										);
 				$this->ordersmodel->refundsale($transaction_data);
 
 			}
@@ -160,19 +155,19 @@ class Orders extends CI_Controller {
 		}
 
 
-    }
+	}
 
-    public function ajaxApproveOrder(){
+	public function ajaxApproveOrder(){
 	
 		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest')){
 			$oid = $this->input->post("oid", true);    
 			$result = $this->ordersmodel->admin_approve_disapprove_order($oid, 'approved');
 
 			echo ($result)
-			? "true"
-			: "false";
+				? "true"
+				: "false";
 		}
-    }
+	}
 
 
 	public function refunded(){
