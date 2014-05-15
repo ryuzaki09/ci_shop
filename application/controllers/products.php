@@ -66,7 +66,7 @@ class Products extends CI_Controller {
 			$pname = $this->input->post("pname", true);
 			$price = $this->input->post("price", true);
 			$rowID = $this->input->post("rowId", true);
-			
+
 			$this->logger->info("adding to basket: ".var_export($this->input->post(), true));
 			//  remove one stock of product
 			$this->productsmodel->removeOneStock($pid);
@@ -111,9 +111,9 @@ class Products extends CI_Controller {
 					$data['rowID'] = $this->cart->insert($basket_data);
 				}
 			}
-			
+
 			echo json_encode($data);
-		
+
 		}
 	}
 }
