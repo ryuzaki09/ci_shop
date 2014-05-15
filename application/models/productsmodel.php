@@ -1,11 +1,10 @@
 <?php
 class Productsmodel extends Commonmodel {
-
-    public function __construct(){
-        parent::__construct();
-    }
-
-
+	
+	public function __construct(){
+		parent::__construct();
+	}
+	
 	public function db_get_product($where){
 		if(is_array($where) && !empty($where)){
 			$this->db->where($where);
@@ -20,14 +19,14 @@ class Productsmodel extends Commonmodel {
 		}
 		return;
     }
-
-    public function db_allproducts(){
-        $result = $this->db->get($this->table['products']);
-
-        return ($result->num_rows()>0)
-                ? $result->result_array()
-                : false;
-    }
+	
+	public function db_allproducts(){
+		$result = $this->db->get($this->table['products']);
+		
+		return ($result->num_rows()>0)
+				? $result->result_array()
+				: false;
+	}
 	
 	public function db_delete_product($pid){
 		if(is_numeric($pid)){
