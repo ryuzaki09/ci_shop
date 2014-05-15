@@ -97,15 +97,15 @@ class Basket extends CI_Controller {
 			redirect(base_url().'user/login');
 		}
 		
-    }
+	}
     
-    /**
-     * process_checkout 
-     * This is when the customer clicks on the Proceed to Payment on the checkout page
-     * @access public
-     * @return void
-     */
-    public function process_checkout(){
+	/**
+	 * process_checkout 
+	 * This is when the customer clicks on the Proceed to Payment on the checkout page
+	 * @access public
+	 * @return void
+	 */
+	 public function process_checkout(){
 
 		$alt_address = $this->session->userdata("alternative_address");
 		$customer_details = $this->session->userdata("user_details");
@@ -152,88 +152,88 @@ class Basket extends CI_Controller {
 			$i++;
 		endforeach;
 		
-        $this->logger->info("order info: ".var_export($order_data, true));
-        $additional_prices = array('subtotal' => $subtotal, 
+		$this->logger->info("order info: ".var_export($order_data, true));
+		$additional_prices = array('subtotal' => $subtotal, 
                                     'currency' => 'GBP',
                                     'tax'       => $this->tax,
                                     'shipping'  => $this->shipping
                                 );
-        $additional_prices['total'] = $additional_prices['subtotal'] + $additional_prices['tax'] + $additional_prices['shipping'];
+		$additional_prices['total'] = $additional_prices['subtotal'] + $additional_prices['tax'] + $additional_prices['shipping'];
 
-        //insert order details into DB for customer
+		//insert order details into DB for customer
         $this->load->model('ordersmodel');
+		
+		try {
+			$result = $this->ordersmodel->create_order($insert_data, $additional_prices, $delivery_add);
+		} catch(Exception $e){
+			$this->logger->error($e->getMessage());
+		}
+		
+		if($result)
+			//start processing paypal
+			$this->process_paypal($order_data, $additional_prices);
+		else
+			redirect(base_url()."basket/checkout");
+			
+	}
+	
+	private function process_paypal($order_data=false, $additional_prices){
+		$this->load->library("paypal");
+		$this->load->library("payment");
+		
+		//get access token for paypal
+		$paypal_token = $this->paypal->getAccessToken();
+		if($paypal_token){
+			$this->payment->setValue("paypal_token", $paypal_token->access_token);
+			$this->payment->setValue("pay_method", "paypal");
 
-        try {
-            $result = $this->ordersmodel->create_order($insert_data, $additional_prices, $delivery_add);
-        } catch(Exception $e){
-            $this->logger->error($e->getMessage());
-        }
-
-        if($result)
-            //start processing paypal
-            $this->process_paypal($order_data, $additional_prices);
-        else
-            redirect(base_url()."basket/checkout");
-
-    }
-
-    private function process_paypal($order_data=false, $additional_prices){
-        $this->load->library("paypal");
-        $this->load->library("payment");
-
-        //get access token for paypal
-        $paypal_token = $this->paypal->getAccessToken();
-        if($paypal_token){
-            $this->payment->setValue("paypal_token", $paypal_token->access_token);
-            $this->payment->setValue("pay_method", "paypal");
-
-            //request paypal to create payment
-            $payment_result = $this->paypal->createPayment($paypal_token->access_token, $order_data, $additional_prices);
-            $this->payment->destroyValues();
-            if($payment_result && $payment_result->links[1]->rel == "approval_url"){
-                $this->payment->setValue("paypal_id", $payment_result->id);
+			//request paypal to create payment
+			$payment_result = $this->paypal->createPayment($paypal_token->access_token, $order_data, $additional_prices);
+			$this->payment->destroyValues();
+			if($payment_result && $payment_result->links[1]->rel == "approval_url"){
+				$this->payment->setValue("paypal_id", $payment_result->id);
 				$this->logger->info("redirecting customer to: ".$payment_result->links[1]->href);
 
-                //redirect customer to get approval of sale
-                redirect($payment_result->links[1]->href);
-				
-            }
-        }
-    }
+				//redirect customer to get approval of sale
+				redirect($payment_result->links[1]->href);
 
-    //once customer approves, execute payment and save to DB
-    public function paypal_callback(){
-        $this->logger->info("Paypal callback received");
-        $this->load->library("paypal");
-        $this->load->library("payment");
-        $payer_id       = $this->input->get("PayerID", true);
-        $token          = $this->input->get("token", true);
-        $access_token   = $this->payment->getValue("paypal_token");
-        $id             = $this->payment->getValue("paypal_id");
-        
-        if($payer_id && $token){
+			}
+		}
+	}
+	
+	//once customer approves, execute payment and save to DB
+	public function paypal_callback(){
+		$this->logger->info("Paypal callback received");
+		$this->load->library("paypal");
+		$this->load->library("payment");
+		$payer_id       = $this->input->get("PayerID", true);
+		$token          = $this->input->get("token", true);
+		$access_token   = $this->payment->getValue("paypal_token");
+		$id             = $this->payment->getValue("paypal_id");
 
-            $result = $this->paypal->execute_payment($id, $payer_id, $access_token);
-            //successfully executed the paypal payment
-            if($result){
-                //create a transaction in DB
-                $this->load->model('ordersmodel');
-                $order_id = $this->payment->getValue("order_id");
-                $external_ref = array('paypal_id' => $result->id,
+		if($payer_id && $token){
+
+			$result = $this->paypal->execute_payment($id, $payer_id, $access_token);
+			//successfully executed the paypal payment
+			if($result){
+				//create a transaction in DB
+				$this->load->model('ordersmodel');
+				$order_id = $this->payment->getValue("order_id");
+				$external_ref = array('paypal_id' => $result->id,
                                         'sales_id' => $result->transactions[0]->related_resources[0]->sale->id);
 
-                $insertdata = array('oid'   => $order_id,
+				$insertdata = array('oid'   => $order_id,
                                     'customer_id'   => $this->session->userdata("uid"),
                                     'subtotal'  => $result->transactions[0]->amount->details->subtotal,
                                     'total' => $result->transactions[0]->amount->total,
                                     'external_ref'  => json_encode($external_ref),
                                     'date_created'  => date('Y-m-d H:i:s'));
 
-                $this->logger->info("inserting transaction data: ".var_export($insertdata, true));
-                $trx_result = $this->ordersmodel->createTransaction($insertdata);
+				$this->logger->info("inserting transaction data: ".var_export($insertdata, true));
+				$trx_result = $this->ordersmodel->createTransaction($insertdata);
 
 				//if transaction completed then redirect
-                if($trx_result){
+				if($trx_result){
 					$this->logger->info("Transaction Completed: ".$order_id);
 					$this->cart->destroy(); //destroy the shopping cart session now that transaction is completed.
 					redirect("/basket/orderComplete");
@@ -241,15 +241,15 @@ class Basket extends CI_Controller {
 					$this->session->set_flashdata("error_msg", "Transaction cannot be completed. Please try again later.");
 					redirect("/basket/checkout");
 				}
-            }
-        } //end of if theres a payer_id and token
-    }
+			}
+		} //end of if theres a payer_id and token
+	}
 
-    //redirect here after transaction is completed
-    public function orderComplete(){
+	//redirect here after transaction is completed
+	public function orderComplete(){
 		$this->load->library("payment");
 		$paymentvalues = $this->payment->getAllValues();
-		
+
 		//check if theres any order/payment info first before showing the page otherwise redirect to homepage
 		if(is_array($paymentvalues) && !empty($paymentvalues)){
 			//send confirmation email
@@ -262,7 +262,7 @@ class Basket extends CI_Controller {
 			$this->email->subject("Your Order Confirmation");
 			$this->email->message("Thank you for your order!");
 			$this->email->send();
-			
+
 			$data['order_info'] = $paymentvalues; //assign order info to show on the view
 			$this->payment->destroyValues(); //delete all payment info in the session
 
@@ -274,6 +274,6 @@ class Basket extends CI_Controller {
 			redirect(base_url());
 		}
 
-    }
+	}
 
 }
