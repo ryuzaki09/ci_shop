@@ -19,21 +19,21 @@ class Basket extends CI_Controller {
 		$useremail = $this->session->userdata('user_details');
 		
 		/*
-        if($this->input->post('update') == "Update Cart"){
+		if($this->input->post('update') == "Update Cart"){
 			$i = 0;
-            foreach($this->input->post() AS $postdata => $value):
+			foreach($this->input->post() AS $postdata => $value):
 				if(is_numeric($value['pid'])){
 					$stock = $this->productsmodel->getProductStock($value['pid']);
 					$this->logger->info("value: ".$value['pid']);
-                	$data[] = $value;
+					$data[] = $value;
 				}
-
+				
 				$i++;
-            endforeach;
-
+			endforeach;
+			
 			$this->logger->info("Post data: ".var_export($data, true));
-            $this->cart->update($data);
-        }
+			$this->cart->update($data);
+		}
 		*/
 		$data['js'][] = $this->loadpage->set("js", "/js/basket.js");
 		$data['pagetitle']  = "Shopping Basket";
