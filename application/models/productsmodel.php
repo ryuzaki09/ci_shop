@@ -6,7 +6,7 @@ class Productsmodel extends Commonmodel {
     }
 
 
-    public function db_get_product($where){
+	public function db_get_product($where){
 		if(is_array($where) && !empty($where)){
 			$this->db->where($where);
 
@@ -17,7 +17,7 @@ class Productsmodel extends Commonmodel {
 			return ($result->num_rows()>0)
 					? $result->row()
 					: false;
- 		}
+		}
 		return;
     }
 
@@ -42,7 +42,7 @@ class Productsmodel extends Commonmodel {
 
     }
 
-    public function db_insert_update_products($id=false, $name, $desc, $img1=false, $img2=false, $img3=false, $img4=false, $price, $category, $subcat, $stock){
+	public function db_insert_update_products($id=false, $name, $desc, $img1=false, $img2=false, $img3=false, $img4=false, $price, $category, $subcat, $stock){
 		$data = array('name' =>$name,
                       'desc' => $desc,
                       'price' => $price,
