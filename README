@@ -1,3 +1,7 @@
+Version 0.4.3
+ - adding products to basket updated to use ajax.
+ - added remove products from basket functionality that uses ajax.
+
 Version 0.4.2
  - delivery address now showing in customer order history and CMS order list.
 
