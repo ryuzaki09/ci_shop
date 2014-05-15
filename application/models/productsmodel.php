@@ -28,12 +28,12 @@ class Productsmodel extends Commonmodel {
                 ? $result->result_array()
                 : false;
     }
-
-    public function db_delete_product($pid){
+	
+	public function db_delete_product($pid){
 		if(is_numeric($pid)){
 			$this->db->where('pid', $pid);
 			$this->db->delete($this->table['products']);
-
+			
 			return($this->db->affected_rows()>0)
 					? true
 					: false;
@@ -41,14 +41,14 @@ class Productsmodel extends Commonmodel {
 		return;
 
     }
-
+	
 	public function db_insert_update_products($id=false, $name, $desc, $img1=false, $img2=false, $img3=false, $img4=false, $price, $category, $subcat, $stock){
 		$data = array('name' =>$name,
-                      'desc' => $desc,
-                      'price' => $price,
-                      'category' => $category,
-                      'sub_cat' => $subcat,
-					  'stock' => $stock);
+					'desc' => $desc,
+					'price' => $price,
+					'category' => $category,
+					'sub_cat' => $subcat,
+					'stock' => $stock);
 
         if($img1){
             $data['img1'] = $img1;
@@ -86,7 +86,7 @@ class Productsmodel extends Commonmodel {
 
 		return;
 	}
-
+	
 	public function getProductOptions($pid){
 		if(is_numeric($pid)){
 			$this->db->where("products.pid", $pid);
@@ -131,10 +131,10 @@ class Productsmodel extends Commonmodel {
 			$this->db->set("stock", "stock+$qty", false);
 			$this->db->where("pid", $pid);
 			$this->db->update($this->table['products']);
-			
+						
 			return ($this->db->affected_rows() >0)
-					? true
-					: false;
+				? true
+				: false;
 		}
 		return;
 	}
