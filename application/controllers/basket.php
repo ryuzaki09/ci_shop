@@ -13,9 +13,9 @@ class Basket extends CI_Controller {
 	public function index(){
 		$this->shoppingbasket();
 	}
-
-    //Update the shopping basket at the basket page
-    public function shoppingbasket(){
+	
+	//Update the shopping basket at the basket page
+	public function shoppingbasket(){
 		$useremail = $this->session->userdata('user_details');
 		
 		/*
@@ -134,23 +134,23 @@ class Basket extends CI_Controller {
 		$i = 0;
 		$subtotal = 0;
 		foreach($this->input->post() AS $order):
-            $order_data[$i]['quantity'] = $order['qty'];
-            $order_data[$i]['price']    = $order['price'];
-            $order_data[$i]['name']     = $order['name'];
-            $order_data[$i]['currency'] = "GBP";
-            $order_data[$i]['sku']      = $order['pid'].",".$order['rowid'];
-            $subtotal = $subtotal + ($order['price'] * $order['qty']);
-
-            //dbdata for insert
-            $insert_data[$i]['pid']     = $order['pid'];
-            $insert_data[$i]['qty']     = $order['qty'];
-            $insert_data[$i]['cid']     = $customer_id;
-            $insert_data[$i]['price']   = $order['price'];
-            $insert_data[$i]['currency']    = "GBP";
-            $insert_data[$i]['method']  = "paypal";
-            
-            $i++;
-        endforeach;
+			$order_data[$i]['quantity'] = $order['qty'];
+			$order_data[$i]['price']    = $order['price'];
+			$order_data[$i]['name']     = $order['name'];
+			$order_data[$i]['currency'] = "GBP";
+			$order_data[$i]['sku']      = $order['pid'].",".$order['rowid'];
+			$subtotal = $subtotal + ($order['price'] * $order['qty']);
+			
+			//dbdata for insert
+			$insert_data[$i]['pid']     = $order['pid'];
+			$insert_data[$i]['qty']     = $order['qty'];
+			$insert_data[$i]['cid']     = $customer_id;
+			$insert_data[$i]['price']   = $order['price'];
+			$insert_data[$i]['currency']    = "GBP";
+			$insert_data[$i]['method']  = "paypal";
+			
+			$i++;
+		endforeach;
 		
         $this->logger->info("order info: ".var_export($order_data, true));
         $additional_prices = array('subtotal' => $subtotal, 
