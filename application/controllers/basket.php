@@ -1,18 +1,18 @@
 <?php
 
 class Basket extends CI_Controller {
-    private $tax = "0.00";
-    private $shipping = "0.00";
-    
-    public function __construct(){
-        parent::__construct();
-        $this->load->model('productsmodel');
-        $this->load->library('loadpage');
-    }
-    
-    public function index(){
-        $this->shoppingbasket();
-    }
+	private $tax = "0.00";
+	private $shipping = "0.00";
+	
+	public function __construct(){
+		parent::__construct();
+		$this->load->model('productsmodel');
+		$this->load->library('loadpage');
+	}
+	
+	public function index(){
+		$this->shoppingbasket();
+	}
 
     //Update the shopping basket at the basket page
     public function shoppingbasket(){
@@ -35,11 +35,11 @@ class Basket extends CI_Controller {
             $this->cart->update($data);
         }
 		*/
-		$data['js'][] = $this->loadpage->set("js", "/js/basket.js");	
-        $data['pagetitle']  = "Shopping Basket";
-        $this->loadpage->loadpage('basket/list', @$data);
-    }
-
+		$data['js'][] = $this->loadpage->set("js", "/js/basket.js");
+		$data['pagetitle']  = "Shopping Basket";
+		$this->loadpage->loadpage('basket/list', @$data);
+	}
+	
 	public function removeProductFromBasket(){
 		$rowId = $this->input->post("rowid", true);
 
@@ -71,23 +71,23 @@ class Basket extends CI_Controller {
 
 		echo json_encode($data);
 	}
-
-    //confirmation page to checkout and require customer to be logged in.
-    public function checkout(){
-
-        $data['environment'] = (ENVIRONMENT == "development")
+	
+	//confirmation page to checkout and require customer to be logged in.
+	public function checkout(){
+		
+		$data['environment'] = (ENVIRONMENT == "development")
                             ? true
                             : false;
 		
 		$data['alt_address'] = $this->session->userdata("alternative_address");
 		// var_dump($alt_address);
-        
-        if($this->auth->is_logged_in()){
-            $this->load->model('usermodel');
-
+		
+		if($this->auth->is_logged_in()){
+			$this->load->model('usermodel');
+			
 			$uid = $this->session->userdata('uid');
 			$data['userdata'] = $this->usermodel->db_get_userdetails($uid);
-
+			
 			$data['css'][] = $this->loadpage->set("css", "/css/jquery-ui-1.10.0.custom.min.css");
 			$data['js'][] = $this->loadpage->set("js", "/js/jquery.validate.min.js");
 				
@@ -126,14 +126,14 @@ class Basket extends CI_Controller {
 			$delivery_add = $alt_address;
 
 		$this->logger->info("delivery address: ".var_export($delivery_add, true));
-
-        $order_data = array();
-        $customer_id = $this->session->userdata('uid');
-        
-        //grab all product info from post and pass to process payment
-        $i = 0;
-        $subtotal = 0;
-        foreach($this->input->post() AS $order):
+		
+		$order_data = array();
+		$customer_id = $this->session->userdata('uid');
+		
+		//grab all product info from post and pass to process payment
+		$i = 0;
+		$subtotal = 0;
+		foreach($this->input->post() AS $order):
             $order_data[$i]['quantity'] = $order['qty'];
             $order_data[$i]['price']    = $order['price'];
             $order_data[$i]['name']     = $order['name'];

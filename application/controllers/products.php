@@ -7,8 +7,8 @@ class Products extends CI_Controller {
 		$this->load->library('loadpage');
 		$this->load->library('auth');
 	}
-
-    public function index($id=false){
+	
+	public function index($id=false){
 		$this->item($id);
 	}
 	
